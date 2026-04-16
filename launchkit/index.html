@@ -268,6 +268,239 @@
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
+// ========== i18n SYSTEM ==========
+const I18N = {
+  en: {
+    nav_how: 'How it works',
+    nav_examples: 'Examples',
+    hero_title: 'Paste your URL.<br><span class="accent">Launch everywhere.</span>',
+    hero_subtitle: 'You built something cool. Get your Reddit post, Twitter thread, Product Hunt copy, HN post, and landing page — in 30 seconds.',
+    url_placeholder: 'https://your-awesome-tool.com',
+    url_aria: 'Enter your tool URL',
+    launch_btn: 'Generate Launch Package →',
+    launch_btn_generating: 'Generating...',
+    tone_label: 'Tone:',
+    tone_professional: 'Professional',
+    tone_casual: 'Casual',
+    tone_hype: 'Hype',
+    hint: 'Press <kbd>/</kbd> to start typing · <kbd>1</kbd>-<kbd>5</kbd> to switch tabs',
+    step1_title: 'Paste URL',
+    step1_desc: 'We scan your tool',
+    step2_title: 'AI generates',
+    step2_desc: 'Copy for every platform',
+    step3_title: 'Copy & launch',
+    step3_desc: 'Post everywhere',
+    loading_scanning: 'Scanning URL...',
+    loading_analyzing: 'Analyzing content...',
+    loading_generating: 'Generating copy for each platform...',
+    loading_building: 'Building landing page...',
+    loading_done: 'Done! ✨',
+    results_title_prefix: '✨ Generated Launch Package for ',
+    share_btn: '🔗 Share',
+    export_btn: '⬇ Export',
+    copy_btn: 'Copy',
+    copied_btn: 'Copied!',
+    copy_html_btn: 'Copy HTML',
+    landing_label: '🌐 Landing Page Preview',
+    checklist_label: 'Launch Checklist',
+    checklist_done: 'done',
+    pro_tips: 'Pro Tips',
+    history_title: 'Recent Packages',
+    history_empty: 'No history yet. Generate a package first!',
+    vibeboard_strong: 'Built something awesome?',
+    vibeboard_text: 'Submit it to VibeBoard and get discovered by the vibe coding community 🔥',
+    vibeboard_link: 'Submit to VibeBoard →',
+    footer: 'LaunchKit — Built for vibe coders who ship fast.',
+    toast_copied: '✓ Copied to clipboard',
+    toast_exported: '📥 Exported as Markdown',
+    toast_shared: '🔗 Share link copied!',
+    // Checklist phases & items
+    phase_prelaunch: 'Pre-Launch',
+    phase_launchday: 'Launch Day',
+    phase_postlaunch: 'Post-Launch',
+    check_analytics: 'Set up analytics (Plausible/Umami/GA)',
+    check_demo: 'Prepare 30-second demo video or GIF',
+    check_day: 'Choose launch day (Tue-Thu recommended)',
+    check_responses: 'Draft responses to common questions',
+    check_feedback: 'Set up a feedback channel (email/Discord/Twitter DMs)',
+    check_mobile: 'Test your tool on mobile',
+    check_proofread: 'Proofread all copy one more time',
+    check_social: 'Prepare social media accounts',
+    check_reddit: 'Post to Reddit (morning, EST)',
+    check_twitter: 'Post Twitter thread',
+    check_ph: 'Submit to Product Hunt',
+    check_hn: 'Submit Show HN',
+    check_discord: 'Share in relevant Discord servers',
+    check_monitor: 'Monitor and reply to all comments',
+    check_bugs: 'Fix any bugs reported immediately',
+    check_thanks: 'Send thank-you to early supporters',
+    check_retro: 'Write a "what I learned" retrospective',
+    check_metrics: 'Track metrics for 1 week',
+    check_iterate: 'Iterate based on feedback',
+    check_next: 'Plan next launch (new feature? new platform?)',
+    // Pro tips
+    tip_reddit_0: "Best time to post: Tuesday-Thursday, 9-11am EST",
+    tip_reddit_1: "Use r/vibecoding (153K members), r/sideproject, r/webdev",
+    tip_reddit_2: "Title should be a story, not an ad. 'I built...' works better than 'Check out...'",
+    tip_reddit_3: "Reply to every comment in the first 2 hours — it boosts the algorithm",
+    tip_reddit_4: "Add a TL;DR at the end for skimmers",
+    tip_twitter_0: "Optimal thread length: 4-7 tweets. More gets ignored, less loses depth",
+    tip_twitter_1: "First tweet is everything — no 'thread:' prefix, just hook them",
+    tip_twitter_2: "Include a screenshot or demo GIF in tweet 2 or 3",
+    tip_twitter_3: "End with a clear CTA + pin the thread",
+    tip_twitter_4: "Post between 8-10am or 5-7pm your target audience's timezone",
+    tip_ph_0: "Launch on Tuesday-Thursday for max visibility",
+    tip_ph_1: "Prepare your hunter 1 week ahead",
+    tip_ph_2: "First comment (maker comment) should tell your personal story",
+    tip_ph_3: "Engage with every comment on launch day",
+    tip_ph_4: "Tagline under 60 chars — punchy, not descriptive",
+    tip_hn_0: "Show HN titles should be factual, not hypey",
+    tip_hn_1: "'Show HN: X — Y' where Y is a concise technical description",
+    tip_hn_2: "HN rewards technical depth — mention your architecture",
+    tip_hn_3: "Don't ask for upvotes. Don't even hint at it",
+    tip_hn_4: "Best time: weekday mornings US Pacific time"
+  },
+  zh: {
+    nav_how: '使用方法',
+    nav_examples: '示例',
+    hero_title: '粘贴你的 URL，<br><span class="accent">一键推广到全平台。</span>',
+    hero_subtitle: '你做了一个很酷的产品。30 秒内获取 Reddit 帖子、Twitter 推文、Product Hunt 文案、HN 帖子和落地页。',
+    url_placeholder: 'https://你的产品.com',
+    url_aria: '输入你的工具 URL',
+    launch_btn: '生成推广套件 →',
+    launch_btn_generating: '生成中...',
+    tone_label: '语气：',
+    tone_professional: '专业',
+    tone_casual: '随意',
+    tone_hype: '炸裂',
+    hint: '按 <kbd>/</kbd> 开始输入 · <kbd>1</kbd>-<kbd>5</kbd> 切换标签页',
+    step1_title: '粘贴 URL',
+    step1_desc: '我们扫描你的工具',
+    step2_title: 'AI 生成',
+    step2_desc: '为每个平台生成文案',
+    step3_title: '复制 & 发布',
+    step3_desc: '发布到各平台',
+    loading_scanning: '正在扫描 URL...',
+    loading_analyzing: '正在分析内容...',
+    loading_generating: '正在为每个平台生成文案...',
+    loading_building: '正在构建落地页...',
+    loading_done: '完成！✨',
+    results_title_prefix: '✨ 已生成推广套件：',
+    share_btn: '🔗 分享',
+    export_btn: '⬇ 导出',
+    copy_btn: '复制',
+    copied_btn: '已复制！',
+    copy_html_btn: '复制 HTML',
+    landing_label: '🌐 落地页预览',
+    checklist_label: '发布清单',
+    checklist_done: '已完成',
+    pro_tips: '专业建议',
+    history_title: '最近生成',
+    history_empty: '暂无历史记录。先生成一个推广套件吧！',
+    vibeboard_strong: '做了很棒的产品？',
+    vibeboard_text: '提交到 VibeBoard，让 vibe coding 社区发现你 🔥',
+    vibeboard_link: '提交到 VibeBoard →',
+    footer: 'LaunchKit — 为快速发布的 vibe coders 打造。',
+    toast_copied: '✓ 已复制到剪贴板',
+    toast_exported: '📥 已导出为 Markdown',
+    toast_shared: '🔗 分享链接已复制！',
+    phase_prelaunch: '发布前',
+    phase_launchday: '发布当天',
+    phase_postlaunch: '发布后',
+    check_analytics: '设置数据分析工具（Plausible/Umami/GA）',
+    check_demo: '准备 30 秒演示视频或 GIF',
+    check_day: '选择发布日期（推荐周二至周四）',
+    check_responses: '草拟常见问题的回复',
+    check_feedback: '设置反馈渠道（邮件/Discord/Twitter 私信）',
+    check_mobile: '在移动端测试你的工具',
+    check_proofread: '再校对一次所有文案',
+    check_social: '准备社交媒体账号',
+    check_reddit: '发布到 Reddit（美东时间上午）',
+    check_twitter: '发布 Twitter 推文串',
+    check_ph: '提交到 Product Hunt',
+    check_hn: '提交 Show HN',
+    check_discord: '分享到相关 Discord 服务器',
+    check_monitor: '监控并回复所有评论',
+    check_bugs: '立即修复报告的 bug',
+    check_thanks: '向早期支持者发送感谢',
+    check_retro: '写一篇"我学到了什么"的复盘',
+    check_metrics: '跟踪一周的数据指标',
+    check_iterate: '根据反馈迭代改进',
+    check_next: '计划下一次发布（新功能？新平台？）',
+    tip_reddit_0: "最佳发帖时间：周二至周四，美东时间上午 9-11 点",
+    tip_reddit_1: "使用 r/vibecoding（15.3 万成员）、r/sideproject、r/webdev",
+    tip_reddit_2: "标题应该是故事，不是广告。'I built...' 比 'Check out...' 效果更好",
+    tip_reddit_3: "前两小时回复每条评论——这能提升算法推荐",
+    tip_reddit_4: "在末尾加上 TL;DR 方便快速阅读",
+    tip_twitter_0: "最佳推文串长度：4-7 条。太多会被忽略，太少缺乏深度",
+    tip_twitter_1: "第一条推文最重要——不要加 'thread:' 前缀，直接吸引注意力",
+    tip_twitter_2: "在第 2 或第 3 条推文中加入截图或演示 GIF",
+    tip_twitter_3: "以明确的行动号召结尾 + 置顶推文串",
+    tip_twitter_4: "在目标受众时区的上午 8-10 点或下午 5-7 点发布",
+    tip_ph_0: "在周二至周四发布以获得最大曝光",
+    tip_ph_1: "提前一周联系你的推荐人",
+    tip_ph_2: "第一条评论（maker 评论）应该讲述你的个人故事",
+    tip_ph_3: "发布当天回复每条评论",
+    tip_ph_4: "标语控制在 60 字符以内——简洁有力",
+    tip_hn_0: "Show HN 标题应该实事求是，不要夸大",
+    tip_hn_1: "'Show HN: X — Y'，其中 Y 是简洁的技术描述",
+    tip_hn_2: "HN 看重技术深度——提到你的架构",
+    tip_hn_3: "不要求赞。连暗示都不要",
+    tip_hn_4: "最佳时间：工作日早上（美国太平洋时间）"
+  }
+};
+
+let currentLang = localStorage.getItem('lk-lang') || 'en';
+
+function t(key) {
+  return I18N[currentLang][key] || I18N.en[key] || key;
+}
+
+function applyLang() {
+  // Text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (I18N[currentLang][key] !== undefined) el.textContent = I18N[currentLang][key];
+  });
+  // HTML content
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (I18N[currentLang][key] !== undefined) el.innerHTML = I18N[currentLang][key];
+  });
+  // Placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (I18N[currentLang][key] !== undefined) el.placeholder = I18N[currentLang][key];
+  });
+  // Aria labels
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const key = el.getAttribute('data-i18n-aria');
+    if (I18N[currentLang][key] !== undefined) el.setAttribute('aria-label', I18N[currentLang][key]);
+  });
+  // Update toggle button highlight
+  const toggle = document.getElementById('langToggle');
+  if (toggle) toggle.innerHTML = currentLang === 'en'
+    ? '<strong>EN</strong> | 中文'
+    : 'EN | <strong>中文</strong>';
+  // Update page title
+  document.title = currentLang === 'zh'
+    ? 'LaunchKit — 30 秒推广到全平台'
+    : 'LaunchKit — Launch everywhere in 30 seconds';
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'zh' : 'en';
+  localStorage.setItem('lk-lang', currentLang);
+  applyLang();
+  // Re-render results if visible
+  if (currentData && document.getElementById('resultsSection').classList.contains('visible')) {
+    renderResults();
+  }
+}
+
+// Apply on load
+document.addEventListener('DOMContentLoaded', () => applyLang());
 // Toast system
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -403,7 +636,7 @@ async function generate() {
 
   const btn = document.getElementById('launchBtn');
   btn.disabled = true;
-  btn.textContent = 'Generating...';
+  btn.textContent = t('launch_btn_generating');
 
   // Find matching data or default to 0
   let dataIdx = 0;
@@ -419,11 +652,11 @@ async function generate() {
   const text = document.getElementById('loadingText');
 
   const steps = [
-    {msg:'Scanning URL...', pct:20, step:1},
-    {msg:'Analyzing content...', pct:45, step:1},
-    {msg:'Generating copy for each platform...', pct:70, step:2},
-    {msg:'Building landing page...', pct:90, step:2},
-    {msg:'Done! ✨', pct:100, step:3}
+    {msg:t('loading_scanning'), pct:20, step:1},
+    {msg:t('loading_analyzing'), pct:45, step:1},
+    {msg:t('loading_generating'), pct:70, step:2},
+    {msg:t('loading_building'), pct:90, step:2},
+    {msg:t('loading_done'), pct:100, step:3}
   ];
 
   // Reset steps
@@ -450,12 +683,12 @@ async function generate() {
   loading.classList.remove('visible');
   renderResults();
   btn.disabled = false;
-  btn.textContent = 'Generate Launch Package →';
+  btn.textContent = t('launch_btn');
 }
 
 function renderResults() {
   const toneData = currentData.tones[currentTone];
-  document.getElementById('resultsTitle').textContent = '✨ Generated Launch Package for ' + currentName;
+  document.getElementById('resultsTitle').textContent = t('results_title_prefix') + currentName;
 
   // Build tabs
   const tabsBar = document.getElementById('tabsBar');
@@ -518,7 +751,7 @@ function buildTextPanel(platform, data, idx) {
         <span class="card-label">${platform.label}</span>
         <div class="card-actions">
           <span class="char-count" id="charcount-${idx}">${platform.limitLabel}</span>
-          <button class="copy-btn" onclick="copyContent(this, ${idx})" data-event="copy-${platform.id}">Copy</button>
+          <button class="copy-btn" onclick="copyContent(this, ${idx})" data-event="copy-${platform.id}">${t('copy_btn')}</button>
         </div>
       </div>
       <div class="editable" contenteditable="true" id="content-${idx}" oninput="updateCharCount(${idx})">${content}</div>
@@ -531,8 +764,8 @@ function buildLandingPanel(data, idx) {
   return `<div class="tab-panel${idx===0?' active':''}" data-panel="${idx}">
     <div class="card">
       <div class="card-header">
-        <span class="card-label">🌐 Landing Page Preview</span>
-        <button class="copy-btn" onclick="copyContent(this, ${idx})" data-event="copy-landing" style="background:#00d4aa;color:#0a0a0a;border-color:#00d4aa">Copy HTML</button>
+        <span class="card-label">${t('landing_label')}</span>
+        <button class="copy-btn" onclick="copyContent(this, ${idx})" data-event="copy-landing" style="background:#00d4aa;color:#0a0a0a;border-color:#00d4aa">${t('copy_html_btn')}</button>
       </div>
       <div class="landing-mock">
         <h2>${data.headline}</h2>
@@ -581,9 +814,9 @@ function copyContent(btn, idx) {
   }
   navigator.clipboard.writeText(text).then(() => {
     btn.classList.add('copied');
-    btn.textContent = 'Copied!';
-    showToast('✓ Copied to clipboard');
-    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = btn.style.background ? 'Copy HTML' : 'Copy'; }, 1500);
+    btn.textContent = t('copied_btn');
+    showToast(t('toast_copied'));
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = btn.style.background ? t('copy_html_btn') : t('copy_btn'); }, 1500);
   });
 }
 
@@ -602,7 +835,7 @@ function exportAll() {
   a.href = URL.createObjectURL(blob);
   a.download = `launchkit-${currentName.toLowerCase().replace(/\s+/g,'-')}.md`;
   a.click();
-  showToast('📥 Exported as Markdown');
+  showToast(t('toast_exported'));
 }
 
 function sharePackage() {
@@ -610,7 +843,7 @@ function sharePackage() {
   const shareUrl = window.location.href.replace(/index\.html.*$/, '').replace(/\/$/, '')
     + '/share.html?tool=' + encodeURIComponent(currentName) + '&tone=' + encodeURIComponent(currentTone);
   navigator.clipboard.writeText(shareUrl).then(() => {
-    showToast('🔗 Share link copied!');
+    showToast(t('toast_shared'));
   });
 }
 
@@ -620,34 +853,10 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // --- Pro Tips ---
 const PRO_TIPS = {
-  0: [ // Reddit
-    "Best time to post: Tuesday-Thursday, 9-11am EST",
-    "Use r/vibecoding (153K members), r/sideproject, r/webdev",
-    "Title should be a story, not an ad. 'I built...' works better than 'Check out...'",
-    "Reply to every comment in the first 2 hours — it boosts the algorithm",
-    "Add a TL;DR at the end for skimmers"
-  ],
-  1: [ // Twitter
-    "Optimal thread length: 4-7 tweets. More gets ignored, less loses depth",
-    "First tweet is everything — no 'thread:' prefix, just hook them",
-    "Include a screenshot or demo GIF in tweet 2 or 3",
-    "End with a clear CTA + pin the thread",
-    "Post between 8-10am or 5-7pm your target audience's timezone"
-  ],
-  2: [ // Product Hunt
-    "Launch on Tuesday-Thursday for max visibility",
-    "Prepare your hunter 1 week ahead",
-    "First comment (maker comment) should tell your personal story",
-    "Engage with every comment on launch day",
-    "Tagline under 60 chars — punchy, not descriptive"
-  ],
-  3: [ // HN
-    "Show HN titles should be factual, not hypey",
-    "'Show HN: X — Y' where Y is a concise technical description",
-    "HN rewards technical depth — mention your architecture",
-    "Don't ask for upvotes. Don't even hint at it",
-    "Best time: weekday mornings US Pacific time"
-  ]
+  0: ['tip_reddit_0','tip_reddit_1','tip_reddit_2','tip_reddit_3','tip_reddit_4'],
+  1: ['tip_twitter_0','tip_twitter_1','tip_twitter_2','tip_twitter_3','tip_twitter_4'],
+  2: ['tip_ph_0','tip_ph_1','tip_ph_2','tip_ph_3','tip_ph_4'],
+  3: ['tip_hn_0','tip_hn_1','tip_hn_2','tip_hn_3','tip_hn_4']
 };
 
 // Inject pro tips into each tab panel (except landing)
@@ -657,10 +866,10 @@ document.querySelectorAll('.tab-panel').forEach((panel, idx) => {
   const tipsHtml = `
     <div class="pro-tips" style="margin-top:16px;border-top:1px solid #1a1a1a;padding-top:16px;">
       <div class="tips-toggle" style="cursor:pointer;font-size:13px;color:#555;font-weight:600;display:flex;align-items:center;gap:6px;user-select:none;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.arrow').textContent=this.nextElementSibling.style.display==='none'?'▶':'▼'">
-        <span class="arrow" style="font-size:10px;">▶</span> Pro Tips
+        <span class="arrow" style="font-size:10px;">▶</span> <span data-i18n="pro_tips">${t('pro_tips')}</span>
       </div>
       <div style="display:none;margin-top:10px;">
-        ${tips.map(t => `<div style="font-size:12px;color:#666;padding:4px 0 4px 16px;border-left:2px solid #1a1a1a;margin-bottom:6px;">${t}</div>`).join('')}
+        ${tips.map(key => `<div style="font-size:12px;color:#666;padding:4px 0 4px 16px;border-left:2px solid #1a1a1a;margin-bottom:6px;" data-i18n="${key}">${t(key)}</div>`).join('')}
       </div>
     </div>`;
   panel.querySelector('.card').insertAdjacentHTML('beforeend', tipsHtml);
@@ -668,31 +877,16 @@ document.querySelectorAll('.tab-panel').forEach((panel, idx) => {
 
 // --- Launch Checklist ---
 const CHECKLIST_ITEMS = [
-  { phase: 'Pre-Launch', items: [
-    'Set up analytics (Plausible/Umami/GA)',
-    'Prepare 30-second demo video or GIF',
-    'Choose launch day (Tue-Thu recommended)',
-    'Draft responses to common questions',
-    'Set up a feedback channel (email/Discord/Twitter DMs)',
-    'Test your tool on mobile',
-    'Proofread all copy one more time',
-    'Prepare social media accounts'
+  { phase: 'phase_prelaunch', items: [
+    'check_analytics','check_demo','check_day','check_responses',
+    'check_feedback','check_mobile','check_proofread','check_social'
   ]},
-  { phase: 'Launch Day', items: [
-    'Post to Reddit (morning, EST)',
-    'Post Twitter thread',
-    'Submit to Product Hunt',
-    'Submit Show HN',
-    'Share in relevant Discord servers',
-    'Monitor and reply to all comments',
-    'Fix any bugs reported immediately'
+  { phase: 'phase_launchday', items: [
+    'check_reddit','check_twitter','check_ph','check_hn',
+    'check_discord','check_monitor','check_bugs'
   ]},
-  { phase: 'Post-Launch', items: [
-    'Send thank-you to early supporters',
-    'Write a "what I learned" retrospective',
-    'Track metrics for 1 week',
-    'Iterate based on feedback',
-    'Plan next launch (new feature? new platform?)'
+  { phase: 'phase_postlaunch', items: [
+    'check_thanks','check_retro','check_metrics','check_iterate','check_next'
   ]}
 ];
 

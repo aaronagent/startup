@@ -722,7 +722,7 @@
   </div>
 </div>
 
-<div class="footer">VibeBoard © 2026 — Built with vibes ✨</div>
+<div class="footer" data-i18n="footer">VibeBoard © 2026 — Built with vibes ✨</div>
 
 <!-- Scroll to top -->
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Scroll to top">↑</button>
@@ -762,11 +762,11 @@
     </form>
     <div class="form-success" id="formSuccess">
       <div class="checkmark">🎉</div>
-      <h3>Tool Submitted!</h3>
-      <p>We'll review it and add it to the board shortly.</p>
+      <h3 data-i18n="form_success_title">Tool Submitted!</h3>
+      <p data-i18n="form_success_desc">We'll review it and add it to the board shortly.</p>
       <div class="launchkit-cta">
-        <p>Want to promote your tool everywhere? 🚀 Use LaunchKit to generate posts for Reddit, Twitter, HN & more</p>
-        <a href="../launchkit/index.html">Open LaunchKit →</a>
+        <p data-i18n="launchkit_promo">Want to promote your tool everywhere? 🚀 Use LaunchKit to generate posts for Reddit, Twitter, HN & more</p>
+        <a href="../launchkit/index.html" data-i18n="launchkit_open">Open LaunchKit →</a>
       </div>
     </div>
   </div>
@@ -776,6 +776,153 @@
 <div class="modal-overlay" id="compareModal" onclick="if(event.target===this)closeModal('compareModal')">
   <div class="modal" style="max-width:640px" id="compareContent"></div>
 </div>
+
+<script>
+// --- i18n System ---
+const I18N = {
+  en: {
+    nav_today: 'Today', nav_this_week: 'This Week', nav_collections: 'Collections',
+    submit_btn: '+ Submit a Tool',
+    hero_title: 'Discover what vibe coders are building',
+    hero_desc: "Every day, people are building amazing tools with AI. Here's the best of what shipped this week.",
+    stat_tools: 'Tools Launched', stat_community: 'Community', stat_week: 'This Week',
+    search_placeholder: 'Search tools by name or description...',
+    filter_label: 'Filter:', sort_label: 'Sort:',
+    cat_all: 'All', cat_productivity: 'Productivity', cat_devtools: 'Dev Tools',
+    cat_design: 'Design', cat_fun: 'Fun / Creative', cat_data: 'Data', cat_aiml: 'AI / ML',
+    sort_hot: '🔥 Hot', sort_new: '🆕 New', sort_trending: '📈 Trending',
+    sidebar_weekly: '📬 Weekly Top 10',
+    sidebar_weekly_desc: 'Get the best vibe-coded tools delivered every Friday. No spam, just tools.',
+    subscribe: 'Subscribe',
+    sidebar_hall: '🏆 Hall of Fame', sidebar_built: '🛠 Built With',
+    collections_title: '📂 Collections',
+    collections_desc: 'Curated sets of tools for different vibes.',
+    digest_title: "📨 This Week's Top 5",
+    digest_cta: 'Get this in your inbox every Friday →',
+    badge_title: '🏅 "As Featured on VibeBoard" Badge',
+    badge_desc: 'Embed a badge on your website to show off your VibeBoard feature.',
+    copy_code: 'Copy Code', copied: 'Copied!',
+    footer: 'VibeBoard © 2026 — Built with vibes ✨',
+    submit_title: 'Submit a Tool',
+    submit_desc: "Share what you've built with the vibe coding community.",
+    form_name: 'Tool Name *', form_url: 'URL *', form_desc: 'Short Description *',
+    form_desc_ph: 'What does it do? (1-2 sentences)',
+    form_category: 'Category *', form_select_cat: 'Select a category',
+    form_built: 'Built With', form_submit: 'Submit Tool 🚀',
+    form_success_title: 'Tool Submitted!',
+    form_success_desc: "We'll review it and add it to the board shortly.",
+    launchkit_promo: 'Want to promote your tool everywhere? 🚀 Use LaunchKit to generate posts for Reddit, Twitter, HN & more',
+    launchkit_open: 'Open LaunchKit →',
+    load_more: 'Load More',
+    more_tools: 'more tools',
+    no_results: 'No tools found. Try a different search or category.',
+    trending: 'Trending', new_badge: 'New!',
+    built_with_prefix: 'Built with',
+    launched_now: 'Launched just now', launched_h_ago: 'Launched {n}h ago',
+    launched_yesterday: 'Launched yesterday', launched_d_ago: 'Launched {n}d ago',
+    screenshot_preview: '📸 Screenshot preview',
+    votes_label: 'votes',
+    try_it: 'Try it →', launch_launchkit: '🚀 Launch with LaunchKit',
+    compare_with: '⚖️ Compare with...', share_url: '🔗 Share URL',
+    compare_title: '⚖️ Compare {name} with...',
+    compare_select_tool: 'Select a tool to compare',
+    compare_icon: 'Icon', compare_votes: 'Votes', compare_category: 'Category',
+    compare_built: 'Built with', compare_launched: 'Launched',
+    view_maker: 'View all tools by this maker →',
+    subscribed_friday: '✅ Subscribed! See you Friday.',
+    nl_success: "You're in! Check your inbox Friday.",
+    collection_weekend: '⚡ Weekend Projects', collection_weekend_sub: 'Tools built in under 48 hours',
+    collection_ai: '🤖 AI-Powered', collection_ai_sub: 'Tools that use AI as a core feature',
+    collection_dev: '🔧 Developer Essentials', collection_dev_sub: 'Tools every dev should know',
+  },
+  zh: {
+    nav_today: '今日', nav_this_week: '本周', nav_collections: '合集',
+    submit_btn: '+ 提交工具',
+    hero_title: '发现 Vibe Coder 们在做什么',
+    hero_desc: '每天都有人用 AI 构建出色的工具。这是本周最佳作品。',
+    stat_tools: '已发布工具', stat_community: '社区成员', stat_week: '本周新增',
+    search_placeholder: '搜索工具...',
+    filter_label: '筛选：', sort_label: '排序：',
+    cat_all: '全部', cat_productivity: '生产力', cat_devtools: '开发工具',
+    cat_design: '设计', cat_fun: '趣味 / 创意', cat_data: '数据', cat_aiml: 'AI / ML',
+    sort_hot: '🔥 热门', sort_new: '🆕 最新', sort_trending: '📈 趋势',
+    sidebar_weekly: '📬 每周 Top 10',
+    sidebar_weekly_desc: '每周五收到最佳 vibe-coded 工具推荐。无垃圾邮件，只有工具。',
+    subscribe: '订阅',
+    sidebar_hall: '🏆 名人堂', sidebar_built: '🛠 构建工具',
+    collections_title: '📂 合集',
+    collections_desc: '为不同 vibe 精选的工具集。',
+    digest_title: '📨 本周 Top 5',
+    digest_cta: '每周五发送到你的邮箱 →',
+    badge_title: '🏅 "VibeBoard 推荐" 徽章',
+    badge_desc: '在你的网站上嵌入徽章，展示你的 VibeBoard 推荐。',
+    copy_code: '复制代码', copied: '已复制！',
+    footer: 'VibeBoard © 2026 — 用 vibes 构建 ✨',
+    submit_title: '提交工具',
+    submit_desc: '与 vibe coding 社区分享你的作品。',
+    form_name: '工具名称 *', form_url: 'URL *', form_desc: '简短描述 *',
+    form_desc_ph: '它是做什么的？（1-2句话）',
+    form_category: '分类 *', form_select_cat: '选择分类',
+    form_built: '构建工具', form_submit: '提交工具 🚀',
+    form_success_title: '工具已提交！',
+    form_success_desc: '我们会审核并尽快将其添加到排行榜。',
+    launchkit_promo: '想在各平台推广你的工具？🚀 使用 LaunchKit 生成 Reddit、Twitter、HN 等平台的帖子',
+    launchkit_open: '打开 LaunchKit →',
+    load_more: '加载更多',
+    more_tools: '个工具',
+    no_results: '未找到工具。请尝试不同的搜索或分类。',
+    trending: '热门', new_badge: '新！',
+    built_with_prefix: '使用',
+    launched_now: '刚刚发布', launched_h_ago: '{n}小时前发布',
+    launched_yesterday: '昨天发布', launched_d_ago: '{n}天前发布',
+    screenshot_preview: '📸 截图预览',
+    votes_label: '票',
+    try_it: '试试看 →', launch_launchkit: '🚀 用 LaunchKit 推广',
+    compare_with: '⚖️ 对比...', share_url: '🔗 分享链接',
+    compare_title: '⚖️ 将 {name} 与...对比',
+    compare_select_tool: '选择要对比的工具',
+    compare_icon: '图标', compare_votes: '投票', compare_category: '分类',
+    compare_built: '构建工具', compare_launched: '发布时间',
+    view_maker: '查看此作者的所有工具 →',
+    subscribed_friday: '✅ 已订阅！周五见。',
+    nl_success: '订阅成功！周五查收邮件。',
+    collection_weekend: '⚡ 周末项目', collection_weekend_sub: '48小时内构建的工具',
+    collection_ai: '🤖 AI 驱动', collection_ai_sub: '以 AI 为核心功能的工具',
+    collection_dev: '🔧 开发者必备', collection_dev_sub: '每个开发者都该知道的工具',
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'en';
+
+function i18n(key) {
+  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+}
+
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = i18n(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = i18n(el.getAttribute('data-i18n-placeholder'));
+  });
+  // Update submit button
+  const submitBtn = document.getElementById('submitBtn');
+  if (submitBtn) submitBtn.textContent = i18n('submit_btn');
+  // Update lang button label
+  const langBtn = document.getElementById('langBtn');
+  if (langBtn) langBtn.textContent = currentLang === 'en' ? 'EN | 中文' : '中文 | EN';
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'zh' : 'en';
+  localStorage.setItem('lang', currentLang);
+  applyI18n();
+  // Re-render dynamic content
+  renderTools();
+  renderCollections();
+  renderDigest();
+}
+</script>
 
 <script>
 const TOOLS = [
@@ -817,11 +964,11 @@ function getToolVotes(tool) {
 
 function timeAgo(ms) {
   const h = Math.floor(ms / 3600000);
-  if (h < 1) return 'Launched just now';
-  if (h < 24) return `Launched ${h}h ago`;
+  if (h < 1) return i18n('launched_now');
+  if (h < 24) return i18n('launched_h_ago').replace('{n}', h);
   const d = Math.floor(h / 24);
-  if (d === 1) return 'Launched yesterday';
-  return `Launched ${d}d ago`;
+  if (d === 1) return i18n('launched_yesterday');
+  return i18n('launched_d_ago').replace('{n}', d);
 }
 
 function getFilteredTools() {
@@ -851,7 +998,7 @@ function renderTools() {
   const top3Ids = allByVotes.slice(0,3).map(t=>t.id);
 
   if (visible.length === 0) {
-    list.innerHTML = '<div class="no-results">No tools found. Try a different search or category.</div>';
+    list.innerHTML = '<div class="no-results">' + i18n('no_results') + '</div>';
     return;
   }
 
@@ -861,11 +1008,11 @@ function renderTools() {
     const isVoted = voted.includes(t.id);
     const isTrending = top3Ids.includes(t.id);
     html += `<div class="tool-card fade-in" onclick="openDetail(${t.id})" style="animation-delay:${i*60}ms">
-      ${isTrending ? '<div class="trending-badge">🔥 Trending</div>' : ''}
+      ${isTrending ? '<div class="trending-badge">🔥 '+t('trending')+'</div>' : ''}
       <div class="tool-rank">${i+1}</div>
       <div class="tool-icon">${t.icon}</div>
       <div class="tool-info">
-        <div class="tool-name">${t.name}${t.launchedAgo <= 24*3600000 ? '<span class="new-tool-badge">New!</span>' : ''}</div>
+        <div class="tool-name">${t.name}${t.launchedAgo <= 24*3600000 ? '<span class="new-tool-badge">'+window.t('new_badge')+'</span>' : ''}</div>
         <div class="tool-desc">${t.desc}</div>
         <div class="tool-meta">
           <span class="tool-tag">${t.category}</span>
