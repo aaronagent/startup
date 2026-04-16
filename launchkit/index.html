@@ -232,8 +232,11 @@
 
 <div class="results" id="resultsSection">
   <div class="results-header">
-    <div class="results-title" id="resultsTitle">✨ Generated Launch Package</div>
-    <button class="export-btn" onclick="exportAll()" data-event="export-markdown">⬇ Export as Markdown</button>
+    <div class="results-title" id="resultsTitle">Generated Launch Package</div>
+    <div style="display:flex;gap:8px;">
+      <button class="export-btn" onclick="sharePackage()" data-event="share-package">🔗 Share</button>
+      <button class="export-btn" onclick="exportAll()" data-event="export-markdown">⬇ Export</button>
+    </div>
   </div>
 
   <div class="tabs" id="tabsBar"></div>
@@ -581,6 +584,15 @@ function exportAll() {
   a.download = `launchkit-${currentName.toLowerCase().replace(/\s+/g,'-')}.md`;
   a.click();
   showToast('📥 Exported as Markdown');
+}
+
+function sharePackage() {
+  if (!currentName) return;
+  const shareUrl = window.location.href.replace(/index\.html.*$/, '').replace(/\/$/, '')
+    + '/share.html?tool=' + encodeURIComponent(currentName) + '&tone=' + encodeURIComponent(currentTone);
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    showToast('🔗 Share link copied!');
+  });
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
