@@ -603,46 +603,47 @@
     <div class="tooltip-text">A daily leaderboard for tools built with AI-assisted "vibe coding" ✨</div>
   </div>
   <div class="nav">
-    <a href="#">Today</a>
-    <a href="#">This Week</a>
-    <a href="#">Collections</a>
+    <a href="#" data-i18n="nav_today">Today</a>
+    <a href="#" data-i18n="nav_this_week">This Week</a>
+    <a href="#" data-i18n="nav_collections">Collections</a>
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode" id="themeBtn">🌙</button>
-    <button class="submit-btn" onclick="openSubmitModal()">+ Submit a Tool</button>
+    <button class="theme-toggle" onclick="toggleLang()" title="Toggle language" id="langBtn" style="font-size:13px;font-weight:600;letter-spacing:0.5px">EN | 中文</button>
+    <button class="submit-btn" onclick="openSubmitModal()" id="submitBtn">+ Submit a Tool</button>
   </div>
 </div>
 
 <!-- Hero -->
 <div class="hero">
-  <h1>Discover what vibe coders are building</h1>
-  <p>Every day, people are building amazing tools with AI. Here's the best of what shipped this week.</p>
+  <h1 data-i18n="hero_title">Discover what vibe coders are building</h1>
+  <p data-i18n="hero_desc">Every day, people are building amazing tools with AI. Here's the best of what shipped this week.</p>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">847</div><div class="stat-label">Tools Launched</div></div>
-    <div class="stat"><div class="stat-num">12.3K</div><div class="stat-label">Community</div></div>
-    <div class="stat"><div class="stat-num">156</div><div class="stat-label">This Week</div></div>
+    <div class="stat"><div class="stat-num">847</div><div class="stat-label" data-i18n="stat_tools">Tools Launched</div></div>
+    <div class="stat"><div class="stat-num">12.3K</div><div class="stat-label" data-i18n="stat_community">Community</div></div>
+    <div class="stat"><div class="stat-num">156</div><div class="stat-label" data-i18n="stat_week">This Week</div></div>
   </div>
 </div>
 
 <!-- Search -->
 <div class="search-bar">
   <span class="search-icon">🔍</span>
-  <input class="search-input" type="text" placeholder="Search tools by name or description..." id="searchInput" oninput="filterTools()">
+  <input class="search-input" type="text" data-i18n-placeholder="search_placeholder" placeholder="Search tools by name or description..." id="searchInput" oninput="filterTools()">
 </div>
 
 <!-- Filter bar -->
 <div class="filter-bar">
-  <span class="filter-bar-label">Filter:</span>
-  <div class="filter-pill active" onclick="setCategory(this,'All')">All</div>
-  <div class="filter-pill" onclick="setCategory(this,'Productivity')">Productivity</div>
-  <div class="filter-pill" onclick="setCategory(this,'Dev Tools')">Dev Tools</div>
-  <div class="filter-pill" onclick="setCategory(this,'Design')">Design</div>
-  <div class="filter-pill" onclick="setCategory(this,'Fun/Creative')">Fun / Creative</div>
-  <div class="filter-pill" onclick="setCategory(this,'Data')">Data</div>
-  <div class="filter-pill" onclick="setCategory(this,'AI/ML')">AI / ML</div>
+  <span class="filter-bar-label" data-i18n="filter_label">Filter:</span>
+  <div class="filter-pill active" onclick="setCategory(this,'All')" data-i18n="cat_all">All</div>
+  <div class="filter-pill" onclick="setCategory(this,'Productivity')" data-i18n="cat_productivity">Productivity</div>
+  <div class="filter-pill" onclick="setCategory(this,'Dev Tools')" data-i18n="cat_devtools">Dev Tools</div>
+  <div class="filter-pill" onclick="setCategory(this,'Design')" data-i18n="cat_design">Design</div>
+  <div class="filter-pill" onclick="setCategory(this,'Fun/Creative')" data-i18n="cat_fun">Fun / Creative</div>
+  <div class="filter-pill" onclick="setCategory(this,'Data')" data-i18n="cat_data">Data</div>
+  <div class="filter-pill" onclick="setCategory(this,'AI/ML')" data-i18n="cat_aiml">AI / ML</div>
   <div class="sort-divider"></div>
-  <span class="filter-bar-label">Sort:</span>
-  <div class="sort-pill active" onclick="setSort(this,'hot')">🔥 Hot</div>
-  <div class="sort-pill" onclick="setSort(this,'new')">🆕 New</div>
-  <div class="sort-pill" onclick="setSort(this,'trending')">📈 Trending</div>
+  <span class="filter-bar-label" data-i18n="sort_label">Sort:</span>
+  <div class="sort-pill active" onclick="setSort(this,'hot')" data-i18n="sort_hot">🔥 Hot</div>
+  <div class="sort-pill" onclick="setSort(this,'new')" data-i18n="sort_new">🆕 New</div>
+  <div class="sort-pill" onclick="setSort(this,'trending')" data-i18n="sort_trending">📈 Trending</div>
 </div>
 
 <!-- Main content -->
@@ -652,15 +653,15 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-box" id="newsletterBox">
-      <div class="sidebar-title">📬 Weekly Top 10</div>
-      <div class="sidebar-text">Get the best vibe-coded tools delivered every Friday. No spam, just tools.</div>
+      <div class="sidebar-title" data-i18n="sidebar_weekly">📬 Weekly Top 10</div>
+      <div class="sidebar-text" data-i18n="sidebar_weekly_desc">Get the best vibe-coded tools delivered every Friday. No spam, just tools.</div>
       <input class="email-input" type="email" placeholder="your@email.com" id="emailInput">
-      <button class="email-btn" onclick="subscribeNewsletter()">Subscribe</button>
+      <button class="email-btn" onclick="subscribeNewsletter()" data-i18n="subscribe">Subscribe</button>
       <div class="newsletter-success" id="newsletterSuccess"></div>
     </div>
 
     <div class="sidebar-box">
-      <div class="sidebar-title">🏆 Hall of Fame</div>
+      <div class="sidebar-title" data-i18n="sidebar_hall">🏆 Hall of Fame</div>
       <div class="hall-item"><strong>CSV Wizard</strong> — 2.1K users in 1 week</div>
       <div class="hall-item"><strong>SnapResume</strong> — Featured on HN</div>
       <div class="hall-item"><strong>PaletteAI</strong> — 500 GitHub stars</div>

@@ -33,6 +33,8 @@
   .logo span{color:#00d4aa}
   .nav a{color:#666;text-decoration:none;font-size:14px;margin-left:24px;transition:color .2s}
   .nav a:hover{color:#00d4aa}
+  .lang-toggle{margin-left:24px;padding:4px 12px;background:#1a1a1a;border:1px solid #333;border-radius:6px;color:#888;font-size:13px;cursor:pointer;font-weight:500;transition:all .2s;white-space:nowrap}
+  .lang-toggle:hover{border-color:#00d4aa;color:#00d4aa}
   @media(max-width:600px){.nav{display:none}}
 
   .hero{text-align:center;padding:56px 24px 40px;max-width:700px;margin:0 auto}
@@ -185,27 +187,28 @@
 <div class="header">
   <div class="logo">Launch<span>Kit</span></div>
   <div class="nav">
-    <a href="#how">How it works</a>
-    <a href="#examples">Examples</a>
+    <a href="#how" data-i18n="nav_how">How it works</a>
+    <a href="#examples" data-i18n="nav_examples">Examples</a>
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN | 中文</button>
   </div>
 </div>
 
 <div class="hero">
-  <h1>Paste your URL.<br><span class="accent">Launch everywhere.</span></h1>
-  <p>You built something cool. Get your Reddit post, Twitter thread, Product Hunt copy, HN post, and landing page — in 30 seconds.</p>
+  <h1 data-i18n-html="hero_title">Paste your URL.<br><span class="accent">Launch everywhere.</span></h1>
+  <p data-i18n="hero_subtitle">You built something cool. Get your Reddit post, Twitter thread, Product Hunt copy, HN post, and landing page — in 30 seconds.</p>
 </div>
 
 <div class="controls">
   <div class="url-input-group">
-    <input class="url-input" id="urlInput" type="url" placeholder="https://your-awesome-tool.com" aria-label="Enter your tool URL" autocomplete="url">
-    <button class="launch-btn" id="launchBtn" onclick="generate()" data-event="generate-package">Generate Launch Package →</button>
+    <input class="url-input" id="urlInput" type="url" placeholder="https://your-awesome-tool.com" aria-label="Enter your tool URL" autocomplete="url" data-i18n-placeholder="url_placeholder" data-i18n-aria="url_aria">
+    <button class="launch-btn" id="launchBtn" onclick="generate()" data-event="generate-package" data-i18n="launch_btn">Generate Launch Package →</button>
   </div>
   <div class="options-row">
-    <span class="tone-label">Tone:</span>
+    <span class="tone-label" data-i18n="tone_label">Tone:</span>
     <div class="tone-selector">
-      <button class="tone-btn" data-tone="professional" onclick="setTone(this)">Professional</button>
-      <button class="tone-btn active" data-tone="casual" onclick="setTone(this)">Casual</button>
-      <button class="tone-btn" data-tone="hype" onclick="setTone(this)">Hype</button>
+      <button class="tone-btn" data-tone="professional" onclick="setTone(this)" data-i18n="tone_professional">Professional</button>
+      <button class="tone-btn active" data-tone="casual" onclick="setTone(this)" data-i18n="tone_casual">Casual</button>
+      <button class="tone-btn" data-tone="hype" onclick="setTone(this)" data-i18n="tone_hype">Hype</button>
     </div>
   </div>
   <div class="examples" id="examples">
@@ -213,24 +216,24 @@
     <button class="example-btn" onclick="loadExample(1)">shipfast.dev</button>
     <button class="example-btn" onclick="loadExample(2)">calmpage.io</button>
   </div>
-  <div class="hint">Press <kbd>/</kbd> to start typing · <kbd>1</kbd>-<kbd>5</kbd> to switch tabs</div>
+  <div class="hint" data-i18n-html="hint">Press <kbd>/</kbd> to start typing · <kbd>1</kbd>-<kbd>5</kbd> to switch tabs</div>
 </div>
 
 <div class="steps" id="stepsSection">
   <div class="step" id="step1">
     <div class="step-num">1</div>
-    <div class="step-title">Paste URL</div>
-    <div class="step-desc">We scan your tool</div>
+    <div class="step-title" data-i18n="step1_title">Paste URL</div>
+    <div class="step-desc" data-i18n="step1_desc">We scan your tool</div>
   </div>
   <div class="step" id="step2">
     <div class="step-num">2</div>
-    <div class="step-title">AI generates</div>
-    <div class="step-desc">Copy for every platform</div>
+    <div class="step-title" data-i18n="step2_title">AI generates</div>
+    <div class="step-desc" data-i18n="step2_desc">Copy for every platform</div>
   </div>
   <div class="step" id="step3">
     <div class="step-num">3</div>
-    <div class="step-title">Copy & launch</div>
-    <div class="step-desc">Post everywhere</div>
+    <div class="step-title" data-i18n="step3_title">Copy & launch</div>
+    <div class="step-desc" data-i18n="step3_desc">Post everywhere</div>
   </div>
 </div>
 
@@ -243,8 +246,8 @@
   <div class="results-header">
     <div class="results-title" id="resultsTitle">Generated Launch Package</div>
     <div style="display:flex;gap:8px;">
-      <button class="export-btn" onclick="sharePackage()" data-event="share-package">🔗 Share</button>
-      <button class="export-btn" onclick="exportAll()" data-event="export-markdown">⬇ Export</button>
+      <button class="export-btn" onclick="sharePackage()" data-event="share-package" data-i18n="share_btn">🔗 Share</button>
+      <button class="export-btn" onclick="exportAll()" data-event="export-markdown" data-i18n="export_btn">⬇ Export</button>
     </div>
   </div>
 
@@ -254,12 +257,12 @@
 
 <div class="vibeboard-banner" id="vibeboardBanner" style="display:none">
   <div class="vibeboard-banner-inner">
-    <p><strong>Built something awesome?</strong> Submit it to VibeBoard and get discovered by the vibe coding community 🔥</p>
-    <a class="vibeboard-link" href="../vibeboard/index.html" data-event="submit-vibeboard">Submit to VibeBoard →</a>
+    <p><strong data-i18n="vibeboard_strong">Built something awesome?</strong> <span data-i18n="vibeboard_text">Submit it to VibeBoard and get discovered by the vibe coding community 🔥</span></p>
+    <a class="vibeboard-link" href="../vibeboard/index.html" data-event="submit-vibeboard" data-i18n="vibeboard_link">Submit to VibeBoard →</a>
   </div>
 </div>
 
-<div class="footer">LaunchKit — Built for vibe coders who ship fast.</div>
+<div class="footer" data-i18n="footer">LaunchKit — Built for vibe coders who ship fast.</div>
 
 <div class="toast" id="toast"></div>
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
