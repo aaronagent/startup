@@ -3,6 +3,8 @@
 > **Build it. Launch it. Get discovered.**
 > The complete toolkit for vibe coders.
 
+🌐 **Live Demo:** [aaronagent.github.io/startup](https://aaronagent.github.io/startup/)
+
 ## Two Products, One Mission
 
 ### 🚀 [LaunchKit](/launchkit)
@@ -79,6 +81,10 @@ startup/
 - [x] Product design docs (LaunchKit + VibeBoard)
 - [x] Wireframe prototypes
 - [x] Interactive prototypes (v1)
+- [x] LaunchKit v2: Pro tips, launch checklist, history, keyboard shortcuts
+- [x] VibeBoard v2: Badge generator, weekly digest, tool comparison, animated stats, keyboard shortcuts
+- [x] GitHub Pages deployment
+- [x] SEO & Open Graph meta tags
 - [ ] LaunchKit: Real AI-powered copy generation (Claude API)
 - [ ] VibeBoard: Backend with Supabase (real data persistence)
 - [ ] User authentication (GitHub OAuth)
