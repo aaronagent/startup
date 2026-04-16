@@ -1,0 +1,194 @@
+=====================================================
+  1. TWITTER/X — 推文线程 (Thread)
+=====================================================
+【发布方式】发一个 thread，第一条推是 hook，后面每条一个工具
+
+--- 第 1 条 (Hook) ---
+I spent this week hunting down the 10 coolest tools people built with vibe coding.
+
+Most of them get buried and nobody ever sees them.
+
+Here's the list 🧵👇
+
+--- 第 2 条 ---
+1/ Clico — AI supercharges every textbox in your browser
+
+A browser extension that adds AI writing to any text field. Write, rewrite, summarize, translate — right where you type.
+
+tryclico.com
+
+--- 第 3 条 ---
+2/ SUN — AI generates personalized audio lessons
+
+Tell it what you want to learn, it creates a podcast-style lesson just for you. iOS + Android.
+
+sunapp.ai
+
+--- 第 4 条 ---
+3/ Parallel Code — Run Claude, Codex, and Gemini at the same time
+
+Ten AI agents. Ten git branches. One afternoon.
+
+parallelcode.app
+
+--- 第 5 条 ---
+4/ Vibecode App — The mobile app that builds mobile apps
+
+Describe your app in plain language, get a real functional app. Claude Code + Expo.
+
+Hunted by @alexisohanian on Product Hunt.
+
+--- 第 6 条 ---
+5/ Sheet Ninja — Vibe-coded apps with Google Sheets as backend
+
+Your data stays in Sheets. Build real web apps on top. Perfect for non-technical founders.
+
+sheetninja.io
+
+--- 第 7 条 ---
+6/ v0 by @vercel — Full-stack vibe coding platform
+
+Describe what you want, get a working React component. The gold standard.
+
+v0.dev
+
+--- 第 8 条 ---
+7/ Rork — Build real mobile apps by chatting
+
+Like v0 but for mobile. Chat → get a real iOS/Android app.
+
+rork.app
+
+--- 第 9 条 ---
+8/ Base44 — Build fully functional apps in minutes
+
+No code needed. Describe your idea, get a working app with database, auth, and deployment.
+
+base44.com
+
+--- 第 10 条 ---
+9/ Trae — Adaptive AI IDE
+
+An IDE that adapts to how you code. Closes the gap between thinking and shipping.
+
+--- 第 11 条 ---
+10/ Genzi — Social app built around music
+
+Not a dev tool — a real consumer app. Shows what's possible when non-devs start building.
+
+genzi.app
+
+--- 第 12 条 (CTA) ---
+63% of vibe coders aren't professional devs. People are shipping real products in days.
+
+The bottleneck isn't building anymore. It's distribution.
+
+If you built something cool with AI, reply with a link. I want to feature you next week.
+
+🔁 RT if you want this list every week.
+
+
+=====================================================
+  2. 微信朋友圈 / 公众号
+=====================================================
+
+【标题（公众号用）】我花了一周找到了 10 个最酷的 AI vibe coding 作品，大部分你没听过
+
+【正文】
+
+每周都有人用 AI 编程工具做出很酷的东西。但大部分做完就沉了，没人知道。
+
+我花了一周时间，从 Product Hunt、Reddit、Twitter 上挖出了 10 个最有意思的：
+
+1. Clico — 给浏览器里所有输入框加上 AI
+一个浏览器插件，任何网页的文本框都能用 AI 写、改、翻译、总结。不用切到 ChatGPT。
+
+2. SUN — AI 给你生成个性化播客课程
+告诉它你想学什么，它生成一期播客给你听。iOS 和安卓都有。
+
+3. Parallel Code — 同时跑 Claude、Codex、Gemini
+十个 AI agent，十个 git 分支，一个下午搞定。
+
+4. Vibecode App — 用嘴巴造 App 的 App
+用语音或文字描述你的 app，直接生成能用的手机应用。Alexis Ohanian 在 Product Hunt 推荐的。
+
+5. Sheet Ninja — Google 表格变成 App 后端
+数据留在 Google Sheets，上面搭真正的 Web 应用。非技术创始人的神器。
+
+6. v0 by Vercel — 描述 UI，生成 React 组件
+UI 生成的金标准。Product Hunt 4.85 分。
+
+7. Rork — 聊天造手机 App
+像 v0 但是做移动端。聊着天就把 iOS/Android app 做出来了。
+
+8. Base44 — 几分钟做出完整应用
+不用写代码。说你的想法，给你带数据库、登录、部署的完整应用。
+
+9. Trae — 会适应你的 AI 编辑器
+一个能学习你编码习惯的 IDE。
+
+10. Genzi — 围绕音乐的社交 App
+不是开发工具，是一个真正的消费者产品。说明非程序员也能用 AI 做出真东西。
+
+---
+
+我的观察：
+- 这些东西大部分几天就做出来了
+- 63% 的 vibe coders 不是专业程序员
+- 做出来容易，让人知道才是最难的
+
+如果你也用 AI 做了什么有意思的东西，评论区告诉我，下周我想推荐社区里的作品。
+
+想每周看这种推荐吗？点赞让我知道。
+
+
+=====================================================
+  3. 小红书
+=====================================================
+
+【标题】用 AI 写代码的人都在做什么？我找到了 10 个超酷的作品
+
+【正文】
+
+花了一周从 Product Hunt 和 Reddit 上挖出来的👇
+
+1️⃣ Clico — 给任何网页输入框加 AI 能力的浏览器插件
+2️⃣ SUN — 告诉 AI 你想学什么，它给你生成一期播客
+3️⃣ Parallel Code — 同时跑十个 AI 帮你写代码
+4️⃣ Vibecode App — 用嘴巴描述就能做出手机 App
+5️⃣ Sheet Ninja — Google 表格秒变 App 后端
+6️⃣ v0 — Vercel 出品，描述 UI 就能生成代码
+7️⃣ Rork — 聊天就能做手机 App
+8️⃣ Base44 — 几分钟做出带数据库的完整应用
+9️⃣ Trae — 会学习你习惯的 AI 编辑器
+🔟 Genzi — 非程序员用 AI 做出的音乐社交 App
+
+💡 我的发现：
+- 63% 用 AI 编程的人不是程序员
+- 大部分作品几天就做出来了
+- 做出来容易，被人知道才是难的
+
+你用 AI 做过什么好玩的东西吗？评论区聊聊👇
+
+#vibecoding #AI编程 #独立开发 #副业 #AI工具推荐
+
+
+=====================================================
+  4. REDDIT 养号计划
+=====================================================
+
+目标：在 r/vibecoding 攒到 50+ karma，然后重新发帖
+
+每天做这些（每天 10 分钟）：
+
+1. 去 r/vibecoding 的热门帖子下面留有价值的评论
+   - 不要留 "nice" "cool" 这种废话
+   - 留具体的、有见解的评论，比如：
+     "I tried this tool, the best part is X but it breaks when you do Y"
+     "This is similar to X but the key difference is..."
+
+2. 去 r/sideproject、r/webdev 也留一些评论
+
+3. 如果看到有人问问题，认真回答
+
+预计 3-5 天可以攒到 50+ karma，然后重新发那个帖子。

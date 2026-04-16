@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaunchKit — Wireframe</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.5;
+  }
+
+  .header {
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+  }
+  .logo { font-size: 22px; font-weight: 700; color: #fff; }
+  .logo span { color: #00d4aa; }
+  .nav a { color: #888; text-decoration: none; font-size: 14px; margin-left: 24px; }
+
+  .hero {
+    text-align: center;
+    padding: 64px 32px 48px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: #00d4aa; }
+  .hero p {
+    font-size: 18px;
+    color: #888;
+    margin-bottom: 32px;
+  }
+
+  .url-input-group {
+    display: flex;
+    max-width: 560px;
+    margin: 0 auto;
+    gap: 0;
+  }
+  .url-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid #333;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    background: #111;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+  }
+  .url-input::placeholder { color: #555; }
+  .launch-btn {
+    padding: 14px 28px;
+    background: #00d4aa;
+    color: #0a0a0a;
+    border: 2px solid #00d4aa;
+    border-radius: 0 10px 10px 0;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .steps {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    padding: 48px 32px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .step {
+    text-align: center;
+    flex: 1;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 2px solid #00d4aa;
+    color: #00d4aa;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .step-title { font-weight: 600; color: #fff; font-size: 15px; margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: #888; }
+
+  .divider {
+    border-top: 1px solid #1a1a1a;
+    margin: 16px 0;
+  }
+
+  .results {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+  .results-header {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .output-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .output-card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .output-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .output-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #00d4aa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .copy-btn {
+    padding: 4px 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #888;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .output-content {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.6;
+  }
+  .output-content .title {
+    font-weight: 600;
+    color: #fff;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .output-content .meta {
+    font-size: 12px;
+    color: #555;
+    margin-top: 8px;
+  }
+
+  .landing-preview {
+    grid-column: 1 / -1;
+  }
+  .landing-mock {
+    background: #fff;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 12px;
+  }
+  .landing-mock h2 { color: #111; font-size: 24px; margin-bottom: 8px; }
+  .landing-mock p { color: #666; font-size: 14px; margin-bottom: 16px; }
+  .landing-mock .mock-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #00d4aa;
+    color: #0a0a0a;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .landing-mock .mock-screenshot {
+    width: 100%;
+    height: 200px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 48px 32px;
+  }
+  .cta-section p { color: #555; font-size: 13px; }
+
+  .wireframe-note {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: #333;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Launch<span>Kit</span></div>
+  <div class="nav">
+    <a href="#">How it works</a>
+    <a href="#">Examples</a>
+    <a href="#">Pricing</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>Paste your URL.<br><span class="accent">Launch everywhere.</span></h1>
+  <p>You built something cool. Let AI generate your landing page, Reddit post, Twitter thread, and Product Hunt copy. In 30 seconds.</p>
+  <div class="url-input-group">
+    <input class="url-input" type="url" placeholder="https://your-awesome-tool.com" value="https://csvwizard.app">
+    <button class="launch-btn">Generate Launch Package →</button>
+  </div>
+</div>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-title">Paste URL</div>
+    <div class="step-desc">We scan your tool automatically</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-title">AI generates</div>
+    <div class="step-desc">Landing page + posts for every platform</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-title">Copy & launch</div>
+    <div class="step-desc">One click to post everywhere</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="results">
+  <div class="results-header">✨ Generated Launch Package for CSV Wizard</div>
+
+  <div class="output-grid">
+
+    <div class="output-card">
+      <div class="output-card-header">
+        <span class="output-label">📱 Reddit Post</span>
+        <button class="copy-btn">Copy</button>
+      </div>
+      <div class="output-content">
+        <span class="title">I built a tool that lets you ask questions to your CSV files in plain English</span>
+        Drop any CSV, ask "what's my top selling product?" or "show me revenue by month" — and get instant charts. No SQL, no pandas, no code.
+
+        Built with Cursor + Claude in a weekend. Try it free.
+        <div class="meta">r/vibecoding · 312 characters · Optimized for engagement</div>
+      </div>
+    </div>
+
+    <div class="output-card">
+      <div class="output-card-header">
+        <span class="output-label">🐦 Twitter Thread</span>
+        <button class="copy-btn">Copy</button>
+      </div>
+      <div class="output-content">
+        <span class="title">1/ I built CSV Wizard this weekend 🧵</span>
+        Drop any CSV file → ask questions in plain English → get instant charts.
+
+        No SQL. No pandas. No code.
+
+        Here's what it does and how I built it with @cursor_ai + @anthropic Claude ↓
+        <div class="meta">Thread: 5 tweets · 840 characters total · Hashtags included</div>
+      </div>
+    </div>
+
+    <div class="output-card">
+      <div class="output-card-header">
+        <span class="output-label">🚀 Product Hunt</span>
+        <button class="copy-btn">Copy</button>
+      </div>
+      <div class="output-content">
+        <span class="title">CSV Wizard — Ask your spreadsheets anything</span>
+        Tagline: Drop a CSV, ask in English, get charts. Zero code.
+
+        Maker comment: "I built this because I was tired of writing pandas scripts every time someone sent me a CSV. Now I just drop the file and ask what I want to know."
+        <div class="meta">Tagline: 52 chars · Description: 300 words ready</div>
+      </div>
+    </div>
+
+    <div class="output-card">
+      <div class="output-card-header">
+        <span class="output-label">💻 Hacker News</span>
+        <button class="copy-btn">Copy</button>
+      </div>
+      <div class="output-content">
+        <span class="title">Show HN: CSV Wizard — Query CSV files with natural language</span>
+        I built a web tool where you drop a CSV file, type a question like "show me sales by region as a bar chart," and get an instant visualization. Uses Claude for query understanding.
+
+        No signup required. Handles files up to 50MB.
+        <div class="meta">Title: 58 chars · Comment: 180 words · HN style optimized</div>
+      </div>
+    </div>
+
+    <div class="output-card landing-preview">
+      <div class="output-card-header">
+        <span class="output-label">🌐 Generated Landing Page</span>
+        <button class="copy-btn" style="background:#00d4aa;color:#0a0a0a;border-color:#00d4aa;">Open Preview</button>
+      </div>
+      <div class="landing-mock">
+        <h2>CSV Wizard</h2>
+        <p>Drop a CSV. Ask questions in plain English. Get instant charts and insights.</p>
+        <a class="mock-btn" href="#">Try CSV Wizard Free →</a>
+        <div class="mock-screenshot">[ Auto-generated screenshot of csvwizard.app ]</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-section">
+  <p>LaunchKit — Wireframe concept sketch. Not a final design.</p>
+</div>
+
+</body>
+</html>

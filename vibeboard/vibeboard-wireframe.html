@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeBoard — Wireframe Sketch</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #fafafa;
+    color: #333;
+    line-height: 1.5;
+    padding: 0;
+  }
+
+  /* Header */
+  .header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: #6c5ce7; }
+  .nav { display: flex; gap: 24px; align-items: center; }
+  .nav a {
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+  }
+  .submit-btn {
+    background: #6c5ce7;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 48px 32px 32px;
+    background: linear-gradient(180deg, #f5f3ff 0%, #fafafa 100%);
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+  }
+  .hero p {
+    font-size: 16px;
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto 24px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 16px;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 24px;
+    font-weight: 700;
+    color: #6c5ce7;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    padding: 16px 32px;
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fff;
+  }
+  .filter-pill {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #666;
+    cursor: pointer;
+  }
+  .filter-pill.active {
+    background: #6c5ce7;
+    color: #fff;
+    border-color: #6c5ce7;
+  }
+
+  /* Tool cards */
+  .tools-grid {
+    max-width: 800px;
+    margin: 24px auto;
+    padding: 0 32px;
+  }
+  .tool-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: box-shadow 0.2s;
+  }
+  .tool-card:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .tool-rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ccc;
+    min-width: 28px;
+    text-align: center;
+    padding-top: 4px;
+  }
+  .tool-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: #f0ecff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .tool-info { flex: 1; }
+  .tool-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 2px;
+  }
+  .tool-desc {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  .tool-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+    color: #999;
+  }
+  .tool-tag {
+    background: #f5f3ff;
+    color: #6c5ce7;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .tool-vote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 48px;
+  }
+  .vote-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11px;
+    color: #666;
+    line-height: 1.2;
+  }
+  .vote-btn .arrow { font-size: 14px; color: #6c5ce7; }
+  .vote-count { font-weight: 600; }
+
+  /* Built-with badge */
+  .built-with {
+    font-size: 11px;
+    color: #999;
+    background: #f8f8f8;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* Sidebar placeholder */
+  .page-layout {
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 32px;
+    padding: 24px 32px;
+  }
+  .main-col { flex: 1; }
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+  }
+  .sidebar-box {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .sidebar-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111;
+  }
+  .sidebar-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .email-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .email-btn {
+    width: 100%;
+    padding: 8px;
+    background: #6c5ce7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+
+  /* Footer note */
+  .wireframe-note {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: #bbb;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">Vibe<span>Board</span></div>
+  <div class="nav">
+    <a href="#">Today</a>
+    <a href="#">This Week</a>
+    <a href="#">Collections</a>
+    <button class="submit-btn">Submit a Tool</button>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Discover what vibe coders are building</h1>
+  <p>Every day, people are building amazing tools with AI. Here's the best of what shipped this week.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">847</div>
+      <div class="stat-label">Tools Launched</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12.3K</div>
+      <div class="stat-label">Community</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">156</div>
+      <div class="stat-label">This Week</div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-pill active">All</div>
+  <div class="filter-pill">Productivity</div>
+  <div class="filter-pill">Developer Tools</div>
+  <div class="filter-pill">Design</div>
+  <div class="filter-pill">Fun / Creative</div>
+  <div class="filter-pill">Data & Analytics</div>
+</div>
+
+<!-- Main content -->
+<div class="page-layout">
+  <div class="main-col">
+
+    <!-- Tool 1 -->
+    <div class="tool-card">
+      <div class="tool-rank">1</div>
+      <div class="tool-icon">📊</div>
+      <div class="tool-info">
+        <div class="tool-name">CSV Wizard</div>
+        <div class="tool-desc">Drop a CSV, ask questions in plain English, get charts and insights instantly. No pandas, no SQL.</div>
+        <div class="tool-meta">
+          <span class="tool-tag">Data</span>
+          <span class="built-with">Built with Cursor + Claude</span>
+          <span>Launched 3h ago</span>
+        </div>
+      </div>
+      <div class="tool-vote">
+        <div class="vote-btn">
+          <span class="arrow">▲</span>
+          <span class="vote-count">342</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool 2 -->
+    <div class="tool-card">
+      <div class="tool-rank">2</div>
+      <div class="tool-icon">🎨</div>
+      <div class="tool-info">
+        <div class="tool-name">ColorSync</div>
+        <div class="tool-desc">Paste any screenshot, extract the exact color palette, and generate Tailwind/CSS variables. One click.</div>
+        <div class="tool-meta">
+          <span class="tool-tag">Design</span>
+          <span class="built-with">Built with Bolt + GPT-4</span>
+          <span>Launched 5h ago</span>
+        </div>
+      </div>
+      <div class="tool-vote">
+        <div class="vote-btn">
+          <span class="arrow">▲</span>
+          <span class="vote-count">218</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool 3 -->
+    <div class="tool-card">
+      <div class="tool-rank">3</div>
+      <div class="tool-icon">✍️</div>
+      <div class="tool-info">
+        <div class="tool-name">CommitPoet</div>
+        <div class="tool-desc">Turns your git diff into a haiku commit message. Actually useful for making git history readable.</div>
+        <div class="tool-meta">
+          <span class="tool-tag">Dev Tools</span>
+          <span class="built-with">Built with Claude Code</span>
+          <span>Launched 8h ago</span>
+        </div>
+      </div>
+      <div class="tool-vote">
+        <div class="vote-btn">
+          <span class="arrow">▲</span>
+          <span class="vote-count">156</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool 4 -->
+    <div class="tool-card">
+      <div class="tool-rank">4</div>
+      <div class="tool-icon">📝</div>
+      <div class="tool-info">
+        <div class="tool-name">MeetingGhost</div>
+        <div class="tool-desc">Records your meeting, extracts action items, sends follow-up emails. You just show up and talk.</div>
+        <div class="tool-meta">
+          <span class="tool-tag">Productivity</span>
+          <span class="built-with">Built with Replit + Whisper</span>
+          <span>Launched 12h ago</span>
+        </div>
+      </div>
+      <div class="tool-vote">
+        <div class="vote-btn">
+          <span class="arrow">▲</span>
+          <span class="vote-count">98</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-box">
+      <div class="sidebar-title">📬 Weekly Top 10</div>
+      <div class="sidebar-text">Get the best vibe-coded tools delivered every Friday. No spam, just tools.</div>
+      <input class="email-input" type="email" placeholder="your@email.com">
+      <button class="email-btn">Subscribe</button>
+    </div>
+
+    <div class="sidebar-box">
+      <div class="sidebar-title">🏆 Hall of Fame</div>
+      <div class="sidebar-text" style="font-size: 12px;">
+        <div style="margin-bottom: 6px;"><strong>CSV Wizard</strong> — 2.1K users in 1 week</div>
+        <div style="margin-bottom: 6px;"><strong>SnapResume</strong> — Featured on HN</div>
+        <div><strong>PaletteAI</strong> — 500 GitHub stars</div>
+      </div>
+    </div>
+
+    <div class="sidebar-box">
+      <div class="sidebar-title">🛠 Built With</div>
+      <div class="sidebar-text" style="font-size: 12px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span>Cursor</span><span style="color:#6c5ce7;">34%</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span>Claude Code</span><span style="color:#6c5ce7;">28%</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span>Bolt</span><span style="color:#6c5ce7;">18%</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Replit</span><span style="color:#6c5ce7;">12%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wireframe-note">
+  VibeBoard — Wireframe concept sketch. Not a final design.
+</div>
+
+</body>
+</html>

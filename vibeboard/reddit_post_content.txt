@@ -1,0 +1,91 @@
+=====================================================
+  VibeBoard — Reddit 帖子内容（复制粘贴用）
+=====================================================
+
+【步骤】
+1. 打开 https://www.reddit.com/r/vibecoding/submit
+2. 选择 "Text" 帖子类型
+3. 把下面的标题复制到 Title 框
+4. 把正文复制到 Body 框
+5. 点 Post
+
+=====================================================
+📋 TITLE (复制这行):
+=====================================================
+
+I curated 10 of the coolest tools and apps built with vibe coding this week
+
+=====================================================
+📋 BODY (复制下面全部内容):
+=====================================================
+
+Every week, people are shipping amazing tools using AI coding assistants. Most of them get buried. I spent this week hunting down the most interesting ones. Here's what I found.
+
+---
+
+## The List
+
+### 1. 🔥 Clico — AI supercharges every textbox in your browser
+A browser extension that injects AI writing assistance into any text field on any website. Write, rewrite, summarize, translate — right where you type.
+- **URL:** [tryclico.com](https://tryclico.com)
+- **Built with:** AI-powered browser extension
+
+### 2. 🎧 SUN — AI generates personalized audio lessons on any topic
+Tell it what you want to learn, it creates a podcast-style lesson just for you. Available on iOS and Android.
+- **URL:** [sunapp.ai](https://sunapp.ai)
+- **Built with:** AI content generation
+
+### 3. ⚡ Parallel Code — Run Claude, Codex, and Gemini simultaneously
+Ten AI agents, ten git branches, one afternoon. Run multiple AI coding models in parallel and compare results.
+- **URL:** [parallelcode.app](https://parallelcode.app)
+- **Built with:** Multi-model AI architecture
+
+### 4. 📱 Vibecode App — The mobile app that builds mobile apps
+Describe your app in plain language or voice, get a real functional mobile app. Hunted by Alexis Ohanian on Product Hunt.
+- **URL:** [vibecodeapp.com](https://www.vibecodeapp.com)
+- **Built with:** Claude Code + Expo
+
+### 5. 📊 Sheet Ninja — Ship vibe-coded apps with Google Sheets as backend
+Your data stays in Google Sheets. Build real web apps on top of your spreadsheets. Perfect for non-technical founders.
+- **URL:** [sheetninja.io](https://sheetninja.io)
+- **Built with:** Vibe coded
+
+### 6. 🎨 v0 by Vercel — Full-stack vibe coding platform
+Describe what you want, get a working React component. The gold standard for UI generation. 4.85/5 on Product Hunt.
+- **URL:** [v0.dev](https://v0.dev)
+- **Built with:** Vercel AI
+
+### 7. 📲 Rork — Build real mobile apps by chatting with AI
+Like v0 but for mobile. Chat with AI, get a real iOS/Android app. 4.58/5 on Product Hunt.
+- **URL:** [rork.app](https://rork.app)
+- **Built with:** AI mobile generation
+
+### 8. 🧠 Base44 — Build fully functional apps in minutes
+No coding necessary. Describe your idea, get a working app with database, auth, and deployment. 4.49/5 on Product Hunt.
+- **URL:** [base44.com](https://base44.com)
+- **Built with:** AI full-stack
+
+### 9. ✏️ Trae — Adaptive AI IDE that ships faster
+An IDE that adapts to how you code. 4.71/5 on Product Hunt. Closes the gap between thinking and shipping.
+- **URL:** Available on Product Hunt
+- **Built with:** AI-adaptive
+
+### 10. 🎵 Genzi — The social app built around music
+Not a coding tool — a real consumer app. Social platform where music is the core interaction.
+- **URL:** [genzi.app](https://www.genzi.app)
+- **Built with:** AI-assisted development
+
+---
+
+## What I noticed
+
+- Most of these shipped in days, not months
+- The "Built with" stack is diversifying fast — Claude, Cursor, Bolt, Lovable, Replit, v0
+- 63% of vibe coders aren't professional devs — non-developers are shipping real products
+- Distribution is still the biggest bottleneck — many great tools exist but nobody knows about them
+
+## Want this every week?
+
+If there's interest, I'll do this regularly — a curated weekly list of the best vibe-coded tools and apps.
+
+**If you built something cool, drop a link in the comments. I want to feature community-built tools next time.**
