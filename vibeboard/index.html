@@ -281,6 +281,126 @@
     border-top: 1px solid var(--border); margin-top: 24px;
   }
 
+  /* Badge Generator */
+  .badge-section {
+    max-width: 1100px; margin: 0 auto; padding: 24px 32px;
+  }
+  .badge-section-inner {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px; transition: background .3s;
+  }
+  .badge-section-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .badge-section-desc { font-size: 14px; color: var(--text3); margin-bottom: 20px; }
+  .badge-controls { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+  .badge-style-btn {
+    padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text3); transition: all .2s;
+  }
+  .badge-style-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .badge-preview-area { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+  .badge-preview { padding: 16px 24px; border-radius: 12px; background: var(--sidebar-bg); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; min-height: 60px; }
+  .vb-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px; font-weight: 600; text-decoration: none; transition: transform .2s;
+  }
+  .vb-badge:hover { transform: translateY(-1px); }
+  .vb-badge.dark { background: #1a1a2e; color: #e0e0e0; border: 1px solid #2a2a4a; }
+  .vb-badge.dark .vb-badge-accent { color: #7c6cf7; }
+  .vb-badge.light { background: #fff; color: #333; border: 1px solid #e0e0e0; }
+  .vb-badge.light .vb-badge-accent { color: #6c5ce7; }
+  .badge-code-area { position: relative; }
+  .badge-code {
+    width: 100%; padding: 14px; border-radius: 8px; background: var(--input-bg);
+    border: 1px solid var(--border); font-family: "SF Mono", Monaco, monospace; font-size: 12px;
+    color: var(--text3); resize: none; height: 80px; outline: none;
+  }
+  .badge-copy-btn {
+    position: absolute; top: 8px; right: 8px; padding: 6px 14px; border-radius: 6px;
+    background: var(--accent); color: #fff; border: none; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: background .2s;
+  }
+  .badge-copy-btn:hover { background: var(--accent-hover); }
+
+  /* Weekly Digest Preview */
+  .digest-section {
+    max-width: 1100px; margin: 0 auto; padding: 0 32px 24px;
+  }
+  .digest-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; transition: background .3s;
+  }
+  .digest-header {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    padding: 20px 28px; color: #fff;
+  }
+  .digest-header-title { font-size: 18px; font-weight: 700; }
+  .digest-header-sub { font-size: 13px; opacity: .85; margin-top: 4px; }
+  .digest-body { padding: 24px 28px; }
+  .digest-item {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .digest-item:last-child { border-bottom: none; }
+  .digest-rank { font-size: 14px; font-weight: 700; color: var(--accent); min-width: 24px; }
+  .digest-icon { font-size: 20px; }
+  .digest-info { flex: 1; }
+  .digest-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .digest-desc-mini { font-size: 12px; color: var(--text4); }
+  .digest-votes { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .digest-cta {
+    padding: 20px 28px; border-top: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .digest-cta-input {
+    flex: 1; min-width: 200px; padding: 10px 14px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 14px; background: var(--input-bg); color: var(--text); outline: none;
+  }
+  .digest-cta-input:focus { border-color: var(--accent); }
+  .digest-cta-btn {
+    padding: 10px 24px; background: var(--accent); color: #fff; border: none;
+    border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s;
+  }
+  .digest-cta-btn:hover { background: var(--accent-hover); }
+
+  /* Compare Modal */
+  .compare-btn {
+    display: inline-block; background: var(--tag-bg); color: var(--accent); padding: 10px 28px;
+    border-radius: 10px; font-size: 14px; font-weight: 600; border: 1px solid var(--border);
+    cursor: pointer; transition: all .2s; margin-left: 10px;
+  }
+  .compare-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .compare-select {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; background: var(--input-bg); color: var(--text); margin: 16px 0; outline: none;
+  }
+  .compare-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .compare-table th, .compare-table td {
+    padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px;
+  }
+  .compare-table th { color: var(--text4); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  .compare-table td { color: var(--text); }
+  .compare-table .compare-icon { font-size: 28px; }
+  .compare-table .compare-name { font-weight: 700; font-size: 16px; }
+
+  /* Keyboard shortcuts toast */
+  .kb-toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 24px; font-size: 13px; color: var(--text3); z-index: 9999;
+    box-shadow: 0 8px 32px var(--card-shadow); display: none; white-space: nowrap;
+  }
+  .kb-toast kbd {
+    display: inline-block; background: var(--sidebar-bg); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2px 6px; font-family: monospace; font-size: 12px;
+    color: var(--text); margin: 0 2px;
+  }
+  .tool-card.kb-highlight { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  /* Animated counter */
+  @keyframes countPulse { 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+  .stat-num.counted { animation: countPulse .4s ease; }
+
   /* Responsive */
   @media (max-width: 768px) {
     .header { padding: 12px 16px; }
@@ -381,7 +501,46 @@
   </div>
 </div>
 
+<!-- Weekly Digest Preview -->
+<div class="digest-section">
+  <div class="digest-card">
+    <div class="digest-header">
+      <div class="digest-header-title">📨 This Week's Top 5</div>
+      <div class="digest-header-sub">VibeBoard Weekly Digest — April 14, 2026</div>
+    </div>
+    <div class="digest-body" id="digestBody"></div>
+    <div class="digest-cta">
+      <input class="digest-cta-input" type="email" placeholder="your@email.com" id="digestEmail">
+      <button class="digest-cta-btn" onclick="subscribeDigest()">Get this in your inbox every Friday →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Badge Generator -->
+<div class="badge-section">
+  <div class="badge-section-inner">
+    <div class="badge-section-title">🏅 "As Featured on VibeBoard" Badge</div>
+    <div class="badge-section-desc">Embed a badge on your website to show off your VibeBoard feature.</div>
+    <div class="badge-controls">
+      <button class="badge-style-btn active" onclick="setBadgeStyle('dark',this)">Dark</button>
+      <button class="badge-style-btn" onclick="setBadgeStyle('light',this)">Light</button>
+    </div>
+    <div class="badge-preview-area">
+      <div class="badge-preview" id="badgePreview"></div>
+    </div>
+    <div class="badge-code-area">
+      <textarea class="badge-code" id="badgeCode" readonly></textarea>
+      <button class="badge-copy-btn" onclick="copyBadgeCode(this)">Copy Code</button>
+    </div>
+  </div>
+</div>
+
 <div class="footer">VibeBoard © 2026 — Built with vibes ✨</div>
+
+<!-- Keyboard Shortcuts Toast -->
+<div class="kb-toast" id="kbToast">
+  <kbd>J</kbd>/<kbd>K</kbd> navigate &nbsp; <kbd>V</kbd> vote &nbsp; <kbd>/</kbd> search &nbsp; <kbd>?</kbd> help
+</div>
 
 <!-- Detail Modal -->
 <div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
@@ -414,6 +573,11 @@
       <p>We'll review it and add it to the board shortly.</p>
     </div>
   </div>
+</div>
+
+<!-- Compare Modal -->
+<div class="modal-overlay" id="compareModal" onclick="if(event.target===this)closeModal('compareModal')">
+  <div class="modal" style="max-width:640px" id="compareContent"></div>
 </div>
 
 <script>
@@ -579,6 +743,7 @@ function openDetail(id) {
   const t = TOOLS.find(x => x.id === id);
   if (!t) return;
   const v = getToolVotes(t);
+  const otherOptions = TOOLS.filter(x => x.id !== id).map(x => `<option value="${x.id}">${x.icon} ${x.name}</option>`).join('');
   document.getElementById('detailContent').innerHTML = `
     <button class="modal-close" onclick="closeModal('detailModal')">×</button>
     <div class="modal-icon">${t.icon}</div>
@@ -591,7 +756,10 @@ function openDetail(id) {
       <span class="modal-meta-item">⬆ ${v} votes</span>
       <span class="modal-meta-item">${timeAgo(t.launchedAgo)}</span>
     </div>
-    <a href="${t.url}" target="_blank" class="try-btn" onclick="event.stopPropagation()">Try it →</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <a href="${t.url}" target="_blank" class="try-btn" onclick="event.stopPropagation()">Try it →</a>
+      <button class="compare-btn" onclick="openCompare(${t.id})">⚖️ Compare with...</button>
+    </div>
   `;
   const m = document.getElementById('detailModal');
   m.style.display = 'flex';
@@ -646,10 +814,191 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal('detailModal');
     closeModal('submitModal');
+    closeModal('compareModal');
   }
 });
 
+// --- Compare Feature ---
+let compareBaseId = null;
+function openCompare(baseId) {
+  compareBaseId = baseId;
+  const base = TOOLS.find(t => t.id === baseId);
+  const opts = TOOLS.filter(t => t.id !== baseId).map(t => `<option value="${t.id}">${t.icon} ${t.name}</option>`).join('');
+  document.getElementById('compareContent').innerHTML = `
+    <button class="modal-close" onclick="closeModal('compareModal')">×</button>
+    <h2>⚖️ Compare ${base.name} with...</h2>
+    <select class="compare-select" onchange="renderComparison(${baseId}, this.value)">
+      <option value="">Select a tool to compare</option>
+      ${opts}
+    </select>
+    <div id="comparisonResult"></div>
+  `;
+  closeModal('detailModal');
+  const m = document.getElementById('compareModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => m.classList.add('show'));
+}
+
+function renderComparison(aId, bId) {
+  if (!bId) { document.getElementById('comparisonResult').innerHTML = ''; return; }
+  const a = TOOLS.find(t => t.id == aId), b = TOOLS.find(t => t.id == bId);
+  const av = getToolVotes(a), bv = getToolVotes(b);
+  document.getElementById('comparisonResult').innerHTML = `
+    <table class="compare-table">
+      <tr><th></th><th>${a.name}</th><th>${b.name}</th></tr>
+      <tr><td>Icon</td><td class="compare-icon">${a.icon}</td><td class="compare-icon">${b.icon}</td></tr>
+      <tr><td>Votes</td><td class="compare-name" style="font-size:14px;color:${av>=bv?'var(--accent)':'var(--text3)'}">${av}</td><td class="compare-name" style="font-size:14px;color:${bv>=av?'var(--accent)':'var(--text3)'}">${bv}</td></tr>
+      <tr><td>Category</td><td>${a.category}</td><td>${b.category}</td></tr>
+      <tr><td>Built with</td><td>${a.built}</td><td>${b.built}</td></tr>
+      <tr><td>Launched</td><td>${timeAgo(a.launchedAgo)}</td><td>${timeAgo(b.launchedAgo)}</td></tr>
+    </table>
+  `;
+}
+
+// --- Badge Generator ---
+let badgeStyle = 'dark';
+function setBadgeStyle(style, btn) {
+  badgeStyle = style;
+  document.querySelectorAll('.badge-style-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBadge();
+}
+function renderBadge() {
+  const isDark = badgeStyle === 'dark';
+  const bg = isDark ? '#1a1a2e' : '#ffffff';
+  const color = isDark ? '#e0e0e0' : '#333333';
+  const accent = isDark ? '#7c6cf7' : '#6c5ce7';
+  const border = isDark ? '#2a2a4a' : '#e0e0e0';
+  document.getElementById('badgePreview').innerHTML = `
+    <a class="vb-badge ${badgeStyle}" href="https://vibeboard.app" target="_blank" style="text-decoration:none">
+      <span>✨</span>
+      <span>As Featured on <span class="vb-badge-accent">VibeBoard</span></span>
+    </a>`;
+  const code = `<a href="https://vibeboard.app" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;background:${bg};color:${color};border:1px solid ${border};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:600;text-decoration:none;">✨ As Featured on <span style="color:${accent}">VibeBoard</span></a>`;
+  document.getElementById('badgeCode').value = code;
+}
+function copyBadgeCode(btn) {
+  navigator.clipboard.writeText(document.getElementById('badgeCode').value);
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = 'Copy Code', 2000);
+}
+
+// --- Weekly Digest ---
+function renderDigest() {
+  const top5 = [...TOOLS].sort((a,b) => getToolVotes(b) - getToolVotes(a)).slice(0,5);
+  document.getElementById('digestBody').innerHTML = top5.map((t,i) => `
+    <div class="digest-item">
+      <div class="digest-rank">${i+1}</div>
+      <div class="digest-icon">${t.icon}</div>
+      <div class="digest-info">
+        <div class="digest-name">${t.name}</div>
+        <div class="digest-desc-mini">${t.desc.slice(0,60)}…</div>
+      </div>
+      <div class="digest-votes">▲ ${getToolVotes(t)}</div>
+    </div>`).join('');
+}
+function subscribeDigest() {
+  const input = document.getElementById('digestEmail');
+  if (!input.value || !input.value.includes('@')) { input.focus(); return; }
+  input.style.display = 'none';
+  const btn = input.nextElementSibling;
+  btn.textContent = '✅ Subscribed! See you Friday.';
+  btn.disabled = true;
+  btn.style.background = '#27ae60';
+}
+
+// --- Animated Stats Counter ---
+function animateCounters() {
+  const stats = document.querySelectorAll('.stat-num');
+  const targets = [847, 12300, 156];
+  const suffixes = ['', 'K', ''];
+  const dividers = [1, 1000, 1];
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      stats.forEach((el, i) => {
+        if (el.dataset.counted) return;
+        el.dataset.counted = '1';
+        const target = targets[i];
+        const dur = 1200;
+        const start = performance.now();
+        function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const ease = 1 - Math.pow(1 - t, 3);
+          const val = Math.round(target * ease);
+          if (dividers[i] === 1000) {
+            el.textContent = (val / 1000).toFixed(1) + 'K';
+          } else {
+            el.textContent = val.toLocaleString();
+          }
+          if (t < 1) requestAnimationFrame(tick);
+          else el.classList.add('counted');
+        }
+        el.textContent = '0';
+        requestAnimationFrame(tick);
+      });
+      observer.disconnect();
+    });
+  }, { threshold: 0.5 });
+  if (stats.length) observer.observe(stats[0]);
+}
+
+// --- Keyboard Shortcuts ---
+let kbIndex = -1;
+let kbToastTimer;
+function showKbToast() {
+  const toast = document.getElementById('kbToast');
+  toast.style.display = 'block';
+  clearTimeout(kbToastTimer);
+  kbToastTimer = setTimeout(() => toast.style.display = 'none', 3000);
+}
+function getVisibleCards() { return Array.from(document.querySelectorAll('.tool-card')); }
+function highlightCard(idx) {
+  const cards = getVisibleCards();
+  cards.forEach(c => c.classList.remove('kb-highlight'));
+  if (idx >= 0 && idx < cards.length) {
+    cards[idx].classList.add('kb-highlight');
+    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+document.addEventListener('keydown', e => {
+  // Don't capture when typing in inputs
+  const tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+    if (e.key === '/' && tag === 'INPUT' && e.target.id === 'searchInput') return;
+    return;
+  }
+  const cards = getVisibleCards();
+  if (e.key === 'j') {
+    e.preventDefault();
+    kbIndex = Math.min(kbIndex + 1, cards.length - 1);
+    highlightCard(kbIndex);
+  } else if (e.key === 'k') {
+    e.preventDefault();
+    kbIndex = Math.max(kbIndex - 1, 0);
+    highlightCard(kbIndex);
+  } else if (e.key === 'v') {
+    e.preventDefault();
+    if (kbIndex >= 0 && kbIndex < cards.length) {
+      const voteBtn = cards[kbIndex].querySelector('.vote-btn');
+      if (voteBtn) voteBtn.click();
+    }
+  } else if (e.key === '/') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  } else if (e.key === 'Enter' && kbIndex >= 0 && kbIndex < cards.length) {
+    cards[kbIndex].click();
+  } else if (e.key === '?') {
+    e.preventDefault();
+    showKbToast();
+  }
+});
+
+// Init
 renderTools();
+renderBadge();
+renderDigest();
+animateCounters();
 </script>
 </body>
 </html>
