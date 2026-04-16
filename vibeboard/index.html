@@ -397,6 +397,113 @@
   }
   .tool-card.kb-highlight { outline: 2px solid var(--accent); outline-offset: -2px; }
 
+  /* Scroll to top */
+  .scroll-top-btn {
+    position: fixed; bottom: 32px; right: 32px; z-index: 999;
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--bg2); color: var(--accent); font-size: 20px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px var(--card-shadow);
+    opacity: 0; pointer-events: none; transform: translateY(12px);
+    transition: opacity .3s, transform .3s, background .2s, border-color .2s;
+  }
+  .scroll-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .scroll-top-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Skeleton loading */
+  .skeleton-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-bottom: 14px; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .skeleton-pulse {
+    background: linear-gradient(90deg, var(--border) 25%, var(--bg3) 50%, var(--border) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 6px;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  .skeleton-icon { width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0; }
+  .skeleton-body { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .skeleton-title { height: 16px; width: 40%; }
+  .skeleton-text { height: 12px; width: 90%; }
+  .skeleton-text2 { height: 12px; width: 60%; }
+  .skeleton-vote { width: 46px; height: 50px; border-radius: 10px; }
+
+  /* New badge */
+  .new-tool-badge {
+    display: inline-block; background: linear-gradient(135deg, #00b894, #00cec9);
+    color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    margin-left: 6px; vertical-align: middle; letter-spacing: .3px;
+    animation: newPulse 2s ease infinite;
+  }
+  @keyframes newPulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+
+  /* Newsletter confetti animation */
+  .newsletter-success-anim {
+    display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 10px;
+  }
+  .nl-checkmark {
+    width: 36px; height: 36px; border-radius: 50%; background: #27ae60;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: 700;
+    animation: checkPop .4s cubic-bezier(.17,.67,.21,1.4);
+  }
+  @keyframes checkPop { 0%{transform:scale(0)} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
+  .nl-dots { display: flex; gap: 4px; justify-content: center; margin-top: 4px; }
+  .nl-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    animation: dotBurst .6s ease forwards;
+    opacity: 0;
+  }
+  @keyframes dotBurst { 0%{transform:scale(0) translateY(0);opacity:0} 50%{opacity:1;transform:scale(1.2) translateY(-8px)} 100%{opacity:.6;transform:scale(.8) translateY(0)} }
+  .nl-msg { color: #27ae60; font-size: 13px; font-weight: 600; margin-top: 2px; }
+
+  /* Tooltip */
+  .logo-tooltip {
+    position: relative; display: inline-block;
+  }
+  .logo-tooltip .tooltip-text {
+    visibility: hidden; opacity: 0;
+    background: var(--bg2); color: var(--text3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 400;
+    position: absolute; top: calc(100% + 8px); left: 0;
+    white-space: nowrap; z-index: 200;
+    box-shadow: 0 4px 16px var(--card-shadow);
+    transition: opacity .2s, visibility .2s;
+    pointer-events: none;
+  }
+  .logo-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+  /* Kbd tooltip */
+  .kbd-indicator { position: relative; display: inline-block; }
+  .kbd-indicator .kbd-tip {
+    visibility: hidden; opacity: 0;
+    background: var(--bg2); color: var(--text3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 10px; font-size: 11px;
+    position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    white-space: nowrap; z-index: 200;
+    box-shadow: 0 2px 8px var(--card-shadow);
+    transition: opacity .15s, visibility .15s;
+    pointer-events: none;
+  }
+  .kbd-indicator:hover .kbd-tip { visibility: visible; opacity: 1; }
+
+  /* Sort transition */
+  .main-col.sort-transitioning .tool-card { opacity: 0; transform: translateY(8px); }
+
+  /* Vote count animation in modal */
+  @keyframes voteCountUp { 0%{transform:scale(1)} 50%{transform:scale(1.3);color:var(--accent)} 100%{transform:scale(1)} }
+  .vote-anim { display: inline-block; animation: voteCountUp .5s ease; }
+
+  /* Share URL btn in modal */
+  .share-url-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--tag-bg); color: var(--accent); padding: 10px 20px;
+    border-radius: 10px; font-size: 14px; font-weight: 600; border: 1px solid var(--border);
+    cursor: pointer; transition: all .2s;
+  }
+  .share-url-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
   /* Animated counter */
   @keyframes countPulse { 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
   .stat-num.counted { animation: countPulse .4s ease; }
@@ -480,6 +587,11 @@
     .tool-card { padding: 16px; gap: 10px; }
     .tool-rank { display: none; }
     .sort-divider { display: none; }
+    .modal { padding: 24px 16px; max-width: 100%; }
+    .badge-controls { flex-direction: column; align-items: flex-start; }
+    .badge-preview-area { flex-direction: column; }
+    .collection-cards { grid-template-columns: 1fr; }
+    .scroll-top-btn { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 18px; }
   }
 </style>
 </head>
@@ -487,7 +599,9 @@
 
 <!-- Header -->
 <div class="header">
-  <div class="logo" onclick="location.reload()">Vibe<span>Board</span></div>
+  <div class="logo logo-tooltip" onclick="location.reload()">Vibe<span>Board</span>
+    <div class="tooltip-text">A daily leaderboard for tools built with AI-assisted "vibe coding" ✨</div>
+  </div>
   <div class="nav">
     <a href="#">Today</a>
     <a href="#">This Week</a>
@@ -542,7 +656,7 @@
       <div class="sidebar-text">Get the best vibe-coded tools delivered every Friday. No spam, just tools.</div>
       <input class="email-input" type="email" placeholder="your@email.com" id="emailInput">
       <button class="email-btn" onclick="subscribeNewsletter()">Subscribe</button>
-      <div class="newsletter-success" id="newsletterSuccess">✅ You're in! Check your inbox Friday.</div>
+      <div class="newsletter-success" id="newsletterSuccess"></div>
     </div>
 
     <div class="sidebar-box">
@@ -609,9 +723,15 @@
 
 <div class="footer">VibeBoard © 2026 — Built with vibes ✨</div>
 
+<!-- Scroll to top -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Scroll to top">↑</button>
+
 <!-- Keyboard Shortcuts Toast -->
 <div class="kb-toast" id="kbToast">
-  <kbd>J</kbd>/<kbd>K</kbd> navigate &nbsp; <kbd>V</kbd> vote &nbsp; <kbd>/</kbd> search &nbsp; <kbd>?</kbd> help
+  <span class="kbd-indicator"><kbd>J</kbd>/<kbd>K</kbd> navigate<span class="kbd-tip">Move up/down through tools</span></span> &nbsp;
+  <span class="kbd-indicator"><kbd>V</kbd> vote<span class="kbd-tip">Upvote selected tool</span></span> &nbsp;
+  <span class="kbd-indicator"><kbd>/</kbd> search<span class="kbd-tip">Focus the search bar</span></span> &nbsp;
+  <span class="kbd-indicator"><kbd>?</kbd> help<span class="kbd-tip">Show this shortcut guide</span></span>
 </div>
 
 <!-- Detail Modal -->
@@ -744,7 +864,7 @@ function renderTools() {
       <div class="tool-rank">${i+1}</div>
       <div class="tool-icon">${t.icon}</div>
       <div class="tool-info">
-        <div class="tool-name">${t.name}</div>
+        <div class="tool-name">${t.name}${t.launchedAgo <= 24*3600000 ? '<span class="new-tool-badge">New!</span>' : ''}</div>
         <div class="tool-desc">${t.desc}</div>
         <div class="tool-meta">
           <span class="tool-tag">${t.category}</span>
@@ -815,7 +935,12 @@ function setSort(el, sort) {
   currentSort = sort;
   document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
-  renderTools();
+  const main = document.querySelector('.main-col');
+  main.classList.add('sort-transitioning');
+  setTimeout(() => {
+    renderTools();
+    main.classList.remove('sort-transitioning');
+  }, 200);
 }
 
 function filterTools() { showAll = false; renderTools(); }
@@ -843,13 +968,14 @@ function openDetail(id) {
     <div class="modal-meta">
       <span class="modal-meta-item">${t.category}</span>
       <span class="modal-meta-item">Built with ${t.built}</span>
-      <span class="modal-meta-item">⬆ ${v} votes</span>
+      <span class="modal-meta-item">⬆ <span class="vote-anim">${v}</span> votes</span>
       <span class="modal-meta-item">${timeAgo(t.launchedAgo)}</span>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
       <a href="${t.url}" target="_blank" class="try-btn" onclick="event.stopPropagation()">Try it →</a>
       <a href="${launchKitUrl}" target="_blank" class="launchkit-btn" onclick="event.stopPropagation()">🚀 Launch with LaunchKit</a>
       <button class="compare-btn" onclick="openCompare(${t.id})">⚖️ Compare with...</button>
+      <button class="share-url-btn" onclick="shareToolUrl(${t.id},this)">🔗 Share URL</button>
     </div>
   `;
   const m = document.getElementById('detailModal');
@@ -884,7 +1010,15 @@ function subscribeNewsletter() {
   if (!input.value || !input.value.includes('@')) { input.focus(); return; }
   input.style.display = 'none';
   document.querySelector('.email-btn').style.display = 'none';
-  document.getElementById('newsletterSuccess').style.display = 'block';
+  const success = document.getElementById('newsletterSuccess');
+  const colors = ['#6c5ce7','#00b894','#fdcb6e','#e17055','#0984e3','#fd79a8'];
+  const dots = colors.map((c,i) => `<span class="nl-dot" style="background:${c};animation-delay:${i*80}ms"></span>`).join('');
+  success.innerHTML = `<div class="newsletter-success-anim">
+    <div class="nl-checkmark">✓</div>
+    <div class="nl-dots">${dots}</div>
+    <div class="nl-msg">You're in! Check your inbox Friday.</div>
+  </div>`;
+  success.style.display = 'block';
 }
 
 function toggleTheme() {
@@ -1059,6 +1193,10 @@ document.addEventListener('keydown', e => {
     if (e.key === '/' && tag === 'INPUT' && e.target.id === 'searchInput') return;
     return;
   }
+  // Don't capture when a modal is open (except Escape)
+  const anyModalOpen = document.querySelector('.modal-overlay.show');
+  if (anyModalOpen && e.key !== 'Escape') return;
+
   const cards = getVisibleCards();
   if (e.key === 'j') {
     e.preventDefault();
@@ -1141,12 +1279,50 @@ function renderCollections() {
   }).join('');
 }
 
-// Init
+// --- Share URL in modal ---
+function shareToolUrl(id, btn) {
+  const t = TOOLS.find(x => x.id === id);
+  if (!t) return;
+  navigator.clipboard.writeText(t.url);
+  const orig = btn.innerHTML;
+  btn.innerHTML = '✓ Copied!';
+  setTimeout(() => btn.innerHTML = orig, 1500);
+}
+
+// --- Scroll to top ---
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+}, { passive: true });
+
+// --- Skeleton Loading ---
+function showSkeletons() {
+  const list = document.getElementById('toolsList');
+  let html = '';
+  for (let i = 0; i < 4; i++) {
+    html += `<div class="skeleton-card">
+      <div class="skeleton-pulse skeleton-icon"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-pulse skeleton-title"></div>
+        <div class="skeleton-pulse skeleton-text"></div>
+        <div class="skeleton-pulse skeleton-text2"></div>
+      </div>
+      <div class="skeleton-pulse skeleton-vote"></div>
+    </div>`;
+  }
+  list.innerHTML = html;
+}
+
+// Init - show skeletons then load
+showSkeletons();
+setTimeout(() => {
 renderTools();
 renderBadge();
 renderDigest();
 renderCollections();
 animateCounters();
+}, 600);
 </script>
 </body>
 </html>
