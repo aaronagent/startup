@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Startup — Design System</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #f8f8f8;
+    color: #333;
+    line-height: 1.6;
+    padding: 40px 24px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 32px; font-weight: 800; color: #111; margin-bottom: 8px; }
+  .subtitle { color: #666; font-size: 16px; margin-bottom: 48px; }
+  h2 { font-size: 20px; font-weight: 700; color: #111; margin: 40px 0 16px; border-bottom: 2px solid #e8e8e8; padding-bottom: 8px; }
+  h3 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #999; margin: 24px 0 12px; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .color-card { border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e8; }
+  .color-swatch { height: 80px; }
+  .color-info { padding: 10px 12px; background: #fff; font-size: 12px; }
+  .color-name { font-weight: 600; color: #111; }
+  .color-hex { color: #888; font-family: monospace; }
+
+  .type-sample { margin-bottom: 16px; padding: 16px; background: #fff; border-radius: 8px; border: 1px solid #e8e8e8; }
+  .type-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+
+  .component-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .component-box { padding: 24px; background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; }
+  .component-box.dark { background: #0a0a0a; border-color: #222; }
+
+  .btn { display: inline-block; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; margin: 4px; }
+  .btn-lk { background: #00d4aa; color: #0a0a0a; }
+  .btn-vb { background: #6c5ce7; color: #fff; }
+  .btn-outline-lk { background: transparent; border: 2px solid #00d4aa; color: #00d4aa; }
+  .btn-outline-vb { background: transparent; border: 2px solid #6c5ce7; color: #6c5ce7; }
+
+  .pill { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; margin: 4px; }
+  .pill-lk { background: rgba(0,212,170,0.1); color: #00d4aa; border: 1px solid rgba(0,212,170,0.3); }
+  .pill-vb { background: rgba(108,92,231,0.1); color: #6c5ce7; border: 1px solid rgba(108,92,231,0.3); }
+
+  .input-demo { padding: 12px 16px; border-radius: 8px; font-size: 14px; width: 100%; margin: 4px 0; }
+  .input-dark { background: #111; border: 2px solid #333; color: #fff; }
+  .input-light { background: #fff; border: 1px solid #ddd; color: #333; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th, td { text-align: left; padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #e8e8e8; }
+  th { color: #999; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Design System</h1>
+<p class="subtitle">Shared visual language for LaunchKit & VibeBoard</p>
+
+<h2>Color Palette</h2>
+
+<h3>LaunchKit (Dark Theme)</h3>
+<div class="color-grid">
+  <div class="color-card"><div class="color-swatch" style="background:#0a0a0a;"></div><div class="color-info"><div class="color-name">Background</div><div class="color-hex">#0a0a0a</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#111;"></div><div class="color-info"><div class="color-name">Surface</div><div class="color-hex">#111111</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#1a1a1a;"></div><div class="color-info"><div class="color-name">Surface Alt</div><div class="color-hex">#1a1a1a</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#00d4aa;"></div><div class="color-info"><div class="color-name">Primary</div><div class="color-hex">#00d4aa</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#00f5c8;"></div><div class="color-info"><div class="color-name">Primary Light</div><div class="color-hex">#00f5c8</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#fff; border:1px solid #ddd;"></div><div class="color-info"><div class="color-name">Text Primary</div><div class="color-hex">#ffffff</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#888;"></div><div class="color-info"><div class="color-name">Text Secondary</div><div class="color-hex">#888888</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#222;"></div><div class="color-info"><div class="color-name">Border</div><div class="color-hex">#222222</div></div></div>
+</div>
+
+<h3>VibeBoard (Light Theme)</h3>
+<div class="color-grid">
+  <div class="color-card"><div class="color-swatch" style="background:#fafafa;"></div><div class="color-info"><div class="color-name">Background</div><div class="color-hex">#fafafa</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#fff; border:1px solid #ddd;"></div><div class="color-info"><div class="color-name">Surface</div><div class="color-hex">#ffffff</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#f5f3ff;"></div><div class="color-info"><div class="color-name">Surface Accent</div><div class="color-hex">#f5f3ff</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#6c5ce7;"></div><div class="color-info"><div class="color-name">Primary</div><div class="color-hex">#6c5ce7</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#a78bfa;"></div><div class="color-info"><div class="color-name">Primary Light</div><div class="color-hex">#a78bfa</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#111;"></div><div class="color-info"><div class="color-name">Text Primary</div><div class="color-hex">#111111</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#666;"></div><div class="color-info"><div class="color-name">Text Secondary</div><div class="color-hex">#666666</div></div></div>
+  <div class="color-card"><div class="color-swatch" style="background:#e8e8e8;"></div><div class="color-info"><div class="color-name">Border</div><div class="color-hex">#e8e8e8</div></div></div>
+</div>
+
+<h2>Typography</h2>
+
+<div class="type-sample">
+  <div class="type-label">H1 — Hero</div>
+  <div style="font-size:40px;font-weight:800;color:#111;line-height:1.15;">Paste your URL. Launch everywhere.</div>
+</div>
+<div class="type-sample">
+  <div class="type-label">H2 — Section</div>
+  <div style="font-size:24px;font-weight:700;color:#111;">Discover what vibe coders are building</div>
+</div>
+<div class="type-sample">
+  <div class="type-label">Body</div>
+  <div style="font-size:16px;color:#666;">Every day, people are building amazing tools with AI. Here's the best of what shipped this week.</div>
+</div>
+<div class="type-sample">
+  <div class="type-label">Caption / Meta</div>
+  <div style="font-size:12px;color:#999;text-transform:uppercase;letter-spacing:0.5px;">r/vibecoding · 312 characters · Optimized for engagement</div>
+</div>
+
+<h2>Components</h2>
+
+<div class="component-grid">
+  <div class="component-box dark">
+    <h3 style="color:#555;">LaunchKit Buttons</h3>
+    <button class="btn btn-lk">Generate →</button>
+    <button class="btn btn-outline-lk">Copy</button>
+  </div>
+  <div class="component-box">
+    <h3>VibeBoard Buttons</h3>
+    <button class="btn btn-vb">Submit a Tool</button>
+    <button class="btn btn-outline-vb">Subscribe</button>
+  </div>
+  <div class="component-box dark">
+    <h3 style="color:#555;">LaunchKit Pills</h3>
+    <span class="pill pill-lk">Professional</span>
+    <span class="pill pill-lk">Casual</span>
+    <span class="pill pill-lk">Hype</span>
+  </div>
+  <div class="component-box">
+    <h3>VibeBoard Pills</h3>
+    <span class="pill pill-vb">Productivity</span>
+    <span class="pill pill-vb">Dev Tools</span>
+    <span class="pill pill-vb">Design</span>
+  </div>
+  <div class="component-box dark">
+    <h3 style="color:#555;">LaunchKit Input</h3>
+    <input class="input-demo input-dark" placeholder="https://your-awesome-tool.com" disabled>
+  </div>
+  <div class="component-box">
+    <h3>VibeBoard Input</h3>
+    <input class="input-demo input-light" placeholder="Search tools..." disabled>
+  </div>
+</div>
+
+<h2>Spacing Scale</h2>
+<table>
+  <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
+  <tr><td><code>xs</code></td><td>4px</td><td>Inline spacing, icon gaps</td></tr>
+  <tr><td><code>sm</code></td><td>8px</td><td>Compact padding</td></tr>
+  <tr><td><code>md</code></td><td>16px</td><td>Standard padding, card gaps</td></tr>
+  <tr><td><code>lg</code></td><td>24px</td><td>Section gaps, card padding</td></tr>
+  <tr><td><code>xl</code></td><td>32px</td><td>Page padding, major sections</td></tr>
+  <tr><td><code>2xl</code></td><td>48px</td><td>Hero padding, section breaks</td></tr>
+  <tr><td><code>3xl</code></td><td>64px</td><td>Hero top padding</td></tr>
+</table>
+
+<h2>Border Radius</h2>
+<table>
+  <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
+  <tr><td><code>sm</code></td><td>4px</td><td>Tags, small badges</td></tr>
+  <tr><td><code>md</code></td><td>6-8px</td><td>Buttons, inputs</td></tr>
+  <tr><td><code>lg</code></td><td>10-12px</td><td>Cards, modals</td></tr>
+  <tr><td><code>xl</code></td><td>16px</td><td>Large cards, containers</td></tr>
+  <tr><td><code>full</code></td><td>20px / 50%</td><td>Pills, avatars</td></tr>
+</table>
+
+</div>
+</body>
+</html>
