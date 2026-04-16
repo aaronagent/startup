@@ -1,5 +1,9 @@
 # 🚀 Startup — LaunchKit + VibeBoard
 
+[![Deploy](https://github.com/aaronagent/startup/actions/workflows/deploy.yml/badge.svg)](https://github.com/aaronagent/startup/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Pages](https://img.shields.io/badge/Live-GitHub%20Pages-blue)](https://aaronagent.github.io/startup/)
+
 > **Build it. Launch it. Get discovered.**
 > The complete toolkit for vibe coders.
 
