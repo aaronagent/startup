@@ -1,4 +1,4 @@
-const CACHE_NAME = 'startup-v1';
+const CACHE_NAME = 'startup-v2';
 const ASSETS = [
   '/startup/',
   '/startup/index.html',
@@ -8,9 +8,11 @@ const ASSETS = [
   '/startup/vibeboard/',
   '/startup/vibeboard/index.html',
   '/startup/vibeboard/tool.html',
+  '/startup/analytics.html',
   '/startup/design-system.html',
   '/startup/404.html',
-  '/startup/og-image.svg'
+  '/startup/og-image.svg',
+  '/startup/manifest.json'
 ];
 
 self.addEventListener('install', e => {
