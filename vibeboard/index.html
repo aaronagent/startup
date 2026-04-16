@@ -668,7 +668,7 @@
     </div>
 
     <div class="sidebar-box">
-      <div class="sidebar-title">🛠 Built With</div>
+      <div class="sidebar-title" data-i18n="sidebar_built">🛠 Built With</div>
       <div class="built-stat"><span>Cursor</span><span>34%</span></div>
       <div class="built-bar"><div class="built-bar-fill" style="width:34%"></div></div>
       <div class="built-stat"><span>Claude Code</span><span>28%</span></div>
@@ -683,8 +683,8 @@
 
 <!-- Collections -->
 <div class="collections-section">
-  <div class="collections-title">📂 Collections</div>
-  <div class="collections-desc">Curated sets of tools for different vibes.</div>
+  <div class="collections-title" data-i18n="collections_title">📂 Collections</div>
+  <div class="collections-desc" data-i18n="collections_desc">Curated sets of tools for different vibes.</div>
   <div id="collectionsContainer"></div>
 </div>
 
@@ -692,13 +692,13 @@
 <div class="digest-section">
   <div class="digest-card">
     <div class="digest-header">
-      <div class="digest-header-title">📨 This Week's Top 5</div>
+      <div class="digest-header-title" data-i18n="digest_title">📨 This Week's Top 5</div>
       <div class="digest-header-sub">VibeBoard Weekly Digest — April 14, 2026</div>
     </div>
     <div class="digest-body" id="digestBody"></div>
     <div class="digest-cta">
       <input class="digest-cta-input" type="email" placeholder="your@email.com" id="digestEmail">
-      <button class="digest-cta-btn" onclick="subscribeDigest()">Get this in your inbox every Friday →</button>
+      <button class="digest-cta-btn" onclick="subscribeDigest()" data-i18n="digest_cta">Get this in your inbox every Friday →</button>
     </div>
   </div>
 </div>
@@ -706,8 +706,8 @@
 <!-- Badge Generator -->
 <div class="badge-section">
   <div class="badge-section-inner">
-    <div class="badge-section-title">🏅 "As Featured on VibeBoard" Badge</div>
-    <div class="badge-section-desc">Embed a badge on your website to show off your VibeBoard feature.</div>
+    <div class="badge-section-title" data-i18n="badge_title">🏅 "As Featured on VibeBoard" Badge</div>
+    <div class="badge-section-desc" data-i18n="badge_desc">Embed a badge on your website to show off your VibeBoard feature.</div>
     <div class="badge-controls">
       <button class="badge-style-btn active" onclick="setBadgeStyle('dark',this)">Dark</button>
       <button class="badge-style-btn" onclick="setBadgeStyle('light',this)">Light</button>
@@ -717,7 +717,7 @@
     </div>
     <div class="badge-code-area">
       <textarea class="badge-code" id="badgeCode" readonly></textarea>
-      <button class="badge-copy-btn" onclick="copyBadgeCode(this)">Copy Code</button>
+      <button class="badge-copy-btn" onclick="copyBadgeCode(this)" data-i18n="copy_code">Copy Code</button>
     </div>
   </div>
 </div>
@@ -744,21 +744,21 @@
 <div class="modal-overlay" id="submitModal" onclick="if(event.target===this)closeModal('submitModal')">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('submitModal')">×</button>
-    <h2>Submit a Tool</h2>
-    <p style="color:var(--text3);font-size:14px;margin-bottom:20px;">Share what you've built with the vibe coding community.</p>
+    <h2 data-i18n="submit_title">Submit a Tool</h2>
+    <p style="color:var(--text3);font-size:14px;margin-bottom:20px;" data-i18n="submit_desc">Share what you've built with the vibe coding community.</p>
     <form id="submitForm" onsubmit="return handleSubmit(event)">
-      <div class="form-group"><label>Tool Name *</label><input required placeholder="e.g. CSV Wizard"></div>
-      <div class="form-group"><label>URL *</label><input required type="url" placeholder="https://..."></div>
-      <div class="form-group"><label>Short Description *</label><textarea required placeholder="What does it do? (1-2 sentences)"></textarea></div>
-      <div class="form-group"><label>Category *</label>
+      <div class="form-group"><label data-i18n="form_name">Tool Name *</label><input required placeholder="e.g. CSV Wizard"></div>
+      <div class="form-group"><label data-i18n="form_url">URL *</label><input required type="url" placeholder="https://..."></div>
+      <div class="form-group"><label data-i18n="form_desc">Short Description *</label><textarea required data-i18n-placeholder="form_desc_ph" placeholder="What does it do? (1-2 sentences)"></textarea></div>
+      <div class="form-group"><label data-i18n="form_category">Category *</label>
         <select required>
-          <option value="">Select a category</option>
+          <option value="" data-i18n="form_select_cat">Select a category</option>
           <option>Productivity</option><option>Dev Tools</option><option>Design</option>
           <option>Fun/Creative</option><option>Data</option><option>AI/ML</option>
         </select>
       </div>
-      <div class="form-group"><label>Built With</label><input placeholder="e.g. Cursor + Claude"></div>
-      <button type="submit" class="try-btn" style="width:100%">Submit Tool 🚀</button>
+      <div class="form-group"><label data-i18n="form_built">Built With</label><input placeholder="e.g. Cursor + Claude"></div>
+      <button type="submit" class="try-btn" style="width:100%" data-i18n="form_submit">Submit Tool 🚀</button>
     </form>
     <div class="form-success" id="formSuccess">
       <div class="checkmark">🎉</div>
