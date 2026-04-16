@@ -67,13 +67,20 @@ open vibeboard/index.html
 ```
 startup/
 ├── index.html              # Hub page — entry point
+├── og-image.svg            # Social preview image
+├── sitemap.xml             # Search engine sitemap
+├── robots.txt              # Crawler directives
+├── design-system.html      # Shared design reference
+├── 404.html                # Custom 404 page
 ├── launchkit/
 │   ├── index.html          # LaunchKit app
+│   ├── share.html          # Shareable results page
 │   ├── launchkit-wireframe.html  # Original wireframe
 │   ├── launchkit-wireframe.png
 │   └── launchkit-design.md      # Product design doc
 ├── vibeboard/
 │   ├── index.html          # VibeBoard app
+│   ├── tool.html           # Individual tool SEO page
 │   ├── vibeboard-wireframe.html  # Original wireframe
 │   ├── vibeboard-wireframe.png
 │   └── vibeboard-design.md      # Product design doc
