@@ -157,6 +157,14 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .step-num.spinning{animation:spin 1s linear infinite;border-style:dashed}
 
+  /* First visit pulse */
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,170,.4)}50%{box-shadow:0 0 0 8px rgba(0,212,170,0)}}
+  .url-input.pulse{animation:pulse 2s ease-in-out 3}
+
+  /* Skip-to-content for accessibility */
+  .skip-link{position:absolute;top:-40px;left:0;background:#00d4aa;color:#0a0a0a;padding:8px 16px;z-index:200;font-weight:600;border-radius:0 0 8px 0;transition:top .2s}
+  .skip-link:focus{top:0}
+
   /* Toast notifications */
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#111;border:1px solid #222;border-radius:10px;padding:10px 20px;font-size:13px;color:#00d4aa;font-weight:500;z-index:999;transition:transform .3s ease,opacity .3s;opacity:0;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.4)}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
@@ -172,6 +180,7 @@
 </style>
 </head>
 <body>
+<a href="#urlInput" class="skip-link">Skip to URL input</a>
 
 <div class="header">
   <div class="logo">Launch<span>Kit</span></div>
@@ -188,7 +197,7 @@
 
 <div class="controls">
   <div class="url-input-group">
-    <input class="url-input" id="urlInput" type="url" placeholder="https://your-awesome-tool.com">
+    <input class="url-input" id="urlInput" type="url" placeholder="https://your-awesome-tool.com" aria-label="Enter your tool URL" autocomplete="url">
     <button class="launch-btn" id="launchBtn" onclick="generate()" data-event="generate-package">Generate Launch Package →</button>
   </div>
   <div class="options-row">
@@ -268,6 +277,13 @@ function showToast(msg) {
 window.addEventListener('scroll', () => {
   document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
 });
+
+// First visit pulse animation
+if (!localStorage.getItem('lk-visited')) {
+  const urlInput = document.getElementById('urlInput');
+  if (urlInput) urlInput.classList.add('pulse');
+  urlInput?.addEventListener('focus', () => { urlInput.classList.remove('pulse'); localStorage.setItem('lk-visited', '1'); }, { once: true });
+}
 
 const PLATFORMS = [
   {id:'reddit', label:'📱 Reddit', charField:'title', charLimit:300, limitLabel:'Title limit: 300'},
