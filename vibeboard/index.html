@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeBoard — Discover Vibe-Coded Tools</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg2: #fff;
+    --bg3: #f5f3ff;
+    --text: #111;
+    --text2: #333;
+    --text3: #666;
+    --text4: #999;
+    --border: #e8e8e8;
+    --border2: #e0e0e0;
+    --accent: #6c5ce7;
+    --accent-light: #f0ecff;
+    --accent-hover: #5a4bd6;
+    --card-shadow: rgba(0,0,0,0.06);
+    --modal-overlay: rgba(0,0,0,0.5);
+    --tag-bg: #f5f3ff;
+    --input-bg: #fff;
+    --sidebar-bg: #f8f8f8;
+  }
+  [data-theme="dark"] {
+    --bg: #1a1a2e;
+    --bg2: #16213e;
+    --bg3: #1a1a2e;
+    --text: #e0e0e0;
+    --text2: #ccc;
+    --text3: #aaa;
+    --text4: #888;
+    --border: #2a2a4a;
+    --border2: #333;
+    --accent: #7c6cf7;
+    --accent-light: #2a2050;
+    --accent-hover: #8d7ff8;
+    --card-shadow: rgba(0,0,0,0.3);
+    --modal-overlay: rgba(0,0,0,0.7);
+    --tag-bg: #2a2050;
+    --input-bg: #1a1a2e;
+    --sidebar-bg: #1e1e3a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text2);
+    line-height: 1.5;
+    transition: background .3s, color .3s;
+  }
+
+  /* Header */
+  .header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky; top: 0; z-index: 100;
+    transition: background .3s;
+  }
+  .logo { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; cursor: pointer; }
+  .logo span { color: var(--accent); }
+  .nav { display: flex; gap: 20px; align-items: center; }
+  .nav a { text-decoration: none; color: var(--text3); font-size: 14px; transition: color .2s; }
+  .nav a:hover { color: var(--accent); }
+  .submit-btn {
+    background: var(--accent); color: #fff; border: none; padding: 8px 20px;
+    border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 500;
+    transition: background .2s, transform .1s;
+  }
+  .submit-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .theme-toggle {
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 18px; line-height: 1;
+    transition: border-color .2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    text-align: center; padding: 48px 32px 32px;
+    background: linear-gradient(180deg, var(--bg3) 0%, var(--bg) 100%);
+    transition: background .3s;
+  }
+  .hero h1 { font-size: 34px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .hero p { font-size: 16px; color: var(--text3); max-width: 520px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 16px; }
+  .stat-num { font-size: 24px; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text4); text-transform: uppercase; letter-spacing: .5px; }
+
+  /* Search */
+  .search-bar {
+    max-width: 500px; margin: -16px auto 0; position: relative; z-index: 10; padding: 0 32px;
+  }
+  .search-input {
+    width: 100%; padding: 12px 16px 12px 42px; border: 1px solid var(--border);
+    border-radius: 12px; font-size: 15px; background: var(--bg2); color: var(--text);
+    box-shadow: 0 2px 12px var(--card-shadow); outline: none; transition: border-color .2s, box-shadow .2s;
+  }
+  .search-input:focus { border-color: var(--accent); box-shadow: 0 2px 20px rgba(108,92,231,0.15); }
+  .search-icon {
+    position: absolute; left: 46px; top: 50%; transform: translateY(-50%);
+    color: var(--text4); font-size: 16px; pointer-events: none;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    padding: 16px 32px; display: flex; gap: 10px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); background: var(--bg2);
+    align-items: center; transition: background .3s;
+  }
+  .filter-bar-label { font-size: 13px; color: var(--text4); font-weight: 500; margin-right: 4px; }
+  .filter-pill {
+    padding: 6px 16px; border-radius: 20px; font-size: 13px;
+    border: 1px solid var(--border); background: var(--bg2); color: var(--text3);
+    cursor: pointer; transition: all .2s; user-select: none;
+  }
+  .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .sort-divider { width: 1px; height: 24px; background: var(--border); margin: 0 6px; }
+  .sort-pill {
+    padding: 6px 14px; border-radius: 20px; font-size: 13px;
+    border: 1px solid transparent; background: transparent; color: var(--text4);
+    cursor: pointer; transition: all .2s;
+  }
+  .sort-pill:hover { color: var(--accent); }
+  .sort-pill.active { color: var(--accent); font-weight: 600; }
+
+  /* Layout */
+  .page-layout { display: flex; max-width: 1100px; margin: 0 auto; gap: 32px; padding: 24px 32px; }
+  .main-col { flex: 1; min-width: 0; }
+  .sidebar { width: 280px; flex-shrink: 0; }
+
+  /* Tool cards */
+  .tool-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-bottom: 14px; display: flex; gap: 14px; align-items: flex-start;
+    transition: box-shadow .2s, transform .2s, background .3s, opacity .5s, transform .5s;
+    cursor: pointer; position: relative;
+  }
+  .tool-card:hover { box-shadow: 0 4px 20px var(--card-shadow); transform: translateY(-2px); }
+  .tool-card.fade-in { opacity: 0; transform: translateY(16px); }
+  .tool-card.visible { opacity: 1; transform: translateY(0); }
+  .trending-badge {
+    position: absolute; top: -8px; right: 16px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: #fff;
+    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px;
+    display: flex; align-items: center; gap: 3px; box-shadow: 0 2px 8px rgba(238,90,36,0.3);
+  }
+  .tool-rank {
+    font-size: 16px; font-weight: 700; color: var(--text4); min-width: 24px;
+    text-align: center; padding-top: 6px;
+  }
+  .tool-icon {
+    width: 52px; height: 52px; border-radius: 12px; background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;
+  }
+  .tool-info { flex: 1; min-width: 0; }
+  .tool-name { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .tool-desc { font-size: 13px; color: var(--text3); margin-bottom: 8px; line-height: 1.5; }
+  .tool-meta { display: flex; gap: 10px; font-size: 11px; color: var(--text4); flex-wrap: wrap; align-items: center; }
+  .tool-tag { background: var(--tag-bg); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .built-with { font-size: 11px; color: var(--text4); background: var(--sidebar-bg); padding: 2px 8px; border-radius: 4px; }
+  .tool-vote { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 48px; }
+  .vote-btn {
+    width: 46px; height: 50px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg2); display: flex; flex-direction: column; align-items: center;
+    justify-content: center; cursor: pointer; font-size: 12px; color: var(--text3);
+    line-height: 1.2; transition: all .2s; gap: 2px;
+  }
+  .vote-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .vote-btn.voted { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .vote-btn.voted .arrow { color: #fff; }
+  .vote-btn .arrow { font-size: 14px; color: var(--accent); transition: color .2s; }
+  .vote-count { font-weight: 700; }
+  @keyframes bounce { 0%,100%{ transform: scale(1); } 40%{ transform: scale(1.25); } 70%{ transform: scale(0.9); } }
+  .vote-btn.bounce { animation: bounce .4s ease; }
+
+  /* Load more */
+  .load-more-wrap { text-align: center; padding: 16px 0 8px; }
+  .load-more-btn {
+    background: var(--bg2); border: 1px solid var(--border); padding: 10px 32px;
+    border-radius: 10px; font-size: 14px; cursor: pointer; color: var(--accent);
+    font-weight: 500; transition: all .2s;
+  }
+  .load-more-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Sidebar */
+  .sidebar-box {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px; transition: background .3s;
+  }
+  .sidebar-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+  .sidebar-text { font-size: 13px; color: var(--text3); line-height: 1.6; }
+  .email-input {
+    width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 13px; margin-top: 10px; background: var(--input-bg); color: var(--text);
+    outline: none; transition: border-color .2s;
+  }
+  .email-input:focus { border-color: var(--accent); }
+  .email-btn {
+    width: 100%; padding: 9px; background: var(--accent); color: #fff; border: none;
+    border-radius: 8px; font-size: 13px; margin-top: 8px; cursor: pointer;
+    font-weight: 500; transition: background .2s;
+  }
+  .email-btn:hover { background: var(--accent-hover); }
+  .newsletter-success { color: #27ae60; font-size: 13px; font-weight: 500; margin-top: 10px; display: none; }
+
+  .hall-item { margin-bottom: 8px; font-size: 12px; color: var(--text3); }
+  .hall-item strong { color: var(--text); }
+  .built-stat { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; color: var(--text3); }
+  .built-stat span:last-child { color: var(--accent); font-weight: 600; }
+  .built-bar { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 10px; overflow: hidden; }
+  .built-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: var(--modal-overlay); z-index: 1000;
+    display: none; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; transition: opacity .25s;
+  }
+  .modal-overlay.show { display: flex; opacity: 1; }
+  .modal {
+    background: var(--bg2); border-radius: 16px; max-width: 560px; width: 100%;
+    max-height: 90vh; overflow-y: auto; padding: 32px; position: relative;
+    transform: translateY(20px); transition: transform .25s;
+  }
+  .modal-overlay.show .modal { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px; background: none; border: none;
+    font-size: 24px; cursor: pointer; color: var(--text4); line-height: 1;
+    width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; transition: background .2s;
+  }
+  .modal-close:hover { background: var(--border); }
+  .modal h2 { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .modal-icon { font-size: 48px; margin-bottom: 12px; }
+  .modal-desc { color: var(--text3); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+  .modal-screenshot {
+    width: 100%; height: 180px; background: var(--accent-light); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; color: var(--text4);
+    font-size: 14px; margin-bottom: 16px; border: 1px solid var(--border);
+  }
+  .modal-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .modal-meta-item {
+    font-size: 12px; padding: 4px 12px; border-radius: 6px;
+    background: var(--tag-bg); color: var(--accent);
+  }
+  .try-btn {
+    display: inline-block; background: var(--accent); color: #fff; padding: 10px 28px;
+    border-radius: 10px; font-size: 14px; font-weight: 600; border: none; cursor: pointer;
+    transition: background .2s, transform .1s; text-decoration: none;
+  }
+  .try-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  /* Form modal */
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; background: var(--input-bg); color: var(--text);
+    font-family: inherit; outline: none; transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-success { text-align: center; padding: 24px 0; display: none; }
+  .form-success .checkmark { font-size: 48px; margin-bottom: 12px; }
+  .form-success h3 { color: var(--text); margin-bottom: 8px; }
+  .form-success p { color: var(--text3); font-size: 14px; }
+
+  .no-results { text-align: center; padding: 48px 16px; color: var(--text4); font-size: 15px; }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 32px; font-size: 12px; color: var(--text4);
+    border-top: 1px solid var(--border); margin-top: 24px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header { padding: 12px 16px; }
+    .nav { gap: 12px; }
+    .nav a { display: none; }
+    .hero { padding: 32px 16px 24px; }
+    .hero h1 { font-size: 24px; }
+    .search-bar { padding: 0 16px; }
+    .filter-bar { padding: 12px 16px; gap: 8px; overflow-x: auto; flex-wrap: nowrap; }
+    .page-layout { flex-direction: column; padding: 16px; }
+    .sidebar { width: 100%; }
+    .tool-card { padding: 16px; gap: 10px; }
+    .tool-rank { display: none; }
+    .sort-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo" onclick="location.reload()">Vibe<span>Board</span></div>
+  <div class="nav">
+    <a href="#">Today</a>
+    <a href="#">This Week</a>
+    <a href="#">Collections</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode" id="themeBtn">🌙</button>
+    <button class="submit-btn" onclick="openSubmitModal()">+ Submit a Tool</button>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Discover what vibe coders are building</h1>
+  <p>Every day, people are building amazing tools with AI. Here's the best of what shipped this week.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">847</div><div class="stat-label">Tools Launched</div></div>
+    <div class="stat"><div class="stat-num">12.3K</div><div class="stat-label">Community</div></div>
+    <div class="stat"><div class="stat-num">156</div><div class="stat-label">This Week</div></div>
+  </div>
+</div>
+
+<!-- Search -->
+<div class="search-bar">
+  <span class="search-icon">🔍</span>
+  <input class="search-input" type="text" placeholder="Search tools by name or description..." id="searchInput" oninput="filterTools()">
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <span class="filter-bar-label">Filter:</span>
+  <div class="filter-pill active" onclick="setCategory(this,'All')">All</div>
+  <div class="filter-pill" onclick="setCategory(this,'Productivity')">Productivity</div>
+  <div class="filter-pill" onclick="setCategory(this,'Dev Tools')">Dev Tools</div>
+  <div class="filter-pill" onclick="setCategory(this,'Design')">Design</div>
+  <div class="filter-pill" onclick="setCategory(this,'Fun/Creative')">Fun / Creative</div>
+  <div class="filter-pill" onclick="setCategory(this,'Data')">Data</div>
+  <div class="filter-pill" onclick="setCategory(this,'AI/ML')">AI / ML</div>
+  <div class="sort-divider"></div>
+  <span class="filter-bar-label">Sort:</span>
+  <div class="sort-pill active" onclick="setSort(this,'hot')">🔥 Hot</div>
+  <div class="sort-pill" onclick="setSort(this,'new')">🆕 New</div>
+  <div class="sort-pill" onclick="setSort(this,'trending')">📈 Trending</div>
+</div>
+
+<!-- Main content -->
+<div class="page-layout">
+  <div class="main-col" id="toolsList"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-box" id="newsletterBox">
+      <div class="sidebar-title">📬 Weekly Top 10</div>
+      <div class="sidebar-text">Get the best vibe-coded tools delivered every Friday. No spam, just tools.</div>
+      <input class="email-input" type="email" placeholder="your@email.com" id="emailInput">
+      <button class="email-btn" onclick="subscribeNewsletter()">Subscribe</button>
+      <div class="newsletter-success" id="newsletterSuccess">✅ You're in! Check your inbox Friday.</div>
+    </div>
+
+    <div class="sidebar-box">
+      <div class="sidebar-title">🏆 Hall of Fame</div>
+      <div class="hall-item"><strong>CSV Wizard</strong> — 2.1K users in 1 week</div>
+      <div class="hall-item"><strong>SnapResume</strong> — Featured on HN</div>
+      <div class="hall-item"><strong>PaletteAI</strong> — 500 GitHub stars</div>
+    </div>
+
+    <div class="sidebar-box">
+      <div class="sidebar-title">🛠 Built With</div>
+      <div class="built-stat"><span>Cursor</span><span>34%</span></div>
+      <div class="built-bar"><div class="built-bar-fill" style="width:34%"></div></div>
+      <div class="built-stat"><span>Claude Code</span><span>28%</span></div>
+      <div class="built-bar"><div class="built-bar-fill" style="width:28%"></div></div>
+      <div class="built-stat"><span>Bolt</span><span>18%</span></div>
+      <div class="built-bar"><div class="built-bar-fill" style="width:18%"></div></div>
+      <div class="built-stat"><span>Replit</span><span>12%</span></div>
+      <div class="built-bar"><div class="built-bar-fill" style="width:12%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">VibeBoard © 2026 — Built with vibes ✨</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
+  <div class="modal" id="detailContent"></div>
+</div>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="submitModal" onclick="if(event.target===this)closeModal('submitModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('submitModal')">×</button>
+    <h2>Submit a Tool</h2>
+    <p style="color:var(--text3);font-size:14px;margin-bottom:20px;">Share what you've built with the vibe coding community.</p>
+    <form id="submitForm" onsubmit="return handleSubmit(event)">
+      <div class="form-group"><label>Tool Name *</label><input required placeholder="e.g. CSV Wizard"></div>
+      <div class="form-group"><label>URL *</label><input required type="url" placeholder="https://..."></div>
+      <div class="form-group"><label>Short Description *</label><textarea required placeholder="What does it do? (1-2 sentences)"></textarea></div>
+      <div class="form-group"><label>Category *</label>
+        <select required>
+          <option value="">Select a category</option>
+          <option>Productivity</option><option>Dev Tools</option><option>Design</option>
+          <option>Fun/Creative</option><option>Data</option><option>AI/ML</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Built With</label><input placeholder="e.g. Cursor + Claude"></div>
+      <button type="submit" class="try-btn" style="width:100%">Submit Tool 🚀</button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      <div class="checkmark">🎉</div>
+      <h3>Tool Submitted!</h3>
+      <p>We'll review it and add it to the board shortly.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOOLS = [
+  { id:1, icon:"📊", name:"CSV Wizard", desc:"Drop a CSV, ask questions in plain English, get charts and insights instantly. No pandas, no SQL.", category:"Data", built:"Cursor + Claude", url:"https://csvwizard.app", votes:342, launchedAgo:3*3600000, velocity:114 },
+  { id:2, icon:"🎨", name:"ColorSync", desc:"Paste any screenshot, extract the exact color palette, and generate Tailwind/CSS variables. One click.", category:"Design", built:"Bolt + GPT-4", url:"https://colorsync.dev", votes:218, launchedAgo:5*3600000, velocity:44 },
+  { id:3, icon:"✍️", name:"CommitPoet", desc:"Turns your git diff into a haiku commit message. Actually useful for making git history readable.", category:"Dev Tools", built:"Claude Code", url:"https://commitpoet.dev", votes:156, launchedAgo:8*3600000, velocity:20 },
+  { id:4, icon:"📝", name:"MeetingGhost", desc:"Records your meeting, extracts action items, sends follow-up emails. You just show up and talk.", category:"Productivity", built:"Replit + Whisper", url:"https://meetingghost.io", votes:98, launchedAgo:12*3600000, velocity:8 },
+  { id:5, icon:"🧠", name:"PromptForge", desc:"Visual prompt engineering studio. Chain prompts, A/B test outputs, share prompt recipes with your team.", category:"AI/ML", built:"Next.js + Claude", url:"https://promptforge.ai", votes:187, launchedAgo:6*3600000, velocity:31 },
+  { id:6, icon:"🎮", name:"RetroQuest", desc:"Describe a game concept in words and get a playable retro-style browser game in 30 seconds.", category:"Fun/Creative", built:"Cursor + GPT-4o", url:"https://retroquest.fun", votes:276, launchedAgo:4*3600000, velocity:69 },
+  { id:7, icon:"📋", name:"SnapResume", desc:"Upload a job posting, paste your LinkedIn, get a tailored resume and cover letter in PDF. ATS-optimized.", category:"Productivity", built:"Bolt + Claude", url:"https://snapresume.co", votes:134, launchedAgo:18*3600000, velocity:7 },
+  { id:8, icon:"🔍", name:"RegexGenie", desc:"Describe what you want to match in plain English, get a tested regex with visual explanation and test cases.", category:"Dev Tools", built:"Claude Code", url:"https://regexgenie.dev", votes:112, launchedAgo:10*3600000, velocity:11 },
+  { id:9, icon:"🖼️", name:"MockMagic", desc:"Turn hand-drawn wireframes into responsive HTML/CSS. Just snap a photo of your whiteboard.", category:"Design", built:"GPT-4o + Tailwind", url:"https://mockmagic.design", votes:203, launchedAgo:7*3600000, velocity:29 },
+  { id:10, icon:"🤖", name:"AgentSmith", desc:"Build, test, and deploy autonomous AI agents with a visual flow editor. No code required.", category:"AI/ML", built:"LangChain + Cursor", url:"https://agentsmith.ai", votes:167, launchedAgo:9*3600000, velocity:19 },
+  { id:11, icon:"🎵", name:"VibeBeats", desc:"Hum a melody into your mic, get a full lo-fi beat with stems you can remix. Export to any DAW.", category:"Fun/Creative", built:"Replit + Suno API", url:"https://vibebeats.app", votes:89, launchedAgo:24*3600000, velocity:4 },
+  { id:12, icon:"📈", name:"TrendScope", desc:"Paste any subreddit or Twitter topic. Get real-time sentiment analysis, emerging themes, and trend predictions.", category:"Data", built:"Cursor + Claude", url:"https://trendscope.io", votes:145, launchedAgo:14*3600000, velocity:10 },
+  { id:13, icon:"🧩", name:"APIBlocks", desc:"Visual API builder — drag and drop endpoints, auto-generate OpenAPI specs, deploy serverless functions instantly.", category:"Dev Tools", built:"Bolt + Vercel", url:"https://apiblocks.dev", votes:78, launchedAgo:36*3600000, velocity:2 },
+  { id:14, icon:"✨", name:"SlideVibe", desc:"Paste a doc or notes, get a beautiful presentation deck with animations. Exports to PPTX and PDF.", category:"Productivity", built:"Claude + React", url:"https://slidevibe.app", votes:92, launchedAgo:20*3600000, velocity:5 },
+];
+
+const NOW = Date.now();
+let currentCategory = 'All';
+let currentSort = 'hot';
+let showAll = false;
+
+// Load votes from localStorage
+function getVotes() {
+  try { return JSON.parse(localStorage.getItem('vb_votes') || '{}'); } catch { return {}; }
+}
+function saveVotes(v) { localStorage.setItem('vb_votes', JSON.stringify(v)); }
+function getVoted() {
+  try { return JSON.parse(localStorage.getItem('vb_voted') || '[]'); } catch { return []; }
+}
+function saveVoted(v) { localStorage.setItem('vb_voted', JSON.stringify(v)); }
+
+function getToolVotes(tool) {
+  const saved = getVotes();
+  return saved[tool.id] !== undefined ? saved[tool.id] : tool.votes;
+}
+
+function timeAgo(ms) {
+  const h = Math.floor(ms / 3600000);
+  if (h < 1) return 'Launched just now';
+  if (h < 24) return `Launched ${h}h ago`;
+  const d = Math.floor(h / 24);
+  if (d === 1) return 'Launched yesterday';
+  return `Launched ${d}d ago`;
+}
+
+function getFilteredTools() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let tools = TOOLS.filter(t => {
+    if (currentCategory !== 'All' && t.category !== currentCategory) return false;
+    if (q && !t.name.toLowerCase().includes(q) && !t.desc.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const votes = getVotes();
+  const getV = t => votes[t.id] !== undefined ? votes[t.id] : t.votes;
+  if (currentSort === 'hot') tools.sort((a, b) => getV(b) - getV(a));
+  else if (currentSort === 'new') tools.sort((a, b) => a.launchedAgo - b.launchedAgo);
+  else tools.sort((a, b) => b.velocity - a.velocity);
+  return tools;
+}
+
+function renderTools() {
+  const tools = getFilteredTools();
+  const list = document.getElementById('toolsList');
+  const voted = getVoted();
+  const limit = showAll ? tools.length : 6;
+  const visible = tools.slice(0, limit);
+
+  // Get top 3 by votes for trending badge
+  const allByVotes = [...TOOLS].sort((a,b) => getToolVotes(b) - getToolVotes(a));
+  const top3Ids = allByVotes.slice(0,3).map(t=>t.id);
+
+  if (visible.length === 0) {
+    list.innerHTML = '<div class="no-results">No tools found. Try a different search or category.</div>';
+    return;
+  }
+
+  let html = '';
+  visible.forEach((t, i) => {
+    const v = getToolVotes(t);
+    const isVoted = voted.includes(t.id);
+    const isTrending = top3Ids.includes(t.id);
+    html += `<div class="tool-card fade-in" onclick="openDetail(${t.id})" style="animation-delay:${i*60}ms">
+      ${isTrending ? '<div class="trending-badge">🔥 Trending</div>' : ''}
+      <div class="tool-rank">${i+1}</div>
+      <div class="tool-icon">${t.icon}</div>
+      <div class="tool-info">
+        <div class="tool-name">${t.name}</div>
+        <div class="tool-desc">${t.desc}</div>
+        <div class="tool-meta">
+          <span class="tool-tag">${t.category}</span>
+          <span class="built-with">Built with ${t.built}</span>
+          <span>${timeAgo(t.launchedAgo)}</span>
+        </div>
+      </div>
+      <div class="tool-vote" onclick="event.stopPropagation()">
+        <div class="vote-btn ${isVoted?'voted':''}" onclick="vote(${t.id},this)">
+          <span class="arrow">▲</span>
+          <span class="vote-count">${v}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  if (!showAll && tools.length > 6) {
+    html += `<div class="load-more-wrap"><button class="load-more-btn" onclick="showAll=true;renderTools()">Load More (${tools.length - 6} more tools)</button></div>`;
+  }
+  list.innerHTML = html;
+
+  // Staggered fade-in
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.tool-card.fade-in').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 60);
+    });
+  });
+}
+
+function vote(id, btn) {
+  const votes = getVotes();
+  const voted = getVoted();
+  const tool = TOOLS.find(t => t.id === id);
+  const current = votes[id] !== undefined ? votes[id] : tool.votes;
+
+  if (voted.includes(id)) {
+    // Unvote
+    votes[id] = current - 1;
+    voted.splice(voted.indexOf(id), 1);
+    btn.classList.remove('voted');
+  } else {
+    votes[id] = current + 1;
+    voted.push(id);
+    btn.classList.add('voted');
+    btn.classList.remove('bounce');
+    void btn.offsetWidth;
+    btn.classList.add('bounce');
+  }
+  saveVotes(votes);
+  saveVoted(voted);
+  btn.querySelector('.vote-count').textContent = votes[id];
+}
+
+function setCategory(el, cat) {
+  currentCategory = cat;
+  showAll = false;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderTools();
+}
+
+function setSort(el, sort) {
+  currentSort = sort;
+  document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderTools();
+}
+
+function filterTools() { showAll = false; renderTools(); }
+
+function openDetail(id) {
+  const t = TOOLS.find(x => x.id === id);
+  if (!t) return;
+  const v = getToolVotes(t);
+  document.getElementById('detailContent').innerHTML = `
+    <button class="modal-close" onclick="closeModal('detailModal')">×</button>
+    <div class="modal-icon">${t.icon}</div>
+    <h2>${t.name}</h2>
+    <div class="modal-desc">${t.desc}</div>
+    <div class="modal-screenshot">📸 Screenshot preview</div>
+    <div class="modal-meta">
+      <span class="modal-meta-item">${t.category}</span>
+      <span class="modal-meta-item">Built with ${t.built}</span>
+      <span class="modal-meta-item">⬆ ${v} votes</span>
+      <span class="modal-meta-item">${timeAgo(t.launchedAgo)}</span>
+    </div>
+    <a href="${t.url}" target="_blank" class="try-btn" onclick="event.stopPropagation()">Try it →</a>
+  `;
+  const m = document.getElementById('detailModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => m.classList.add('show'));
+}
+
+function openSubmitModal() {
+  document.getElementById('submitForm').style.display = 'block';
+  document.getElementById('formSuccess').style.display = 'none';
+  document.getElementById('submitForm').reset();
+  const m = document.getElementById('submitModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => m.classList.add('show'));
+}
+
+function closeModal(id) {
+  const m = document.getElementById(id);
+  m.classList.remove('show');
+  setTimeout(() => m.style.display = 'none', 250);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('submitForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  return false;
+}
+
+function subscribeNewsletter() {
+  const input = document.getElementById('emailInput');
+  if (!input.value || !input.value.includes('@')) { input.focus(); return; }
+  input.style.display = 'none';
+  document.querySelector('.email-btn').style.display = 'none';
+  document.getElementById('newsletterSuccess').style.display = 'block';
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('vb_theme', isDark ? 'light' : 'dark');
+}
+
+// Init theme
+if (localStorage.getItem('vb_theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('themeBtn').textContent = '☀️';
+}
+
+// Close modals on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal('detailModal');
+    closeModal('submitModal');
+  }
+});
+
+renderTools();
+</script>
+</body>
+</html>
