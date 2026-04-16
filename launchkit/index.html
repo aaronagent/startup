@@ -4,6 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LaunchKit — Launch everywhere in 30 seconds</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Paste your URL, get launch copy for Reddit, Twitter, Product Hunt, Hacker News, and a landing page — in 30 seconds. Built for vibe coders who ship fast.">
+<meta name="keywords" content="launch tool, startup launch, product launch, reddit post generator, twitter thread generator, product hunt launch, vibe coding">
+<meta name="author" content="LaunchKit">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="LaunchKit — Launch everywhere in 30 seconds">
+<meta property="og:description" content="Paste your URL, get launch copy for Reddit, Twitter, Product Hunt, Hacker News, and a landing page — in 30 seconds.">
+<meta property="og:site_name" content="LaunchKit">
+<meta property="og:url" content="https://launchkit.dev">
+<meta property="og:image" content="https://launchkit.dev/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LaunchKit — Launch everywhere in 30 seconds">
+<meta name="twitter:description" content="Paste your URL, get launch copy for Reddit, Twitter, Product Hunt, HN, and a landing page — in 30 seconds.">
+<meta name="twitter:image" content="https://launchkit.dev/og-image.png">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.5;overflow-x:hidden}
@@ -102,6 +121,36 @@
   .landing-mock .feature-item{background:#f7f7f7;border-radius:8px;padding:14px;font-size:13px;color:#333}
   .landing-mock .feature-item strong{display:block;font-size:12px;color:#111;margin-bottom:2px}
 
+  /* Social Preview Mockups */
+  .reddit-preview{background:#1a1a1b;border-radius:8px;padding:16px;margin-top:16px;font-family:-apple-system,sans-serif;border:1px solid #343536}
+  .reddit-preview .rp-sub{font-size:12px;color:#818384;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .reddit-preview .rp-sub .rp-icon{width:20px;height:20px;border-radius:50%;background:#ff4500;display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700}
+  .reddit-preview .rp-votes{display:flex;flex-direction:column;align-items:center;gap:2px;float:left;margin-right:12px;color:#818384;font-size:12px;font-weight:700}
+  .reddit-preview .rp-votes .arrow{font-size:16px;cursor:default}
+  .reddit-preview .rp-votes .arrow.up{color:#ff4500}
+  .reddit-preview .rp-title{font-size:16px;font-weight:600;color:#d7dadc;margin-bottom:8px;line-height:1.3}
+  .reddit-preview .rp-body{font-size:13px;color:#b0b3b8;line-height:1.5;margin-bottom:10px;max-height:80px;overflow:hidden;position:relative}
+  .reddit-preview .rp-body::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,#1a1a1b)}
+  .reddit-preview .rp-meta{font-size:11px;color:#818384;display:flex;gap:12px}
+  .reddit-preview .rp-meta span{cursor:default}
+
+  .twitter-preview{background:#ffffff;border-radius:12px;padding:16px;margin-top:16px;font-family:-apple-system,sans-serif;border:1px solid #e1e8ed}
+  .twitter-preview .tp-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .twitter-preview .tp-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00d4aa,#0088cc);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700}
+  .twitter-preview .tp-names .tp-display{font-size:14px;font-weight:700;color:#0f1419;display:flex;align-items:center;gap:4px}
+  .twitter-preview .tp-names .tp-handle{font-size:13px;color:#536471}
+  .twitter-preview .tp-text{font-size:14px;color:#0f1419;line-height:1.5;margin-bottom:12px;white-space:pre-line}
+  .twitter-preview .tp-engagement{display:flex;gap:24px;padding-top:10px;border-top:1px solid #e1e8ed}
+  .twitter-preview .tp-engagement span{font-size:13px;color:#536471;display:flex;align-items:center;gap:5px;cursor:default}
+
+  /* VibeBoard CTA Banner */
+  .vibeboard-banner{max-width:800px;margin:0 auto 40px;padding:0 24px}
+  .vibeboard-banner-inner{background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);border:1px solid #222;border-radius:12px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .vibeboard-banner-inner p{font-size:14px;color:#999;flex:1;min-width:200px}
+  .vibeboard-banner-inner p strong{color:#fff}
+  .vibeboard-link{padding:10px 20px;background:#00d4aa;color:#0a0a0a;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s}
+  .vibeboard-link:hover{background:#00e8bb;transform:translateY(-1px)}
+
   .footer{text-align:center;padding:40px 24px;font-size:12px;color:#333}
 
   /* Spinner for step nums */
@@ -127,7 +176,7 @@
 <div class="controls">
   <div class="url-input-group">
     <input class="url-input" id="urlInput" type="url" placeholder="https://your-awesome-tool.com">
-    <button class="launch-btn" id="launchBtn" onclick="generate()">Generate Launch Package →</button>
+    <button class="launch-btn" id="launchBtn" onclick="generate()" data-event="generate-package">Generate Launch Package →</button>
   </div>
   <div class="options-row">
     <span class="tone-label">Tone:</span>
@@ -170,11 +219,18 @@
 <div class="results" id="resultsSection">
   <div class="results-header">
     <div class="results-title" id="resultsTitle">✨ Generated Launch Package</div>
-    <button class="export-btn" onclick="exportAll()">⬇ Export as Markdown</button>
+    <button class="export-btn" onclick="exportAll()" data-event="export-markdown">⬇ Export as Markdown</button>
   </div>
 
   <div class="tabs" id="tabsBar"></div>
   <div id="tabPanels"></div>
+</div>
+
+<div class="vibeboard-banner" id="vibeboardBanner" style="display:none">
+  <div class="vibeboard-banner-inner">
+    <p><strong>Built something awesome?</strong> Submit it to VibeBoard and get discovered by the vibe coding community 🔥</p>
+    <a class="vibeboard-link" href="../vibeboard/index.html" data-event="submit-vibeboard">Submit to VibeBoard →</a>
+  </div>
 </div>
 
 <div class="footer">LaunchKit — Built for vibe coders who ship fast.</div>
@@ -363,15 +419,42 @@ function renderResults() {
   }).join('');
 
   document.getElementById('resultsSection').classList.add('visible');
+  document.getElementById('vibeboardBanner').style.display = 'block';
   updateAllCharCounts();
 }
 
 function buildTextPanel(platform, data, idx) {
   let content = '';
+  let preview = '';
   if (platform.id === 'reddit') {
     content = `<span class="title">${data.title}</span>\n${data.body}\n<br><small style="color:#444">${data.sub}</small>`;
+    preview = `<div class="reddit-preview">
+      <div class="rp-sub"><span class="rp-icon">r/</span><strong style="color:#d7dadc;font-size:12px">${data.sub}</strong> · <span>Posted by u/you · just now</span></div>
+      <div class="rp-votes"><span class="arrow up">▲</span><span>1</span><span class="arrow">▼</span></div>
+      <div class="rp-title">${data.title}</div>
+      <div class="rp-body">${data.body.replace(/\n/g,'<br>')}</div>
+      <div class="rp-meta"><span>💬 0 Comments</span><span>↗ Share</span><span>⭐ Save</span></div>
+    </div>`;
   } else if (platform.id === 'twitter') {
     content = data.text;
+    const tweetPreview = data.text.length > 280 ? data.text.substring(0, 277) + '...' : data.text;
+    preview = `<div class="twitter-preview">
+      <div class="tp-header">
+        <div class="tp-avatar">${currentName ? currentName.charAt(0) : 'Y'}</div>
+        <div class="tp-names">
+          <div class="tp-display">${currentName || 'You'} <svg width="16" height="16" viewBox="0 0 24 24" fill="#1d9bf0"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></div>
+          <div class="tp-handle">@${currentName ? currentName.toLowerCase().replace(/\s+/g,'') : 'you'}</div>
+        </div>
+      </div>
+      <div class="tp-text">${tweetPreview}</div>
+      <div class="tp-engagement">
+        <span>💬 0</span>
+        <span>🔁 0</span>
+        <span>❤️ 0</span>
+        <span>📊 0</span>
+        <span>↗</span>
+      </div>
+    </div>`;
   } else if (platform.id === 'producthunt') {
     content = `<span class="title">${data.tagline}</span>\n${data.desc}`;
   } else if (platform.id === 'hn') {
@@ -383,10 +466,11 @@ function buildTextPanel(platform, data, idx) {
         <span class="card-label">${platform.label}</span>
         <div class="card-actions">
           <span class="char-count" id="charcount-${idx}">${platform.limitLabel}</span>
-          <button class="copy-btn" onclick="copyContent(this, ${idx})">Copy</button>
+          <button class="copy-btn" onclick="copyContent(this, ${idx})" data-event="copy-${platform.id}">Copy</button>
         </div>
       </div>
       <div class="editable" contenteditable="true" id="content-${idx}" oninput="updateCharCount(${idx})">${content}</div>
+      ${preview}
     </div>
   </div>`;
 }
@@ -396,7 +480,7 @@ function buildLandingPanel(data, idx) {
     <div class="card">
       <div class="card-header">
         <span class="card-label">🌐 Landing Page Preview</span>
-        <button class="copy-btn" onclick="copyContent(this, ${idx})" style="background:#00d4aa;color:#0a0a0a;border-color:#00d4aa">Copy HTML</button>
+        <button class="copy-btn" onclick="copyContent(this, ${idx})" data-event="copy-landing" style="background:#00d4aa;color:#0a0a0a;border-color:#00d4aa">Copy HTML</button>
       </div>
       <div class="landing-mock">
         <h2>${data.headline}</h2>
@@ -580,7 +664,7 @@ if (tabBar) {
           const key = group.phase + '-' + i;
           const checked = state[key] ? 'checked' : '';
           return `<label style="display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;font-size:13px;color:#ccc;transition:opacity .2s;${state[key]?'opacity:.5;text-decoration:line-through;':''}">
-            <input type="checkbox" ${checked} onchange="toggleCheckItem(this,'${key}')" style="accent-color:#00d4aa;width:16px;height:16px;cursor:pointer;">
+            <input type="checkbox" ${checked} onchange="toggleCheckItem(this,'${key}')" data-event="checklist-toggle" style="accent-color:#00d4aa;width:16px;height:16px;cursor:pointer;">
             ${item}
           </label>`;
         }).join('')}
@@ -728,6 +812,19 @@ document.addEventListener('keydown', (e) => {
     switchTab(parseInt(e.key) - 1);
   }
 });
+
+// --- URL Parameter Support (VibeBoard flywheel) ---
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const urlParam = params.get('url');
+  const nameParam = params.get('name');
+  if (urlParam) {
+    const input = document.getElementById('urlInput');
+    input.value = urlParam.startsWith('http') ? urlParam : 'https://' + urlParam;
+    // Auto-trigger generation after a brief delay for page to settle
+    setTimeout(() => generate(), 400);
+  }
+})();
 </script>
 </body>
 </html>
