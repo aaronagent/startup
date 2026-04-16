@@ -1252,8 +1252,8 @@ function renderBadge() {
 }
 function copyBadgeCode(btn) {
   navigator.clipboard.writeText(document.getElementById('badgeCode').value);
-  btn.textContent = 'Copied!';
-  setTimeout(() => btn.textContent = 'Copy Code', 2000);
+  btn.textContent = i18n('copied');
+  setTimeout(() => btn.textContent = i18n('copy_code'), 2000);
 }
 
 // --- Weekly Digest ---
@@ -1275,7 +1275,7 @@ function subscribeDigest() {
   if (!input.value || !input.value.includes('@')) { input.focus(); return; }
   input.style.display = 'none';
   const btn = input.nextElementSibling;
-  btn.textContent = '✅ Subscribed! See you Friday.';
+  btn.textContent = i18n('subscribed_friday');
   btn.disabled = true;
   btn.style.background = '#27ae60';
 }
@@ -1399,9 +1399,9 @@ function filterByMaker(name) {
 
 // --- Collections ---
 const COLLECTIONS = [
-  { title: '⚡ Weekend Projects', sub: 'Tools built in under 48 hours', toolIds: [3, 8, 11, 13] },
-  { title: '🤖 AI-Powered', sub: 'Tools that use AI as a core feature', toolIds: [5, 10, 1, 4] },
-  { title: '🔧 Developer Essentials', sub: 'Tools every dev should know', toolIds: [3, 8, 13, 12] }
+  { titleKey: 'collection_weekend', subKey: 'collection_weekend_sub', toolIds: [3, 8, 11, 13] },
+  { titleKey: 'collection_ai', subKey: 'collection_ai_sub', toolIds: [5, 10, 1, 4] },
+  { titleKey: 'collection_dev', subKey: 'collection_dev_sub', toolIds: [3, 8, 13, 12] }
 ];
 
 function renderCollections() {
@@ -1420,8 +1420,8 @@ function renderCollections() {
       </div>`;
     }).join('');
     return `<div class="collection-group">
-      <div class="collection-header">${col.title}</div>
-      <div class="collection-sub">${col.sub}</div>
+      <div class="collection-header">${i18n(col.titleKey)}</div>
+      <div class="collection-sub">${i18n(col.subKey)}</div>
       <div class="collection-cards">${cards}</div>
     </div>`;
   }).join('');
@@ -1465,6 +1465,7 @@ function showSkeletons() {
 }
 
 // Init - show skeletons then load
+applyI18n();
 showSkeletons();
 setTimeout(() => {
 renderTools();
