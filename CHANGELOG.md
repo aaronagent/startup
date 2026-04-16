@@ -2,6 +2,36 @@
 
 All notable changes to LaunchKit and VibeBoard.
 
+## [0.9.0] — 2026-04-16 — FINAL RELEASE
+
+38 commits, 9 versions, single session. Wireframe → production-ready.
+
+**Stats:** 3,554 LOC · 7 pages · 33 files · 0 dependencies · PWA · Offline · Bilingual
+
+### v0.8 — Internationalization
+- EN/中文 toggle across all 3 products, shared localStorage
+
+### v0.7 — Service Worker + Accessibility
+- Offline support, skip-to-content, ARIA labels, first-visit pulse
+
+### v0.6 — PWA
+- manifest.json, installable, app shortcuts
+
+### v0.5 — Growth Engine
+- tool.html + share.html for SEO, sitemap, robots.txt, JSON-LD, MIT License
+
+### v0.4 — Polish
+- Toast notifications, skeleton loading, scroll-to-top, animations, QA fixes
+
+### v0.3 — Flywheel
+- LaunchKit ↔ VibeBoard bidirectional integration, collections, social sharing
+
+### v0.2 — Features
+- Pro tips, checklist, history, keyboard shortcuts, badges, comparison
+
+### v0.1 — Foundation
+- Interactive prototypes, hub page, design system, README
+
 ## [0.6.0] — 2026-04-16 — THE INSTALLABLE RELEASE
 
 ### Infrastructure
