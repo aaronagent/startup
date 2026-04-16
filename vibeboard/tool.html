@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeBoard — Tool Detail</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VibeBoard">
+<meta property="og:title" content="VibeBoard — Discover Vibe-Coded Tools">
+<meta property="og:description" content="Discover amazing tools built with AI-assisted vibe coding.">
+<meta property="og:url" content="">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VibeBoard">
+<meta name="twitter:description" content="Discover amazing tools built with AI-assisted vibe coding.">
+<style>
+  :root {
+    --bg: #fafafa; --bg2: #fff; --bg3: #f5f3ff; --text: #111; --text2: #333;
+    --text3: #666; --text4: #999; --border: #e8e8e8; --border2: #e0e0e0;
+    --accent: #6c5ce7; --accent-light: #f0ecff; --accent-hover: #5a4bd6;
+    --card-shadow: rgba(0,0,0,0.06); --tag-bg: #f5f3ff; --sidebar-bg: #f8f8f8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg); color: var(--text2); line-height: 1.5;
+  }
+
+  /* Header */
+  .header {
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 14px 32px; display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 14px;
+    color: var(--text3); text-decoration: none; transition: color .2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* Page layout */
+  .page-layout {
+    max-width: 1000px; margin: 0 auto; display: flex; gap: 32px; padding: 32px;
+  }
+  .main-col { flex: 1; min-width: 0; }
+  .sidebar { width: 300px; flex-shrink: 0; }
+
+  /* Tool header */
+  .tool-header {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px; margin-bottom: 24px;
+  }
+  .tool-header-top { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+  .tool-icon {
+    width: 72px; height: 72px; border-radius: 16px; background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center; font-size: 36px; flex-shrink: 0;
+  }
+  .tool-title-area { flex: 1; }
+  .tool-name { font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .tool-meta-tags { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .tool-tag {
+    background: var(--tag-bg); color: var(--accent); padding: 4px 12px;
+    border-radius: 6px; font-size: 12px; font-weight: 500;
+  }
+  .built-with {
+    font-size: 12px; color: var(--text4); background: var(--sidebar-bg);
+    padding: 4px 12px; border-radius: 6px;
+  }
+  .tool-desc {
+    font-size: 16px; color: var(--text3); line-height: 1.7; margin-bottom: 20px;
+  }
+
+  /* Vote display */
+  .vote-display {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+    padding: 16px 20px; background: var(--accent-light); border-radius: 12px;
+  }
+  .vote-count { font-size: 32px; font-weight: 700; color: var(--accent); }
+  .vote-label { font-size: 13px; color: var(--text3); }
+  .vote-btn {
+    margin-left: auto; padding: 10px 24px; border-radius: 10px;
+    border: 2px solid var(--accent); background: #fff; color: var(--accent);
+    font-size: 15px; font-weight: 600; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .vote-btn:hover { background: var(--accent); color: #fff; }
+  .vote-btn.voted { background: var(--accent); color: #fff; }
+
+  /* Screenshot */
+  .screenshot-placeholder {
+    width: 100%; height: 280px; background: var(--accent-light); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center; color: var(--text4);
+    font-size: 15px; border: 1px solid var(--border); margin-bottom: 24px;
+  }
+
+  /* Action buttons */
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .try-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent); color: #fff; padding: 12px 32px;
+    border-radius: 10px; font-size: 15px; font-weight: 600; border: none;
+    cursor: pointer; text-decoration: none; transition: background .2s, transform .1s;
+  }
+  .try-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  /* Share buttons */
+  .share-section { margin-top: 24px; }
+  .share-title { font-size: 13px; color: var(--text4); margin-bottom: 10px; font-weight: 500; }
+  .share-btns { display: flex; gap: 8px; }
+  .share-btn {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg2); font-size: 13px; font-weight: 500; cursor: pointer;
+    color: var(--text3); transition: all .2s; display: flex; align-items: center; gap: 6px;
+  }
+  .share-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  /* Sidebar boxes */
+  .sidebar-box {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .sidebar-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+
+  /* Related tool cards */
+  .related-card {
+    display: flex; gap: 10px; align-items: center; padding: 10px 0;
+    border-bottom: 1px solid var(--border); cursor: pointer; transition: opacity .2s;
+    text-decoration: none; color: inherit;
+  }
+  .related-card:last-child { border-bottom: none; }
+  .related-card:hover { opacity: .7; }
+  .related-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .related-info { flex: 1; min-width: 0; }
+  .related-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .related-desc {
+    font-size: 11px; color: var(--text4); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .related-votes { font-size: 12px; color: var(--accent); font-weight: 600; }
+
+  /* LaunchKit CTA */
+  .launchkit-cta {
+    background: linear-gradient(135deg, #fff5f5, #fff0eb);
+    border: 1px solid #ffd6cc; border-radius: 12px; padding: 20px;
+  }
+  .launchkit-cta .sidebar-title { color: #ee5a24; }
+  .launchkit-cta p { font-size: 13px; color: var(--text3); line-height: 1.6; margin-bottom: 12px; }
+  .launchkit-btn {
+    display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: #fff;
+    padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 600;
+    border: none; cursor: pointer; text-decoration: none; transition: transform .2s, box-shadow .2s;
+  }
+  .launchkit-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(238,90,36,0.3); }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 32px; font-size: 12px; color: var(--text4);
+    border-top: 1px solid var(--border); margin-top: 24px;
+  }
+
+  /* 404 state */
+  .not-found {
+    text-align: center; padding: 80px 32px;
+  }
+  .not-found h2 { font-size: 28px; color: var(--text); margin-bottom: 8px; }
+  .not-found p { color: var(--text3); margin-bottom: 24px; }
+  .not-found a {
+    display: inline-block; background: var(--accent); color: #fff; padding: 10px 28px;
+    border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 14px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header { padding: 12px 16px; }
+    .page-layout { flex-direction: column; padding: 16px; gap: 20px; }
+    .sidebar { width: 100%; }
+    .tool-header { padding: 20px; }
+    .tool-header-top { flex-direction: column; gap: 12px; }
+    .tool-name { font-size: 22px; }
+    .vote-display { flex-wrap: wrap; }
+    .screenshot-placeholder { height: 180px; }
+    .actions { flex-direction: column; }
+    .try-btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <a class="logo" href="index.html">Vibe<span>Board</span></a>
+  <a class="back-link" href="index.html">← Back to VibeBoard</a>
+</div>
+
+<div id="app"></div>
+
+<div class="footer">VibeBoard © 2026 — Built with vibes ✨</div>
+
+<script>
+const TOOLS = [
+  { id:"csv-wizard", icon:"📊", name:"CSV Wizard", desc:"Drop a CSV, ask questions in plain English, get charts and insights instantly. No pandas, no SQL.", category:"Data", built:"Cursor + Claude", url:"https://csvwizard.app", votes:342 },
+  { id:"colorsync", icon:"🎨", name:"ColorSync", desc:"Paste any screenshot, extract the exact color palette, and generate Tailwind/CSS variables. One click.", category:"Design", built:"Bolt + GPT-4", url:"https://colorsync.dev", votes:218 },
+  { id:"commitpoet", icon:"✍️", name:"CommitPoet", desc:"Turns your git diff into a haiku commit message. Actually useful for making git history readable.", category:"Dev Tools", built:"Claude Code", url:"https://commitpoet.dev", votes:156 },
+  { id:"meetingghost", icon:"📝", name:"MeetingGhost", desc:"Records your meeting, extracts action items, sends follow-up emails. You just show up and talk.", category:"Productivity", built:"Replit + Whisper", url:"https://meetingghost.io", votes:98 },
+  { id:"promptforge", icon:"🧠", name:"PromptForge", desc:"Visual prompt engineering studio. Chain prompts, A/B test outputs, share prompt recipes with your team.", category:"AI/ML", built:"Next.js + Claude", url:"https://promptforge.ai", votes:187 },
+  { id:"retroquest", icon:"🎮", name:"RetroQuest", desc:"Describe a game concept in words and get a playable retro-style browser game in 30 seconds.", category:"Fun/Creative", built:"Cursor + GPT-4o", url:"https://retroquest.fun", votes:276 },
+  { id:"snapresume", icon:"📋", name:"SnapResume", desc:"Upload a job posting, paste your LinkedIn, get a tailored resume and cover letter in PDF. ATS-optimized.", category:"Productivity", built:"Bolt + Claude", url:"https://snapresume.co", votes:134 },
+  { id:"regexgenie", icon:"🔍", name:"RegexGenie", desc:"Describe what you want to match in plain English, get a tested regex with visual explanation and test cases.", category:"Dev Tools", built:"Claude Code", url:"https://regexgenie.dev", votes:112 },
+  { id:"mockmagic", icon:"🖼️", name:"MockMagic", desc:"Turn hand-drawn wireframes into responsive HTML/CSS. Just snap a photo of your whiteboard.", category:"Design", built:"GPT-4o + Tailwind", url:"https://mockmagic.design", votes:203 },
+  { id:"agentsmith", icon:"🤖", name:"AgentSmith", desc:"Build, test, and deploy autonomous AI agents with a visual flow editor. No code required.", category:"AI/ML", built:"LangChain + Cursor", url:"https://agentsmith.ai", votes:167 },
+  { id:"vibebeats", icon:"🎵", name:"VibeBeats", desc:"Hum a melody into your mic, get a full lo-fi beat with stems you can remix. Export to any DAW.", category:"Fun/Creative", built:"Replit + Suno API", url:"https://vibebeats.app", votes:89 },
+  { id:"trendscope", icon:"📈", name:"TrendScope", desc:"Paste any subreddit or Twitter topic. Get real-time sentiment analysis, emerging themes, and trend predictions.", category:"Data", built:"Cursor + Claude", url:"https://trendscope.io", votes:145 },
+  { id:"apiblocks", icon:"🧩", name:"APIBlocks", desc:"Visual API builder — drag and drop endpoints, auto-generate OpenAPI specs, deploy serverless functions instantly.", category:"Dev Tools", built:"Bolt + Vercel", url:"https://apiblocks.dev", votes:78 },
+  { id:"slidevibe", icon:"✨", name:"SlideVibe", desc:"Paste a doc or notes, get a beautiful presentation deck with animations. Exports to PPTX and PDF.", category:"Productivity", built:"Claude + React", url:"https://slidevibe.app", votes:92 },
+];
+
+// Parse ?id= from URL
+const params = new URLSearchParams(window.location.search);
+const toolId = params.get('id');
+
+if (!toolId) {
+  window.location.href = 'index.html';
+} else {
+  const tool = TOOLS.find(t => t.id === toolId);
+  if (!tool) {
+    document.getElementById('app').innerHTML = `
+      <div class="not-found">
+        <h2>Tool not found</h2>
+        <p>We couldn't find a tool with ID "${toolId}".</p>
+        <a href="index.html">← Back to VibeBoard</a>
+      </div>`;
+  } else {
+    // Set OG tags dynamically
+    document.title = `${tool.name} — VibeBoard`;
+    document.querySelector('meta[property="og:title"]').content = `${tool.name} — VibeBoard`;
+    document.querySelector('meta[property="og:description"]').content = tool.desc;
+    document.querySelector('meta[property="og:url"]').content = window.location.href;
+    document.querySelector('meta[name="twitter:title"]').content = `${tool.name} — VibeBoard`;
+    document.querySelector('meta[name="twitter:description"]').content = tool.desc;
+
+    // Get related tools (same category, excluding current)
+    const related = TOOLS.filter(t => t.category === tool.category && t.id !== tool.id);
+
+    // Get votes from localStorage
+    const savedVotes = (() => { try { return JSON.parse(localStorage.getItem('vb_votes') || '{}'); } catch { return {}; } })();
+    const votedList = (() => { try { return JSON.parse(localStorage.getItem('vb_voted_slugs') || '[]'); } catch { return []; } })();
+    const voteCount = savedVotes[tool.id] !== undefined ? savedVotes[tool.id] : tool.votes;
+    const isVoted = votedList.includes(tool.id);
+
+    const launchKitUrl = `../launchkit/index.html?url=${encodeURIComponent(tool.url)}&name=${encodeURIComponent(tool.name)}`;
+
+    const relatedHTML = related.length > 0 ? related.map(t => `
+      <a class="related-card" href="tool.html?id=${t.id}">
+        <div class="related-icon">${t.icon}</div>
+        <div class="related-info">
+          <div class="related-name">${t.name}</div>
+          <div class="related-desc">${t.desc}</div>
+        </div>
+        <div class="related-votes">▲ ${t.votes}</div>
+      </a>`).join('') : '<p style="font-size:13px;color:var(--text4)">No other tools in this category yet.</p>';
+
+    document.getElementById('app').innerHTML = `
+      <div class="page-layout">
+        <div class="main-col">
+          <div class="tool-header">
+            <div class="tool-header-top">
+              <div class="tool-icon">${tool.icon}</div>
+              <div class="tool-title-area">
+                <div class="tool-name">${tool.name}</div>
+                <div class="tool-meta-tags">
+                  <span class="tool-tag">${tool.category}</span>
+                  <span class="built-with">Built with ${tool.built}</span>
+                </div>
+              </div>
+            </div>
+            <div class="tool-desc">${tool.desc}</div>
+            <div class="vote-display">
+              <div>
+                <div class="vote-count" id="voteCount">${voteCount}</div>
+                <div class="vote-label">upvotes</div>
+              </div>
+              <button class="vote-btn ${isVoted ? 'voted' : ''}" id="voteBtn" onclick="toggleVote()">
+                <span>▲</span> <span id="voteBtnText">${isVoted ? 'Voted' : 'Upvote'}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="screenshot-placeholder">📸 Screenshot preview</div>
+
+          <div class="actions">
+            <a href="${tool.url}" target="_blank" class="try-btn">Try ${tool.name} →</a>
+          </div>
+
+          <div class="share-section">
+            <div class="share-title">SHARE THIS TOOL</div>
+            <div class="share-btns">
+              <button class="share-btn" onclick="shareTwitter()">𝕏 Twitter</button>
+              <button class="share-btn" onclick="shareReddit()">↗ Reddit</button>
+              <button class="share-btn" onclick="copyLink(this)">🔗 Copy Link</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <div class="sidebar-box">
+            <div class="sidebar-title">More ${tool.category} tools</div>
+            ${relatedHTML}
+          </div>
+
+          <div class="launchkit-cta">
+            <div class="sidebar-title">🚀 Launch with LaunchKit</div>
+            <p>Generate launch posts for Twitter, Reddit, Hacker News & more — in one click.</p>
+            <a href="${launchKitUrl}" target="_blank" class="launchkit-btn">🚀 Open LaunchKit</a>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+// Vote toggle
+function toggleVote() {
+  const tool = TOOLS.find(t => t.id === toolId);
+  if (!tool) return;
+  const votes = (() => { try { return JSON.parse(localStorage.getItem('vb_votes') || '{}'); } catch { return {}; } })();
+  const voted = (() => { try { return JSON.parse(localStorage.getItem('vb_voted_slugs') || '[]'); } catch { return []; } })();
+  const current = votes[tool.id] !== undefined ? votes[tool.id] : tool.votes;
+  const btn = document.getElementById('voteBtn');
+  const countEl = document.getElementById('voteCount');
+  const textEl = document.getElementById('voteBtnText');
+
+  if (voted.includes(tool.id)) {
+    votes[tool.id] = current - 1;
+    voted.splice(voted.indexOf(tool.id), 1);
+    btn.classList.remove('voted');
+    textEl.textContent = 'Upvote';
+  } else {
+    votes[tool.id] = current + 1;
+    voted.push(tool.id);
+    btn.classList.add('voted');
+    textEl.textContent = 'Voted';
+  }
+  localStorage.setItem('vb_votes', JSON.stringify(votes));
+  localStorage.setItem('vb_voted_slugs', JSON.stringify(voted));
+  countEl.textContent = votes[tool.id];
+}
+
+// Share functions
+function shareTwitter() {
+  const tool = TOOLS.find(t => t.id === toolId);
+  const text = `Check out ${tool.name} on VibeBoard — ${tool.desc}`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+}
+function shareReddit() {
+  const tool = TOOLS.find(t => t.id === toolId);
+  window.open(`https://reddit.com/submit?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(`${tool.name} — ${tool.desc}`)}`, '_blank');
+}
+function copyLink(btn) {
+  navigator.clipboard.writeText(window.location.href);
+  const orig = btn.innerHTML;
+  btn.innerHTML = '✓ Copied!';
+  setTimeout(() => btn.innerHTML = orig, 2000);
+}
+</script>
+</body>
+</html>
