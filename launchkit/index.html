@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaunchKit — Launch everywhere in 30 seconds</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.5;overflow-x:hidden}
+  ::selection{background:#00d4aa33;color:#fff}
+
+  .header{padding:16px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a1a;position:sticky;top:0;background:#0a0a0aee;backdrop-filter:blur(12px);z-index:100}
+  .logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px}
+  .logo span{color:#00d4aa}
+  .nav a{color:#666;text-decoration:none;font-size:14px;margin-left:24px;transition:color .2s}
+  .nav a:hover{color:#00d4aa}
+  @media(max-width:600px){.nav{display:none}}
+
+  .hero{text-align:center;padding:56px 24px 40px;max-width:700px;margin:0 auto}
+  .hero h1{font-size:clamp(28px,5vw,42px);font-weight:800;color:#fff;line-height:1.12;margin-bottom:14px}
+  .hero h1 .accent{color:#00d4aa}
+  .hero p{font-size:clamp(15px,2.5vw,18px);color:#777;margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto}
+
+  .controls{max-width:580px;margin:0 auto;padding:0 24px}
+  .url-input-group{display:flex;gap:0}
+  .url-input{flex:1;padding:14px 18px;border:2px solid #222;border-right:none;border-radius:10px 0 0 10px;background:#111;color:#fff;font-size:15px;outline:none;transition:border-color .2s}
+  .url-input:focus{border-color:#00d4aa55}
+  .url-input::placeholder{color:#444}
+  .launch-btn{padding:14px 24px;background:#00d4aa;color:#0a0a0a;border:2px solid #00d4aa;border-radius:0 10px 10px 0;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+  .launch-btn:hover{background:#00e8bb;border-color:#00e8bb;transform:translateY(-1px)}
+  .launch-btn:active{transform:translateY(0)}
+  .launch-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  @media(max-width:500px){.url-input-group{flex-direction:column;gap:8px}.url-input,.launch-btn{border-radius:10px;border:2px solid #222}.launch-btn{border-color:#00d4aa}}
+
+  .options-row{display:flex;gap:12px;margin-top:14px;align-items:center;flex-wrap:wrap}
+  .tone-label{font-size:13px;color:#555;font-weight:500}
+  .tone-selector{display:flex;gap:0;border:1px solid #222;border-radius:8px;overflow:hidden}
+  .tone-btn{padding:6px 14px;background:transparent;border:none;color:#666;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+  .tone-btn.active{background:#00d4aa;color:#0a0a0a}
+  .tone-btn:hover:not(.active){background:#1a1a1a;color:#aaa}
+
+  .examples{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+  .example-btn{padding:5px 12px;background:#111;border:1px solid #1a1a1a;border-radius:20px;color:#555;font-size:12px;cursor:pointer;transition:all .2s}
+  .example-btn:hover{border-color:#00d4aa44;color:#00d4aa}
+
+  .steps{display:flex;justify-content:center;gap:32px;padding:40px 24px;max-width:700px;margin:0 auto}
+  .step{text-align:center;flex:1;opacity:.4;transition:all .5s}
+  .step.active{opacity:1}
+  .step.done .step-num{background:#00d4aa;border-color:#00d4aa;color:#0a0a0a}
+  .step-num{width:36px;height:36px;border-radius:50%;background:#1a1a1a;border:2px solid #333;color:#555;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:10px;transition:all .4s}
+  .step.active .step-num{border-color:#00d4aa;color:#00d4aa}
+  .step-title{font-weight:600;color:#fff;font-size:14px;margin-bottom:3px}
+  .step-desc{font-size:12px;color:#555}
+  @media(max-width:500px){.steps{gap:16px}.step-desc{display:none}}
+
+  /* Loading */
+  .loading-section{max-width:500px;margin:0 auto;padding:20px 24px 40px;display:none;text-align:center}
+  .loading-section.visible{display:block}
+  .loading-text{font-size:15px;color:#00d4aa;margin-bottom:16px;font-weight:500}
+  .loading-bar{height:3px;background:#1a1a1a;border-radius:3px;overflow:hidden}
+  .loading-fill{height:100%;width:0;background:linear-gradient(90deg,#00d4aa,#00e8bb);border-radius:3px;transition:width .4s ease}
+
+  /* Results */
+  .results{max-width:800px;margin:0 auto;padding:0 24px 60px;display:none}
+  .results.visible{display:block}
+  .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+  .results-title{font-size:14px;color:#888;text-transform:uppercase;letter-spacing:1px}
+  .export-btn{padding:8px 18px;background:transparent;border:1px solid #333;border-radius:8px;color:#888;font-size:13px;cursor:pointer;font-weight:500;transition:all .2s}
+  .export-btn:hover{border-color:#00d4aa;color:#00d4aa}
+
+  .tabs{display:flex;gap:0;border-bottom:1px solid #1a1a1a;margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tab{padding:10px 18px;background:transparent;border:none;border-bottom:2px solid transparent;color:#555;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+  .tab.active{color:#00d4aa;border-bottom-color:#00d4aa}
+  .tab:hover:not(.active){color:#888}
+  @media(max-width:500px){.tab{padding:10px 12px;font-size:12px}}
+
+  .tab-panel{display:none;animation:fadeUp .35s ease}
+  .tab-panel.active{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  .card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:20px;transition:border-color .2s}
+  .card:hover{border-color:#222}
+  .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:8px;flex-wrap:wrap}
+  .card-label{font-size:12px;font-weight:700;color:#00d4aa;text-transform:uppercase;letter-spacing:.5px}
+  .card-actions{display:flex;gap:8px;align-items:center}
+  .char-count{font-size:11px;color:#444;font-variant-numeric:tabular-nums}
+  .char-count.warn{color:#f59e0b}
+  .char-count.over{color:#ef4444}
+  .copy-btn{padding:5px 14px;background:#1a1a1a;border:1px solid #222;border-radius:6px;color:#666;font-size:12px;cursor:pointer;transition:all .2s;font-weight:500}
+  .copy-btn:hover{border-color:#00d4aa;color:#00d4aa}
+  .copy-btn.copied{background:#00d4aa;color:#0a0a0a;border-color:#00d4aa}
+
+  .editable{font-size:14px;color:#ccc;line-height:1.7;outline:none;min-height:60px;border-radius:6px;padding:2px;transition:background .2s}
+  .editable:focus{background:#0d0d0d}
+  .editable .title{font-weight:600;color:#fff;display:block;margin-bottom:4px}
+
+  .landing-mock{background:#fff;border-radius:10px;padding:32px 24px;text-align:center;margin-top:14px}
+  .landing-mock h2{color:#111;font-size:22px;margin-bottom:8px;font-weight:700}
+  .landing-mock p{color:#666;font-size:14px;margin-bottom:16px}
+  .landing-mock .mock-cta{display:inline-block;padding:10px 24px;background:#00d4aa;color:#0a0a0a;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none}
+  .landing-mock .mock-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:20px;text-align:left}
+  .landing-mock .feature-item{background:#f7f7f7;border-radius:8px;padding:14px;font-size:13px;color:#333}
+  .landing-mock .feature-item strong{display:block;font-size:12px;color:#111;margin-bottom:2px}
+
+  .footer{text-align:center;padding:40px 24px;font-size:12px;color:#333}
+
+  /* Spinner for step nums */
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .step-num.spinning{animation:spin 1s linear infinite;border-style:dashed}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Launch<span>Kit</span></div>
+  <div class="nav">
+    <a href="#how">How it works</a>
+    <a href="#examples">Examples</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>Paste your URL.<br><span class="accent">Launch everywhere.</span></h1>
+  <p>You built something cool. Get your Reddit post, Twitter thread, Product Hunt copy, HN post, and landing page — in 30 seconds.</p>
+</div>
+
+<div class="controls">
+  <div class="url-input-group">
+    <input class="url-input" id="urlInput" type="url" placeholder="https://your-awesome-tool.com">
+    <button class="launch-btn" id="launchBtn" onclick="generate()">Generate Launch Package →</button>
+  </div>
+  <div class="options-row">
+    <span class="tone-label">Tone:</span>
+    <div class="tone-selector">
+      <button class="tone-btn" data-tone="professional" onclick="setTone(this)">Professional</button>
+      <button class="tone-btn active" data-tone="casual" onclick="setTone(this)">Casual</button>
+      <button class="tone-btn" data-tone="hype" onclick="setTone(this)">Hype</button>
+    </div>
+  </div>
+  <div class="examples" id="examples">
+    <button class="example-btn" onclick="loadExample(0)">csvwizard.app</button>
+    <button class="example-btn" onclick="loadExample(1)">shipfast.dev</button>
+    <button class="example-btn" onclick="loadExample(2)">calmpage.io</button>
+  </div>
+</div>
+
+<div class="steps" id="stepsSection">
+  <div class="step" id="step1">
+    <div class="step-num">1</div>
+    <div class="step-title">Paste URL</div>
+    <div class="step-desc">We scan your tool</div>
+  </div>
+  <div class="step" id="step2">
+    <div class="step-num">2</div>
+    <div class="step-title">AI generates</div>
+    <div class="step-desc">Copy for every platform</div>
+  </div>
+  <div class="step" id="step3">
+    <div class="step-num">3</div>
+    <div class="step-title">Copy & launch</div>
+    <div class="step-desc">Post everywhere</div>
+  </div>
+</div>
+
+<div class="loading-section" id="loadingSection">
+  <div class="loading-text" id="loadingText">Scanning URL...</div>
+  <div class="loading-bar"><div class="loading-fill" id="loadingFill"></div></div>
+</div>
+
+<div class="results" id="resultsSection">
+  <div class="results-header">
+    <div class="results-title" id="resultsTitle">✨ Generated Launch Package</div>
+    <button class="export-btn" onclick="exportAll()">⬇ Export as Markdown</button>
+  </div>
+
+  <div class="tabs" id="tabsBar"></div>
+  <div id="tabPanels"></div>
+</div>
+
+<div class="footer">LaunchKit — Built for vibe coders who ship fast.</div>
+
+<script>
+const PLATFORMS = [
+  {id:'reddit', label:'📱 Reddit', charField:'title', charLimit:300, limitLabel:'Title limit: 300'},
+  {id:'twitter', label:'🐦 Twitter', charField:'full', charLimit:280, limitLabel:'Per tweet: 280'},
+  {id:'producthunt', label:'🚀 Product Hunt', charField:'tagline', charLimit:60, limitLabel:'Tagline limit: 60'},
+  {id:'hn', label:'💻 Hacker News', charField:'title', charLimit:80, limitLabel:'Title limit: 80'},
+  {id:'landing', label:'🌐 Landing Page', charField:null, charLimit:null}
+];
+
+const DATA = {
+  // csvwizard.app
+  0: {
+    name:'CSV Wizard', url:'csvwizard.app',
+    tones: {
+      professional: {
+        reddit:{title:'Introducing CSV Wizard: Natural-language queries for CSV files', body:'We built a tool that lets you upload any CSV file and query it using plain English. Ask "show revenue by quarter" and get instant visualizations. No SQL or coding required.\n\nHandles files up to 50MB. Free tier available.', sub:'r/datascience'},
+        twitter:{text:'Introducing CSV Wizard — upload a CSV, ask questions in plain English, get instant charts.\n\nNo SQL. No Python. No code.\n\nDesigned for analysts, PMs, and founders who need answers from data without writing scripts.\n\nTry it free → csvwizard.app'},
+        producthunt:{tagline:'Query your spreadsheets in plain English', desc:'CSV Wizard lets you upload any CSV file and ask questions using natural language. Get instant charts, summaries, and insights without writing a single line of code.\n\nMaker comment: "We built this for the non-technical people on our team who kept asking engineers to pull data for them. Now they get answers in seconds."'},
+        hn:{title:'Show HN: CSV Wizard – Query CSV files with natural language', body:'I built a web app where you upload a CSV, type a question like "show sales by region as a bar chart," and get an instant visualization. Uses Claude for query parsing.\n\nNo signup required for the free tier. Handles files up to 50MB. Would love feedback on the UX.'},
+        landing:{headline:'CSV Wizard',subline:'Upload a CSV. Ask questions in plain English. Get instant charts and insights.',cta:'Try CSV Wizard Free',features:['Natural language queries','Instant chart generation','50MB file support','No signup required']}
+      },
+      casual: {
+        reddit:{title:'I built a tool that lets you ask questions to your CSV files in plain English', body:'Drop any CSV, ask "what\'s my top selling product?" or "show me revenue by month" — and get instant charts. No SQL, no pandas, no code.\n\nBuilt with Cursor + Claude in a weekend. Try it free.', sub:'r/vibecoding'},
+        twitter:{text:'I built CSV Wizard this weekend 🧵\n\nDrop any CSV file → ask questions in plain English → get instant charts.\n\nNo SQL. No pandas. No code.\n\nHere\'s what it does and how I built it with @cursor_ai + Claude ↓\n\ncsvwizard.app'},
+        producthunt:{tagline:'Drop a CSV, ask in English, get charts. Zero code.', desc:'CSV Wizard — Ask your spreadsheets anything.\n\nMaker comment: "I built this because I was tired of writing pandas scripts every time someone sent me a CSV. Now I just drop the file and ask what I want to know."'},
+        hn:{title:'Show HN: CSV Wizard — Query CSV files with natural language', body:'I built a web tool where you drop a CSV file, type a question like "show me sales by region as a bar chart," and get an instant visualization. Uses Claude for query understanding.\n\nNo signup required. Handles files up to 50MB.'},
+        landing:{headline:'CSV Wizard',subline:'Drop a CSV. Ask questions in plain English. Get instant charts and insights.',cta:'Try CSV Wizard Free →',features:['Ask in plain English','Charts in seconds','Handles huge files','Free to start']}
+      },
+      hype: {
+        reddit:{title:'🔥 I built a tool that turns any CSV into an AI-powered dashboard in SECONDS', body:'Drop your CSV → ask ANY question in plain English → get instant charts and insights. No SQL. No code. No BS.\n\nThis is the future of data analysis and I built it in a weekend. The AI understands exactly what you want.\n\nFree to use. Go try it RIGHT NOW.', sub:'r/vibecoding'},
+        twitter:{text:'🚀 Just dropped CSV Wizard and it\'s INSANE\n\nDrop ANY CSV → ask questions in English → instant charts\n\n❌ No SQL\n❌ No pandas\n❌ No code\n\nBuilt this in a weekend with AI. The future of data analysis is HERE.\n\ncsvwizard.app'},
+        producthunt:{tagline:'🔥 The AI data analyst that never sleeps', desc:'CSV Wizard — Your spreadsheets just got superpowers.\n\nDrop any CSV. Ask anything. Get instant, beautiful charts. This changes EVERYTHING about how non-technical people work with data.\n\nMaker comment: "I can\'t believe this didn\'t exist before. We\'re making data analysis accessible to literally everyone."'},
+        hn:{title:'Show HN: CSV Wizard — I replaced our data team\'s ad-hoc query workflow', body:'Built a tool that lets anyone upload a CSV, ask a natural language question, and get instant charts. Uses Claude for understanding queries.\n\nOur product team went from 15 Slack requests/day to zero. No signup, handles 50MB files. Would love your thoughts.'},
+        landing:{headline:'CSV Wizard',subline:'Drop a CSV. Ask anything. Get instant charts. The AI data analyst that never sleeps. 🔥',cta:'Try It Now — It\'s Free 🚀',features:['AI-powered queries','Instant visualizations','Massive file support','Zero learning curve']}
+      }
+    }
+  },
+  // shipfast.dev
+  1: {
+    name:'ShipFast', url:'shipfast.dev',
+    tones: {
+      professional: {
+        reddit:{title:'ShipFast: A Next.js boilerplate that cuts SaaS launch time from weeks to days', body:'We compiled the most common SaaS patterns (auth, payments, email, SEO, landing page) into a single Next.js boilerplate. Stripe, Supabase, and Resend pre-configured.\n\nSaved our team 3 weeks on the last launch.', sub:'r/nextjs'},
+        twitter:{text:'Announcing ShipFast — the Next.js boilerplate for SaaS.\n\nAuth, payments, emails, SEO, database — all pre-configured.\n\nStop rebuilding the same infrastructure. Start shipping your actual product.\n\nshipfast.dev'},
+        producthunt:{tagline:'Ship your SaaS in days, not weeks', desc:'ShipFast is a production-ready Next.js boilerplate with auth, Stripe payments, email, SEO, and database pre-configured. Focus on your product, not infrastructure.\n\nMaker comment: "After building 4 SaaS products and repeating the same setup every time, I packaged it all into ShipFast."'},
+        hn:{title:'Show HN: ShipFast – Next.js SaaS boilerplate with auth, payments, email', body:'After building several SaaS apps I kept re-implementing the same patterns. ShipFast bundles auth (NextAuth), payments (Stripe), email (Resend), DB (Supabase), and SEO into one starter.\n\nNot a framework — just a well-organized starting point. MIT licensed.'},
+        landing:{headline:'ShipFast',subline:'The Next.js boilerplate for SaaS. Auth, payments, emails, SEO — all pre-wired.',cta:'Get ShipFast',features:['NextAuth built-in','Stripe payments','Email with Resend','SEO optimized']}
+      },
+      casual: {
+        reddit:{title:'I got tired of rebuilding auth + payments for every side project, so I made ShipFast', body:'It\'s a Next.js boilerplate with auth, Stripe, emails, and a database already set up. Just clone, add your keys, and start building the thing that actually matters.\n\nFree and open source. Would love feedback.', sub:'r/SideProject'},
+        twitter:{text:'I kept rebuilding the same SaaS boilerplate over and over so I turned it into a product lol\n\nShipFast = Next.js + Auth + Stripe + Email + DB\n\nClone it → add your keys → ship your thing\n\nshipfast.dev'},
+        producthunt:{tagline:'Clone, configure, ship. SaaS in a weekend.', desc:'ShipFast — Stop rebuilding auth and payments.\n\nMaker comment: "Every side project started with 2 weeks of setup. Now it starts with `git clone`. I wish I\'d had this years ago."'},
+        hn:{title:'Show HN: ShipFast – The SaaS boilerplate I wish existed 3 years ago', body:'Got tired of wiring up auth, payments, and email for every new project. ShipFast is a Next.js starter with all of that pre-configured. Clone, add env vars, build your thing.\n\nMIT licensed. Roast my code.'},
+        landing:{headline:'ShipFast',subline:'Stop rebuilding auth and payments. Clone, configure, ship your SaaS in a weekend.',cta:'Start Shipping →',features:['Auth done for you','Payments in minutes','Emails that work','Database ready']}
+      },
+      hype: {
+        reddit:{title:'🚀 ShipFast: Go from idea to LIVE SaaS in a single weekend', body:'Auth? Done. Payments? Done. Emails? Done. Database? Done. SEO? DONE.\n\nShipFast is everything you need to stop procrastinating and START SHIPPING. Next.js boilerplate that turns "someday" into "today."\n\nSeriously, stop building auth for the 47th time.', sub:'r/SideProject'},
+        twitter:{text:'🔥 ShipFast just changed the game\n\nFrom zero to LIVE SaaS in one weekend:\n✅ Auth\n✅ Payments\n✅ Email\n✅ Database\n✅ SEO\n\nStop building infrastructure. Start building YOUR THING.\n\nshipfast.dev'},
+        producthunt:{tagline:'🔥 Zero to live SaaS in one weekend', desc:'ShipFast — The LAST boilerplate you\'ll ever need.\n\nAuth, payments, email, DB, SEO — ALL pre-configured. Clone and ship. That\'s it. That\'s the product.\n\nMaker comment: "We\'re ending the boilerplate era. Stop building plumbing. Ship the thing that matters."'},
+        hn:{title:'Show HN: ShipFast – From idea to deployed SaaS in a weekend', body:'I got frustrated rebuilding the same auth/payments/email stack for every project. ShipFast packages it all into a single Next.js clone-and-go starter.\n\nUsed it to ship 3 products in the last month. MIT licensed, would love feedback.'},
+        landing:{headline:'ShipFast',subline:'Zero to live SaaS in one weekend. Auth, payments, email — all done. Just add your idea. 🚀',cta:'Start Shipping Now 🔥',features:['Auth in 2 minutes','Stripe in 5 clicks','Built-in emails','Ship, don\'t setup']}
+      }
+    }
+  },
+  // calmpage.io
+  2: {
+    name:'CalmPage', url:'calmpage.io',
+    tones: {
+      professional: {
+        reddit:{title:'CalmPage: A minimal website builder for people who find Notion sites too complex', body:'CalmPage generates a clean, fast personal page from a simple form. No drag-and-drop, no themes to choose from. Answer a few questions, get a beautiful page.\n\nBuilt for writers, researchers, and indie creators who want a web presence without the overhead.', sub:'r/webdev'},
+        twitter:{text:'Introducing CalmPage — the anti-website-builder.\n\nAnswer a few questions. Get a beautiful, fast personal page. No templates. No drag-and-drop. No decisions.\n\nDesigned for people who want a web presence, not a web project.\n\ncalmpage.io'},
+        producthunt:{tagline:'A personal page without the overhead', desc:'CalmPage generates a clean, fast website from a simple questionnaire. No builder UI, no templates, no decisions. Just your content, beautifully presented.\n\nMaker comment: "Most people don\'t need a website builder. They need a website. CalmPage gives you the result without the process."'},
+        hn:{title:'Show HN: CalmPage – Generate a personal website from a short questionnaire', body:'Built a tool that creates minimal personal pages without a builder UI. Fill out a form (name, bio, links, projects), and CalmPage generates a fast, responsive page.\n\nNo JavaScript in the output. Sub-50KB pages. Custom domains supported.'},
+        landing:{headline:'CalmPage',subline:'A personal page without the overhead. Answer a few questions, get a beautiful website.',cta:'Create Your Page',features:['No builder needed','Sub-50KB pages','Custom domains','Always fast']}
+      },
+      casual: {
+        reddit:{title:'I made a website builder for people who hate website builders', body:'CalmPage asks you a few questions (name, bio, links) and generates a minimal personal page. No themes. No drag-and-drop. No decisions to make.\n\nI built it because I spent 3 hours picking a Notion template and still hated my site.', sub:'r/SideProject'},
+        twitter:{text:'I made a website builder for people who hate website builders 😅\n\nCalmPage = answer 5 questions → get a beautiful personal page\n\nNo templates. No drag and drop. No "which font should I use?"\n\nJust your content, looking great.\n\ncalmpage.io'},
+        producthunt:{tagline:'Answer 5 questions, get a beautiful website', desc:'CalmPage — The website builder that doesn\'t feel like one.\n\nMaker comment: "I spent 3 hours picking a Notion template and still hated my site. So I built CalmPage — answer a few questions, get a page you actually like."'},
+        hn:{title:'Show HN: CalmPage – A website builder with no builder UI', body:'Frustrated with spending hours on website builders, I made CalmPage. Fill out a short form (name, bio, links), get a minimal, fast personal page.\n\nNo JS in the output. Pages are under 50KB. Supports custom domains. Would love feedback on the approach.'},
+        landing:{headline:'CalmPage',subline:'Answer a few questions. Get a personal page you actually like. No builder required.',cta:'Make Your Page →',features:['5 questions, done','Looks great always','Crazy fast pages','Your own domain']}
+      },
+      hype: {
+        reddit:{title:'🔥 I built CalmPage — the website builder that takes 60 SECONDS', body:'I\'m so done with website builders. Templates? Fonts? Color pickers? Layout options? ENOUGH.\n\nCalmPage: answer 5 questions → get a GORGEOUS personal page instantly. Zero decisions. Zero stress. Zero BS.\n\nYour website should take less time than your morning coffee.', sub:'r/SideProject'},
+        twitter:{text:'🔥 CalmPage is LIVE and it\'s the opposite of every website builder ever\n\n⏱ 60 seconds\n📝 5 questions\n🎨 0 design decisions\n✨ 1 beautiful page\n\nStop overthinking your personal site. Just answer and ship.\n\ncalmpage.io'},
+        producthunt:{tagline:'✨ 60 seconds to a perfect personal page', desc:'CalmPage — The website builder that DOESN\'T let you waste 3 hours picking templates.\n\nAnswer 5 questions. Get a stunning page. Ship it. Done.\n\nMaker comment: "Website builders are the #1 procrastination tool for creators. CalmPage is the cure."'},
+        hn:{title:'Show HN: CalmPage – Personal website in 60 seconds, no builder UI', body:'Built a website generator that skips the builder entirely. Short questionnaire → instant minimal page. No JS output, sub-50KB, custom domains.\n\nHypothesis: most personal sites don\'t need a builder — they need good defaults and fast execution. Feedback welcome.'},
+        landing:{headline:'CalmPage',subline:'60 seconds. 5 questions. One beautiful page. The fastest way to get online. ✨',cta:'Get Your Page Now 🚀',features:['Done in 60 seconds','Zero design decisions','Blazing fast output','Custom domains']}
+      }
+    }
+  }
+};
+
+let currentTone = 'casual';
+let currentData = null;
+let currentName = '';
+
+function setTone(btn) {
+  document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTone = btn.dataset.tone;
+  if (currentData) renderResults();
+}
+
+function loadExample(idx) {
+  const d = DATA[idx];
+  document.getElementById('urlInput').value = 'https://' + d.url;
+  generate();
+}
+
+async function generate() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) { document.getElementById('urlInput').focus(); return; }
+
+  const btn = document.getElementById('launchBtn');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+
+  // Find matching data or default to 0
+  let dataIdx = 0;
+  Object.keys(DATA).forEach(k => { if (url.includes(DATA[k].url)) dataIdx = parseInt(k); });
+  currentData = DATA[dataIdx];
+  currentName = currentData.name;
+
+  // Hide results, show loading
+  document.getElementById('resultsSection').classList.remove('visible');
+  const loading = document.getElementById('loadingSection');
+  loading.classList.add('visible');
+  const fill = document.getElementById('loadingFill');
+  const text = document.getElementById('loadingText');
+
+  const steps = [
+    {msg:'Scanning URL...', pct:20, step:1},
+    {msg:'Analyzing content...', pct:45, step:1},
+    {msg:'Generating copy for each platform...', pct:70, step:2},
+    {msg:'Building landing page...', pct:90, step:2},
+    {msg:'Done! ✨', pct:100, step:3}
+  ];
+
+  // Reset steps
+  document.querySelectorAll('.step').forEach(s => { s.classList.remove('active','done'); s.querySelector('.step-num').classList.remove('spinning'); });
+  document.getElementById('step1').classList.add('active');
+
+  for (const s of steps) {
+    fill.style.width = s.pct + '%';
+    text.textContent = s.msg;
+    // Activate step
+    const stepEl = document.getElementById('step' + s.step);
+    document.querySelectorAll('.step').forEach(el => {
+      const num = parseInt(el.id.replace('step',''));
+      if (num < s.step) { el.classList.add('done'); el.classList.remove('active'); el.querySelector('.step-num').classList.remove('spinning'); }
+      else if (num === s.step) { el.classList.add('active'); el.querySelector('.step-num').classList.add('spinning'); }
+    });
+    await sleep(600 + Math.random() * 400);
+  }
+
+  // Finish steps
+  document.querySelectorAll('.step').forEach(s => { s.classList.add('done'); s.classList.remove('active'); s.querySelector('.step-num').classList.remove('spinning'); });
+
+  await sleep(300);
+  loading.classList.remove('visible');
+  renderResults();
+  btn.disabled = false;
+  btn.textContent = 'Generate Launch Package →';
+}
+
+function renderResults() {
+  const toneData = currentData.tones[currentTone];
+  document.getElementById('resultsTitle').textContent = '✨ Generated Launch Package for ' + currentName;
+
+  // Build tabs
+  const tabsBar = document.getElementById('tabsBar');
+  tabsBar.innerHTML = PLATFORMS.map((p,i) =>
+    `<button class="tab${i===0?' active':''}" onclick="switchTab(${i})" data-idx="${i}">${p.label}</button>`
+  ).join('');
+
+  // Build panels
+  const panels = document.getElementById('tabPanels');
+  panels.innerHTML = PLATFORMS.map((p,i) => {
+    if (p.id === 'landing') return buildLandingPanel(toneData.landing, i);
+    return buildTextPanel(p, toneData[p.id], i);
+  }).join('');
+
+  document.getElementById('resultsSection').classList.add('visible');
+  updateAllCharCounts();
+}
+
+function buildTextPanel(platform, data, idx) {
+  let content = '';
+  if (platform.id === 'reddit') {
+    content = `<span class="title">${data.title}</span>\n${data.body}\n<br><small style="color:#444">${data.sub}</small>`;
+  } else if (platform.id === 'twitter') {
+    content = data.text;
+  } else if (platform.id === 'producthunt') {
+    content = `<span class="title">${data.tagline}</span>\n${data.desc}`;
+  } else if (platform.id === 'hn') {
+    content = `<span class="title">${data.title}</span>\n${data.body}`;
+  }
+  return `<div class="tab-panel${idx===0?' active':''}" data-panel="${idx}">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-label">${platform.label}</span>
+        <div class="card-actions">
+          <span class="char-count" id="charcount-${idx}">${platform.limitLabel}</span>
+          <button class="copy-btn" onclick="copyContent(this, ${idx})">Copy</button>
+        </div>
+      </div>
+      <div class="editable" contenteditable="true" id="content-${idx}" oninput="updateCharCount(${idx})">${content}</div>
+    </div>
+  </div>`;
+}
+
+function buildLandingPanel(data, idx) {
+  return `<div class="tab-panel${idx===0?' active':''}" data-panel="${idx}">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-label">🌐 Landing Page Preview</span>
+        <button class="copy-btn" onclick="copyContent(this, ${idx})" style="background:#00d4aa;color:#0a0a0a;border-color:#00d4aa">Copy HTML</button>
+      </div>
+      <div class="landing-mock">
+        <h2>${data.headline}</h2>
+        <p>${data.subline}</p>
+        <a class="mock-cta" href="#">${data.cta}</a>
+        <div class="mock-features">
+          ${data.features.map(f => `<div class="feature-item"><strong>✓</strong>${f}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function switchTab(idx) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab[data-idx="${idx}"]`).classList.add('active');
+  document.querySelector(`.tab-panel[data-panel="${idx}"]`).classList.add('active');
+}
+
+function updateCharCount(idx) {
+  const el = document.getElementById('content-' + idx);
+  const counter = document.getElementById('charcount-' + idx);
+  if (!el || !counter) return;
+  const p = PLATFORMS[idx];
+  if (!p.charLimit) return;
+  const text = el.innerText || '';
+  const len = text.length;
+  counter.textContent = `${len} / ${p.charLimit}`;
+  counter.className = 'char-count' + (len > p.charLimit ? ' over' : len > p.charLimit * 0.9 ? ' warn' : '');
+}
+
+function updateAllCharCounts() {
+  PLATFORMS.forEach((p,i) => { if (p.charLimit) updateCharCount(i); });
+}
+
+function copyContent(btn, idx) {
+  const el = document.getElementById('content-' + idx);
+  let text;
+  if (el) {
+    text = el.innerText;
+  } else {
+    // Landing page - copy the mock HTML
+    const panel = document.querySelector(`.tab-panel[data-panel="${idx}"]`);
+    text = panel.querySelector('.landing-mock').innerHTML;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = btn.style.background ? 'Copy HTML' : 'Copy'; }, 1500);
+  });
+}
+
+function exportAll() {
+  const toneData = currentData.tones[currentTone];
+  let md = `# Launch Package: ${currentName}\n\n`;
+  md += `*Generated by LaunchKit · Tone: ${currentTone}*\n\n---\n\n`;
+  md += `## Reddit Post\n\n**${toneData.reddit.title}**\n\n${toneData.reddit.body}\n\n*${toneData.reddit.sub}*\n\n---\n\n`;
+  md += `## Twitter Thread\n\n${toneData.twitter.text}\n\n---\n\n`;
+  md += `## Product Hunt\n\n**${toneData.producthunt.tagline}**\n\n${toneData.producthunt.desc}\n\n---\n\n`;
+  md += `## Hacker News\n\n**${toneData.hn.title}**\n\n${toneData.hn.body}\n\n---\n\n`;
+  md += `## Landing Page Copy\n\n### ${toneData.landing.headline}\n\n${toneData.landing.subline}\n\nCTA: ${toneData.landing.cta}\n\nFeatures:\n${toneData.landing.features.map(f=>'- '+f).join('\n')}\n`;
+
+  const blob = new Blob([md], {type:'text/markdown'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `launchkit-${currentName.toLowerCase().replace(/\s+/g,'-')}.md`;
+  a.click();
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
