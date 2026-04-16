@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aaronagent.github.io/startup/sitemap.xml
