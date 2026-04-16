@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050505"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4aa"/>
+      <stop offset="100%" style="stop-color:#00f5c8"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6c5ce7"/>
+      <stop offset="100%" style="stop-color:#a78bfa"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid lines -->
+  <g opacity="0.04" stroke="#fff" stroke-width="1">
+    <line x1="0" y1="60" x2="1200" y2="60"/><line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/><line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/><line x1="0" y1="480" x2="1200" y2="480"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+    <line x1="60" y1="0" x2="60" y2="630"/><line x1="120" y1="0" x2="120" y2="630"/>
+    <line x1="180" y1="0" x2="180" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/><line x1="360" y1="0" x2="360" y2="630"/>
+    <line x1="420" y1="0" x2="420" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/>
+    <line x1="540" y1="0" x2="540" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="660" y1="0" x2="660" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/>
+    <line x1="780" y1="0" x2="780" y2="630"/><line x1="840" y1="0" x2="840" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/>
+    <line x1="1020" y1="0" x2="1020" y2="630"/><line x1="1080" y1="0" x2="1080" y2="630"/>
+    <line x1="1140" y1="0" x2="1140" y2="630"/>
+  </g>
+
+  <!-- Glow effects -->
+  <circle cx="200" cy="100" r="250" fill="#00d4aa" opacity="0.05"/>
+  <circle cx="1000" cy="530" r="250" fill="#6c5ce7" opacity="0.05"/>
+
+  <!-- Title -->
+  <text x="600" y="220" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="28" fill="#666" text-anchor="middle" font-weight="600" letter-spacing="3">TWO PRODUCTS, ONE MISSION</text>
+
+  <text x="600" y="300" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="64" fill="#fff" text-anchor="middle" font-weight="800">Build it.</text>
+  <text x="430" y="370" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="64" fill="url(#green)" text-anchor="middle" font-weight="800">Launch it.</text>
+  <text x="810" y="370" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="64" fill="url(#purple)" text-anchor="middle" font-weight="800">Get discovered.</text>
+
+  <!-- Product labels -->
+  <text x="380" y="470" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="24" fill="#00d4aa" text-anchor="middle" font-weight="700">🚀 LaunchKit</text>
+  <text x="820" y="470" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="24" fill="#6c5ce7" text-anchor="middle" font-weight="700">⚡ VibeBoard</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="540" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" fill="#555" text-anchor="middle">The complete toolkit for vibe coders</text>
+
+  <!-- URL -->
+  <text x="600" y="590" font-family="-apple-system, BlinkMacSystemFont, monospace" font-size="16" fill="#333" text-anchor="middle">github.com/aaronagent/startup</text>
+</svg>
