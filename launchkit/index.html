@@ -468,6 +468,266 @@ function exportAll() {
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ========== V2 FEATURES ==========
+
+// --- Pro Tips ---
+const PRO_TIPS = {
+  0: [ // Reddit
+    "Best time to post: Tuesday-Thursday, 9-11am EST",
+    "Use r/vibecoding (153K members), r/sideproject, r/webdev",
+    "Title should be a story, not an ad. 'I built...' works better than 'Check out...'",
+    "Reply to every comment in the first 2 hours — it boosts the algorithm",
+    "Add a TL;DR at the end for skimmers"
+  ],
+  1: [ // Twitter
+    "Optimal thread length: 4-7 tweets. More gets ignored, less loses depth",
+    "First tweet is everything — no 'thread:' prefix, just hook them",
+    "Include a screenshot or demo GIF in tweet 2 or 3",
+    "End with a clear CTA + pin the thread",
+    "Post between 8-10am or 5-7pm your target audience's timezone"
+  ],
+  2: [ // Product Hunt
+    "Launch on Tuesday-Thursday for max visibility",
+    "Prepare your hunter 1 week ahead",
+    "First comment (maker comment) should tell your personal story",
+    "Engage with every comment on launch day",
+    "Tagline under 60 chars — punchy, not descriptive"
+  ],
+  3: [ // HN
+    "Show HN titles should be factual, not hypey",
+    "'Show HN: X — Y' where Y is a concise technical description",
+    "HN rewards technical depth — mention your architecture",
+    "Don't ask for upvotes. Don't even hint at it",
+    "Best time: weekday mornings US Pacific time"
+  ]
+};
+
+// Inject pro tips into each tab panel (except landing)
+document.querySelectorAll('.tab-panel').forEach((panel, idx) => {
+  if (idx >= 4 || !PRO_TIPS[idx]) return;
+  const tips = PRO_TIPS[idx];
+  const tipsHtml = `
+    <div class="pro-tips" style="margin-top:16px;border-top:1px solid #1a1a1a;padding-top:16px;">
+      <div class="tips-toggle" style="cursor:pointer;font-size:13px;color:#555;font-weight:600;display:flex;align-items:center;gap:6px;user-select:none;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.arrow').textContent=this.nextElementSibling.style.display==='none'?'▶':'▼'">
+        <span class="arrow" style="font-size:10px;">▶</span> Pro Tips
+      </div>
+      <div style="display:none;margin-top:10px;">
+        ${tips.map(t => `<div style="font-size:12px;color:#666;padding:4px 0 4px 16px;border-left:2px solid #1a1a1a;margin-bottom:6px;">${t}</div>`).join('')}
+      </div>
+    </div>`;
+  panel.querySelector('.card').insertAdjacentHTML('beforeend', tipsHtml);
+});
+
+// --- Launch Checklist ---
+const CHECKLIST_ITEMS = [
+  { phase: 'Pre-Launch', items: [
+    'Set up analytics (Plausible/Umami/GA)',
+    'Prepare 30-second demo video or GIF',
+    'Choose launch day (Tue-Thu recommended)',
+    'Draft responses to common questions',
+    'Set up a feedback channel (email/Discord/Twitter DMs)',
+    'Test your tool on mobile',
+    'Proofread all copy one more time',
+    'Prepare social media accounts'
+  ]},
+  { phase: 'Launch Day', items: [
+    'Post to Reddit (morning, EST)',
+    'Post Twitter thread',
+    'Submit to Product Hunt',
+    'Submit Show HN',
+    'Share in relevant Discord servers',
+    'Monitor and reply to all comments',
+    'Fix any bugs reported immediately'
+  ]},
+  { phase: 'Post-Launch', items: [
+    'Send thank-you to early supporters',
+    'Write a "what I learned" retrospective',
+    'Track metrics for 1 week',
+    'Iterate based on feedback',
+    'Plan next launch (new feature? new platform?)'
+  ]}
+];
+
+function loadChecklist() {
+  return JSON.parse(localStorage.getItem('lk-checklist') || '{}');
+}
+function saveChecklist(state) {
+  localStorage.setItem('lk-checklist', JSON.stringify(state));
+}
+
+// Add checklist tab
+const tabBar = document.querySelector('.tabs');
+if (tabBar) {
+  const checklistTab = document.createElement('div');
+  checklistTab.className = 'tab';
+  checklistTab.dataset.idx = '5';
+  checklistTab.textContent = '📋 Checklist';
+  checklistTab.onclick = () => switchTab(5);
+  tabBar.appendChild(checklistTab);
+
+  const state = loadChecklist();
+  const checklistPanel = document.createElement('div');
+  checklistPanel.className = 'tab-panel';
+  checklistPanel.dataset.panel = '5';
+  checklistPanel.innerHTML = `<div class="card">
+    <div class="card-header"><span class="card-label">Launch Checklist</span>
+    <span style="font-size:12px;color:#555;" id="checklist-progress"></span></div>
+    ${CHECKLIST_ITEMS.map(group => `
+      <div style="margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:600;color:#888;margin-bottom:8px;">${group.phase}</div>
+        ${group.items.map((item, i) => {
+          const key = group.phase + '-' + i;
+          const checked = state[key] ? 'checked' : '';
+          return `<label style="display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;font-size:13px;color:#ccc;transition:opacity .2s;${state[key]?'opacity:.5;text-decoration:line-through;':''}">
+            <input type="checkbox" ${checked} onchange="toggleCheckItem(this,'${key}')" style="accent-color:#00d4aa;width:16px;height:16px;cursor:pointer;">
+            ${item}
+          </label>`;
+        }).join('')}
+      </div>
+    `).join('')}
+  </div>`;
+  document.querySelector('.results').appendChild(checklistPanel);
+  updateChecklistProgress();
+}
+
+function toggleCheckItem(el, key) {
+  const state = loadChecklist();
+  state[key] = el.checked;
+  saveChecklist(state);
+  const label = el.parentElement;
+  label.style.opacity = el.checked ? '.5' : '1';
+  label.style.textDecoration = el.checked ? 'line-through' : 'none';
+  updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+  const state = loadChecklist();
+  const total = CHECKLIST_ITEMS.reduce((s, g) => s + g.items.length, 0);
+  const done = Object.values(state).filter(Boolean).length;
+  const el = document.getElementById('checklist-progress');
+  if (el) el.textContent = `${done}/${total} done`;
+}
+
+// --- History ---
+function saveToHistory(name, url, tone) {
+  const history = JSON.parse(localStorage.getItem('lk-history') || '[]');
+  history.unshift({ name, url, tone, timestamp: Date.now() });
+  if (history.length > 20) history.length = 20;
+  localStorage.setItem('lk-history', JSON.stringify(history));
+}
+
+function getHistory() {
+  return JSON.parse(localStorage.getItem('lk-history') || '[]');
+}
+
+// Inject history button into header
+const nav = document.querySelector('.nav');
+if (nav) {
+  const histBtn = document.createElement('a');
+  histBtn.href = '#';
+  histBtn.textContent = '📚 History';
+  histBtn.style.position = 'relative';
+  histBtn.onclick = (e) => {
+    e.preventDefault();
+    toggleHistoryDropdown();
+  };
+  nav.appendChild(histBtn);
+
+  const dropdown = document.createElement('div');
+  dropdown.id = 'history-dropdown';
+  dropdown.style.cssText = 'display:none;position:absolute;top:56px;right:24px;background:#111;border:1px solid #222;border-radius:10px;padding:12px;width:280px;max-height:300px;overflow-y:auto;z-index:200;box-shadow:0 12px 40px rgba(0,0,0,.5);';
+  document.body.appendChild(dropdown);
+}
+
+function toggleHistoryDropdown() {
+  const dd = document.getElementById('history-dropdown');
+  if (!dd) return;
+  if (dd.style.display === 'none') {
+    const history = getHistory();
+    if (history.length === 0) {
+      dd.innerHTML = '<div style="font-size:13px;color:#555;text-align:center;padding:16px;">No history yet. Generate a package first!</div>';
+    } else {
+      dd.innerHTML = '<div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Recent Packages</div>' +
+        history.map((h, i) => {
+          const ago = timeAgo(h.timestamp);
+          return `<div onclick="restoreHistory(${i})" style="padding:8px;border-radius:6px;cursor:pointer;margin-bottom:4px;transition:background .15s;" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='transparent'">
+            <div style="font-size:13px;color:#fff;font-weight:500;">${h.name}</div>
+            <div style="font-size:11px;color:#555;">${ago} · ${h.tone}</div>
+          </div>`;
+        }).join('');
+    }
+    dd.style.display = 'block';
+    setTimeout(() => document.addEventListener('click', closeHistoryOnClickOutside), 10);
+  } else {
+    dd.style.display = 'none';
+  }
+}
+
+function closeHistoryOnClickOutside(e) {
+  const dd = document.getElementById('history-dropdown');
+  if (dd && !dd.contains(e.target)) {
+    dd.style.display = 'none';
+    document.removeEventListener('click', closeHistoryOnClickOutside);
+  }
+}
+
+function restoreHistory(idx) {
+  const history = getHistory();
+  const h = history[idx];
+  if (!h) return;
+  document.getElementById('url-input').value = h.url;
+  // Set tone
+  document.querySelectorAll('.tone-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.tone === h.tone);
+  });
+  currentTone = h.tone;
+  document.getElementById('history-dropdown').style.display = 'none';
+  generate();
+}
+
+function timeAgo(ts) {
+  const diff = Date.now() - ts;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  const days = Math.floor(hrs / 24);
+  return days + 'd ago';
+}
+
+// Patch generate function to save history
+const _origGenerate = typeof generate === 'function' ? generate : null;
+if (_origGenerate) {
+  const origGen = generate;
+  // We'll hook into it post-completion via MutationObserver
+}
+
+// Save history when results become visible
+const resultsEl = document.querySelector('.results');
+if (resultsEl) {
+  new MutationObserver(() => {
+    if (resultsEl.classList.contains('visible') && currentName) {
+      const url = document.getElementById('url-input')?.value || '';
+      saveToHistory(currentName, url, currentTone);
+    }
+  }).observe(resultsEl, { attributes: true, attributeFilter: ['class'] });
+}
+
+// --- Keyboard Shortcuts ---
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
+  if (e.key === '/') { e.preventDefault(); document.getElementById('url-input')?.focus(); }
+  if (e.key === 'Enter' && !e.target.closest('input')) {
+    const btn = document.querySelector('.gen-btn');
+    if (btn && !btn.disabled) btn.click();
+  }
+  // Tab switching with 1-5
+  if (['1','2','3','4','5'].includes(e.key) && resultsEl?.classList.contains('visible')) {
+    switchTab(parseInt(e.key) - 1);
+  }
+});
 </script>
 </body>
 </html>
