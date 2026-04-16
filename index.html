@@ -312,11 +312,63 @@
 <div class="footer">
   <a href="https://github.com/aaronagent/startup" target="_blank">GitHub</a> ·
   <a href="design-system.html">Design System</a> ·
-  Built with AI
+  Built with AI ·
+  <a href="#" onclick="toggleLang(event)" id="langToggle" style="cursor:pointer">中文</a>
 </div>
 
 <script>
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
+const I18N = {
+  en: {
+    badge: 'Two products, one mission',
+    h1a: 'Build it.', h1b: 'Launch it.', h1c: 'Get discovered.',
+    subtitle: 'The complete toolkit for vibe coders — from shipping your project to getting your first 1,000 users.',
+    lkDesc: 'Paste your URL, get a complete launch package — landing page, Reddit post, Twitter thread, Product Hunt copy. All AI-generated, all editable.',
+    vbDesc: 'The front page for vibe-coded tools. Discover what people are building with AI, vote for the best, submit your own creation.',
+    lkLink: 'Open LaunchKit', vbLink: 'Open VibeBoard',
+    flywheel: 'THE FLYWHEEL',
+    fw1: 'Build a tool', fw2: 'LaunchKit generates copy', fw3: 'Post everywhere',
+    fw4: 'Get discovered on VibeBoard', fw5: 'More builders inspired', fw6: 'Build more tools',
+    toggle: '中文'
+  },
+  zh: {
+    badge: '两款产品，一个使命',
+    h1a: '做出来。', h1b: '推出去。', h1c: '被发现。',
+    subtitle: 'Vibe Coder 的完整工具包 — 从发布你的项目到获得前 1,000 个用户。',
+    lkDesc: '粘贴你的 URL，获得完整推广套件 — 着陆页、Reddit 帖子、Twitter 推文、Product Hunt 文案。全部 AI 生成，全部可编辑。',
+    vbDesc: 'Vibe Coding 工具的发现平台。探索大家用 AI 做了什么，为最好的投票，提交你自己的作品。',
+    lkLink: '打开 LaunchKit', vbLink: '打开 VibeBoard',
+    flywheel: '飞轮效应',
+    fw1: '做一个工具', fw2: 'LaunchKit 生成文案', fw3: '发布到各平台',
+    fw4: '在 VibeBoard 被发现', fw5: '激发更多创造者', fw6: '做更多工具',
+    toggle: 'EN'
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'en';
+function applyLang() {
+  const t = I18N[currentLang];
+  document.querySelector('.badge').textContent = t.badge;
+  document.querySelector('.g1').textContent = t.h1b;
+  document.querySelector('.g2').textContent = t.h1c;
+  document.querySelector('.subtitle').textContent = t.subtitle;
+  document.querySelectorAll('.card-desc')[0].textContent = t.lkDesc;
+  document.querySelectorAll('.card-desc')[1].textContent = t.vbDesc;
+  document.querySelectorAll('.card-link')[0].innerHTML = t.lkLink + ' <span>→</span>';
+  document.querySelectorAll('.card-link')[1].innerHTML = t.vbLink + ' <span>→</span>';
+  document.getElementById('langToggle').textContent = t.toggle;
+  // Update h1 first text node
+  const h1 = document.querySelector('h1');
+  h1.firstChild.textContent = t.h1a + ' ';
+}
+function toggleLang(e) {
+  e.preventDefault();
+  currentLang = currentLang === 'en' ? 'zh' : 'en';
+  localStorage.setItem('lang', currentLang);
+  applyLang();
+}
+applyLang();
 </script>
 </body>
 </html>
