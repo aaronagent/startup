@@ -1283,7 +1283,9 @@ function renderCollections() {
 function shareToolUrl(id, btn) {
   const t = TOOLS.find(x => x.id === id);
   if (!t) return;
-  navigator.clipboard.writeText(t.url);
+  const slug = t.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  const pageUrl = window.location.href.replace(/index\.html.*$/, '').replace(/\/$/, '') + '/tool.html?id=' + slug;
+  navigator.clipboard.writeText(pageUrl);
   const orig = btn.innerHTML;
   btn.innerHTML = '✓ Copied!';
   setTimeout(() => btn.innerHTML = orig, 1500);
