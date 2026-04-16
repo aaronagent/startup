@@ -903,7 +903,7 @@ if (tabBar) {
   const checklistTab = document.createElement('div');
   checklistTab.className = 'tab';
   checklistTab.dataset.idx = '5';
-  checklistTab.textContent = '📋 Checklist';
+  checklistTab.textContent = '📋 ' + t('checklist_label');
   checklistTab.onclick = () => switchTab(5);
   tabBar.appendChild(checklistTab);
 
@@ -912,18 +912,19 @@ if (tabBar) {
   checklistPanel.className = 'tab-panel';
   checklistPanel.dataset.panel = '5';
   checklistPanel.innerHTML = `<div class="card">
-    <div class="card-header"><span class="card-label">Launch Checklist</span>
+    <div class="card-header"><span class="card-label" data-i18n="checklist_label">${t('checklist_label')}</span>
     <span style="font-size:12px;color:#555;" id="checklist-progress"></span></div>
     ${CHECKLIST_ITEMS.map(group => `
       <div style="margin-bottom:16px;">
-        <div style="font-size:13px;font-weight:600;color:#888;margin-bottom:8px;">${group.phase}</div>
-        ${group.items.map((item, i) => {
+        <div style="font-size:13px;font-weight:600;color:#888;margin-bottom:8px;" data-i18n="${group.phase}">${t(group.phase)}</div>
+        ${group.items.map((itemKey, i) => {
           const key = group.phase + '-' + i;
           const checked = state[key] ? 'checked' : '';
           return `<label style="display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;font-size:13px;color:#ccc;transition:opacity .2s;${state[key]?'opacity:.5;text-decoration:line-through;':''}">
             <input type="checkbox" ${checked} onchange="toggleCheckItem(this,'${key}')" data-event="checklist-toggle" style="accent-color:#00d4aa;width:16px;height:16px;cursor:pointer;">
-            ${item}
+            <span data-i18n="${itemKey}">${t(itemKey)}</span>
           </label>`;
+        }).join('')}
         }).join('')}
       </div>
     `).join('')}
@@ -987,9 +988,9 @@ function toggleHistoryDropdown() {
   if (dd.style.display === 'none') {
     const history = getHistory();
     if (history.length === 0) {
-      dd.innerHTML = '<div style="font-size:13px;color:#555;text-align:center;padding:16px;">No history yet. Generate a package first!</div>';
+      dd.innerHTML = '<div style="font-size:13px;color:#555;text-align:center;padding:16px;">' + t('history_empty') + '</div>';
     } else {
-      dd.innerHTML = '<div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Recent Packages</div>' +
+      dd.innerHTML = '<div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">' + t('history_title') + '</div>' +
         history.map((h, i) => {
           const ago = timeAgo(h.timestamp);
           return `<div onclick="restoreHistory(${i})" style="padding:8px;border-radius:6px;cursor:pointer;margin-bottom:4px;transition:background .15s;" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='transparent'">

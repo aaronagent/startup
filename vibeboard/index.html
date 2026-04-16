@@ -1008,15 +1008,15 @@ function renderTools() {
     const isVoted = voted.includes(t.id);
     const isTrending = top3Ids.includes(t.id);
     html += `<div class="tool-card fade-in" onclick="openDetail(${t.id})" style="animation-delay:${i*60}ms">
-      ${isTrending ? '<div class="trending-badge">🔥 '+t('trending')+'</div>' : ''}
+      ${isTrending ? '<div class="trending-badge">🔥 '+i18n('trending')+'</div>' : ''}
       <div class="tool-rank">${i+1}</div>
       <div class="tool-icon">${t.icon}</div>
       <div class="tool-info">
-        <div class="tool-name">${t.name}${t.launchedAgo <= 24*3600000 ? '<span class="new-tool-badge">'+window.t('new_badge')+'</span>' : ''}</div>
+        <div class="tool-name">${t.name}${t.launchedAgo <= 24*3600000 ? '<span class="new-tool-badge">'+i18n('new_badge')+'</span>' : ''}</div>
         <div class="tool-desc">${t.desc}</div>
         <div class="tool-meta">
           <span class="tool-tag">${t.category}</span>
-          <span class="built-with">Built with ${t.built}</span>
+          <span class="built-with">${i18n('built_with_prefix')} ${t.built}</span>
           <span>${timeAgo(t.launchedAgo)}</span>
           <div class="share-btns" onclick="event.stopPropagation()">
             <button class="share-btn" onclick="shareTool('twitter',${t.id})" title="Share on Twitter">𝕏</button>
@@ -1035,7 +1035,7 @@ function renderTools() {
   });
 
   if (!showAll && tools.length > 6) {
-    html += `<div class="load-more-wrap"><button class="load-more-btn" onclick="showAll=true;renderTools()">Load More (${tools.length - 6} more tools)</button></div>`;
+    html += `<div class="load-more-wrap"><button class="load-more-btn" onclick="showAll=true;renderTools()">${i18n('load_more')} (${tools.length - 6} ${i18n('more_tools')})</button></div>`;
   }
   list.innerHTML = html;
 
@@ -1109,21 +1109,21 @@ function openDetail(id) {
       <div class="maker-avatar">${t.name.charAt(0)}</div>
       <div class="maker-info">
         <div class="maker-name">${makerName}</div>
-        <a class="maker-link" onclick="closeModal('detailModal');filterByMaker('${makerName}')">View all tools by this maker →</a>
+        <a class="maker-link" onclick="closeModal('detailModal');filterByMaker('${makerName}')">${i18n('view_maker')}</a>
       </div>
     </div>
-    <div class="modal-screenshot">📸 Screenshot preview</div>
+    <div class="modal-screenshot">${i18n('screenshot_preview')}</div>
     <div class="modal-meta">
       <span class="modal-meta-item">${t.category}</span>
-      <span class="modal-meta-item">Built with ${t.built}</span>
-      <span class="modal-meta-item">⬆ <span class="vote-anim">${v}</span> votes</span>
+      <span class="modal-meta-item">${i18n('built_with_prefix')} ${t.built}</span>
+      <span class="modal-meta-item">⬆ <span class="vote-anim">${v}</span> ${i18n('votes_label')}</span>
       <span class="modal-meta-item">${timeAgo(t.launchedAgo)}</span>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <a href="${t.url}" target="_blank" class="try-btn" onclick="event.stopPropagation()">Try it →</a>
-      <a href="${launchKitUrl}" target="_blank" class="launchkit-btn" onclick="event.stopPropagation()">🚀 Launch with LaunchKit</a>
-      <button class="compare-btn" onclick="openCompare(${t.id})">⚖️ Compare with...</button>
-      <button class="share-url-btn" onclick="shareToolUrl(${t.id},this)">🔗 Share URL</button>
+      <a href="${t.url}" target="_blank" class="try-btn" onclick="event.stopPropagation()">${i18n('try_it')}</a>
+      <a href="${launchKitUrl}" target="_blank" class="launchkit-btn" onclick="event.stopPropagation()">${i18n('launch_launchkit')}</a>
+      <button class="compare-btn" onclick="openCompare(${t.id})">${i18n('compare_with')}</button>
+      <button class="share-url-btn" onclick="shareToolUrl(${t.id},this)">${i18n('share_url')}</button>
     </div>
   `;
   const m = document.getElementById('detailModal');
@@ -1164,7 +1164,7 @@ function subscribeNewsletter() {
   success.innerHTML = `<div class="newsletter-success-anim">
     <div class="nl-checkmark">✓</div>
     <div class="nl-dots">${dots}</div>
-    <div class="nl-msg">You're in! Check your inbox Friday.</div>
+    <div class="nl-msg">${i18n('nl_success')}</div>
   </div>`;
   success.style.display = 'block';
 }
@@ -1199,9 +1199,9 @@ function openCompare(baseId) {
   const opts = TOOLS.filter(t => t.id !== baseId).map(t => `<option value="${t.id}">${t.icon} ${t.name}</option>`).join('');
   document.getElementById('compareContent').innerHTML = `
     <button class="modal-close" onclick="closeModal('compareModal')">×</button>
-    <h2>⚖️ Compare ${base.name} with...</h2>
+    <h2>${i18n('compare_title').replace('{name}', base.name)}</h2>
     <select class="compare-select" onchange="renderComparison(${baseId}, this.value)">
-      <option value="">Select a tool to compare</option>
+      <option value="">${i18n('compare_select_tool')}</option>
       ${opts}
     </select>
     <div id="comparisonResult"></div>
@@ -1219,11 +1219,11 @@ function renderComparison(aId, bId) {
   document.getElementById('comparisonResult').innerHTML = `
     <table class="compare-table">
       <tr><th></th><th>${a.name}</th><th>${b.name}</th></tr>
-      <tr><td>Icon</td><td class="compare-icon">${a.icon}</td><td class="compare-icon">${b.icon}</td></tr>
-      <tr><td>Votes</td><td class="compare-name" style="font-size:14px;color:${av>=bv?'var(--accent)':'var(--text3)'}">${av}</td><td class="compare-name" style="font-size:14px;color:${bv>=av?'var(--accent)':'var(--text3)'}">${bv}</td></tr>
-      <tr><td>Category</td><td>${a.category}</td><td>${b.category}</td></tr>
-      <tr><td>Built with</td><td>${a.built}</td><td>${b.built}</td></tr>
-      <tr><td>Launched</td><td>${timeAgo(a.launchedAgo)}</td><td>${timeAgo(b.launchedAgo)}</td></tr>
+      <tr><td>${i18n('compare_icon')}</td><td class="compare-icon">${a.icon}</td><td class="compare-icon">${b.icon}</td></tr>
+      <tr><td>${i18n('compare_votes')}</td><td class="compare-name" style="font-size:14px;color:${av>=bv?'var(--accent)':'var(--text3)'}">${av}</td><td class="compare-name" style="font-size:14px;color:${bv>=av?'var(--accent)':'var(--text3)'}">${bv}</td></tr>
+      <tr><td>${i18n('compare_category')}</td><td>${a.category}</td><td>${b.category}</td></tr>
+      <tr><td>${i18n('compare_built')}</td><td>${a.built}</td><td>${b.built}</td></tr>
+      <tr><td>${i18n('compare_launched')}</td><td>${timeAgo(a.launchedAgo)}</td><td>${timeAgo(b.launchedAgo)}</td></tr>
     </table>
   `;
 }
