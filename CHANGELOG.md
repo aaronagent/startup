@@ -2,6 +2,31 @@
 
 All notable changes to LaunchKit and VibeBoard.
 
+## [0.6.0] — 2026-04-16 — THE INSTALLABLE RELEASE
+
+### Infrastructure
+- **Added** PWA manifest.json — installable as desktop/mobile app
+- **Added** App shortcuts for LaunchKit and VibeBoard from home screen
+
+## [0.5.0] — 2026-04-16 — THE GROWTH ENGINE RELEASE
+
+### LaunchKit
+- **Added** share.html — shareable results page with OG tags
+- **Added** Share button wired to share.html?tool=X&tone=Y
+
+### VibeBoard
+- **Added** tool.html — individual tool detail page for SEO
+- **Added** Share URLs now point to tool detail pages
+- **Added** Each tool has its own shareable URL with OG previews
+
+### Infrastructure
+- **Added** sitemap.xml for search engine discovery
+- **Added** robots.txt with sitemap reference
+- **Added** JSON-LD structured data (Schema.org WebSite + WebApplication)
+- **Added** MIT License
+- **Added** README badges (deploy status, license, live demo)
+- **Added** OG social preview image (SVG)
+
 ## [0.4.0] — 2026-04-16 — THE POLISH RELEASE
 
 ### LaunchKit

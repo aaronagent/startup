@@ -1,0 +1,32 @@
+{
+  "name": "Startup — LaunchKit + VibeBoard",
+  "short_name": "Startup",
+  "description": "Build it. Launch it. Get discovered. The complete toolkit for vibe coders.",
+  "start_url": "/startup/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#00d4aa",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "LaunchKit",
+      "short_name": "LaunchKit",
+      "url": "/startup/launchkit/",
+      "description": "Generate launch packages",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>", "sizes": "any"}]
+    },
+    {
+      "name": "VibeBoard",
+      "short_name": "VibeBoard",
+      "url": "/startup/vibeboard/",
+      "description": "Discover vibe-coded tools",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>", "sizes": "any"}]
+    }
+  ]
+}
