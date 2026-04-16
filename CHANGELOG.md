@@ -2,6 +2,33 @@
 
 All notable changes to LaunchKit and VibeBoard.
 
+## [0.4.0] — 2026-04-16 — THE POLISH RELEASE
+
+### LaunchKit
+- **Fixed** QA verification of all JS function references
+- **Added** Toast notification system (copy, export feedback)
+- **Added** Scroll-to-top floating button
+- **Added** Keyboard shortcut hints below URL input
+- **Added** Favicon (rocket emoji)
+
+### VibeBoard
+- **Fixed** Dark mode coverage for all sections
+- **Fixed** Keyboard shortcuts skip when modals are open
+- **Fixed** Mobile responsive modals and collections
+- **Added** Skeleton loading shimmer on page load
+- **Added** Scroll-to-top floating button
+- **Added** "New!" animated badges on recent tools
+- **Added** Newsletter subscribe success animation with confetti
+- **Added** Sort transition animations
+- **Added** Keyboard shortcut tooltips
+- **Added** Logo tooltip ("What's VibeBoard?")
+- **Added** Share URL button in tool detail modal
+
+### Infrastructure
+- **Added** GitHub Actions workflow for auto-deployment
+- **Added** Open Graph social preview image (SVG)
+- **Added** Hub animated grid background + ambient glow
+
 ## [0.3.0] — 2026-04-16 — THE FLYWHEEL RELEASE
 
 ### LaunchKit ↔ VibeBoard Integration (CRITICAL)
