@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Startup Hub — LaunchKit + VibeBoard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #050505;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 24px;
+    max-width: 900px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(108, 92, 231, 0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  h1 .g1 {
+    background: linear-gradient(135deg, #00d4aa, #00f5c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  h1 .g2 {
+    background: linear-gradient(135deg, #6c5ce7, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #666;
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: left;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: #333;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .card.launchkit:hover { border-color: #00d4aa40; }
+  .card.launchkit:hover::before {
+    opacity: 1;
+    background: radial-gradient(circle at 50% 120%, rgba(0,212,170,0.06) 0%, transparent 70%);
+  }
+  .card.vibeboard:hover { border-color: #6c5ce740; }
+  .card.vibeboard:hover::before {
+    opacity: 1;
+    background: radial-gradient(circle at 50% 120%, rgba(108,92,231,0.06) 0%, transparent 70%);
+  }
+
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .card-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .card.launchkit .card-title span { color: #00d4aa; }
+  .card.vibeboard .card-title span { color: #6c5ce7; }
+
+  .card-desc {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .card-link {
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+  .card.launchkit .card-link { color: #00d4aa; }
+  .card.vibeboard .card-link { color: #6c5ce7; }
+  .card:hover .card-link { gap: 10px; }
+
+  .footer {
+    position: fixed;
+    bottom: 24px;
+    font-size: 12px;
+    color: #333;
+    z-index: 1;
+  }
+  .footer a { color: #555; text-decoration: none; }
+  .footer a:hover { color: #888; }
+
+  @media (max-width: 600px) {
+    .cards { grid-template-columns: 1fr; }
+    .card { padding: 24px 20px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .container > * {
+    animation: fadeUp 0.6s ease forwards;
+    opacity: 0;
+  }
+  .container > :nth-child(1) { animation-delay: 0s; }
+  .container > :nth-child(2) { animation-delay: 0.1s; }
+  .container > :nth-child(3) { animation-delay: 0.2s; }
+  .container > :nth-child(4) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="container">
+  <div class="badge">Two products, one mission</div>
+
+  <h1>Build it. <span class="g1">Launch it.</span><br><span class="g2">Get discovered.</span></h1>
+
+  <p class="subtitle">The complete toolkit for vibe coders — from shipping your project to getting your first 1,000 users.</p>
+
+  <div class="cards">
+    <a href="launchkit/index.html" class="card launchkit">
+      <span class="card-icon">🚀</span>
+      <div class="card-title">Launch<span>Kit</span></div>
+      <div class="card-desc">Paste your URL, get a complete launch package — landing page, Reddit post, Twitter thread, Product Hunt copy. All AI-generated, all editable.</div>
+      <div class="card-link">Open LaunchKit <span>→</span></div>
+    </a>
+
+    <a href="vibeboard/index.html" class="card vibeboard">
+      <span class="card-icon">⚡</span>
+      <div class="card-title">Vibe<span>Board</span></div>
+      <div class="card-desc">The front page for vibe-coded tools. Discover what people are building with AI, vote for the best, submit your own creation.</div>
+      <div class="card-link">Open VibeBoard <span>→</span></div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="https://github.com/aaronagent/startup" target="_blank">GitHub</a> · Built with AI
+</div>
+
+</body>
+</html>
