@@ -3,6 +3,9 @@
 [![Deploy](https://github.com/aaronagent/startup/actions/workflows/deploy.yml/badge.svg)](https://github.com/aaronagent/startup/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Pages](https://img.shields.io/badge/Live-GitHub%20Pages-blue)](https://aaronagent.github.io/startup/)
+[![Release](https://img.shields.io/github/v/release/aaronagent/startup)](https://github.com/aaronagent/startup/releases/latest)
+[![i18n](https://img.shields.io/badge/i18n-EN%20%7C%20中文-green)](https://aaronagent.github.io/startup/)
+[![Zero Deps](https://img.shields.io/badge/dependencies-0-brightgreen)]()
 
 > **Build it. Launch it. Get discovered.**
 > The complete toolkit for vibe coders.
