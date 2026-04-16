@@ -2,6 +2,29 @@
 
 All notable changes to LaunchKit and VibeBoard.
 
+## [0.3.0] — 2026-04-16 — THE FLYWHEEL RELEASE
+
+### LaunchKit ↔ VibeBoard Integration (CRITICAL)
+- **Added** URL parameter support — VibeBoard sends users to LaunchKit with pre-filled data
+- **Added** "Submit to VibeBoard" CTA after generating a package
+- **Added** LaunchKit → VibeBoard → LaunchKit bidirectional flywheel is LIVE
+
+### LaunchKit
+- **Added** Social preview mockups (Reddit dark card, Twitter light card)
+- **Added** SEO meta tags (Open Graph, Twitter Card)
+- **Added** Analytics-ready `data-event` attributes on all key interactions
+
+### VibeBoard
+- **Added** "Launch with LaunchKit" button in tool detail modals
+- **Added** Collections: "Weekend Projects", "AI-Powered", "Developer Essentials"
+- **Added** Social sharing buttons (Twitter, Reddit, copy link) on every tool card
+- **Added** Maker profiles with avatar and "view all by maker" filter
+- **Added** Tool submission → LaunchKit promotion CTA
+
+### Hub
+- **Added** Feature badges on product cards
+- **Added** CONTRIBUTING.md for open-source readiness
+
 ## [0.2.0] — 2026-04-16
 
 ### LaunchKit
