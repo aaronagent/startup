@@ -156,6 +156,19 @@
   /* Spinner for step nums */
   @keyframes spin{to{transform:rotate(360deg)}}
   .step-num.spinning{animation:spin 1s linear infinite;border-style:dashed}
+
+  /* Toast notifications */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#111;border:1px solid #222;border-radius:10px;padding:10px 20px;font-size:13px;color:#00d4aa;font-weight:500;z-index:999;transition:transform .3s ease,opacity .3s;opacity:0;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  /* Hint text */
+  .hint{text-align:center;margin-top:8px;font-size:12px;color:#333}
+  .hint kbd{background:#1a1a1a;border:1px solid #222;border-radius:4px;padding:1px 6px;font-family:monospace;font-size:11px;color:#555}
+
+  /* Scroll to top */
+  .scroll-top{position:fixed;bottom:24px;right:24px;width:40px;height:40px;border-radius:50%;background:#111;border:1px solid #222;color:#555;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:90;transition:all .2s}
+  .scroll-top:hover{border-color:#00d4aa;color:#00d4aa}
+  .scroll-top.show{display:flex}
 </style>
 </head>
 <body>
@@ -191,6 +204,7 @@
     <button class="example-btn" onclick="loadExample(1)">shipfast.dev</button>
     <button class="example-btn" onclick="loadExample(2)">calmpage.io</button>
   </div>
+  <div class="hint">Press <kbd>/</kbd> to start typing · <kbd>1</kbd>-<kbd>5</kbd> to switch tabs</div>
 </div>
 
 <div class="steps" id="stepsSection">
@@ -235,7 +249,23 @@
 
 <div class="footer">LaunchKit — Built for vibe coders who ship fast.</div>
 
+<div class="toast" id="toast"></div>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <script>
+// Toast system
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+});
+
 const PLATFORMS = [
   {id:'reddit', label:'📱 Reddit', charField:'title', charLimit:300, limitLabel:'Title limit: 300'},
   {id:'twitter', label:'🐦 Twitter', charField:'full', charLimit:280, limitLabel:'Per tweet: 280'},
@@ -530,6 +560,7 @@ function copyContent(btn, idx) {
   navigator.clipboard.writeText(text).then(() => {
     btn.classList.add('copied');
     btn.textContent = 'Copied!';
+    showToast('✓ Copied to clipboard');
     setTimeout(() => { btn.classList.remove('copied'); btn.textContent = btn.style.background ? 'Copy HTML' : 'Copy'; }, 1500);
   });
 }
@@ -549,6 +580,7 @@ function exportAll() {
   a.href = URL.createObjectURL(blob);
   a.download = `launchkit-${currentName.toLowerCase().replace(/\s+/g,'-')}.md`;
   a.click();
+  showToast('📥 Exported as Markdown');
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
